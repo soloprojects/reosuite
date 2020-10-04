@@ -1,0 +1,303 @@
+    /*STYLE FOR DROPDOWN SEARCH*/
+    .myUL {
+        display:none;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        height:150px;
+        overflow-y:scroll;
+        min-width:150px;
+        z-index: 1000px;
+    }
+
+
+    .myUL li a {
+        border: 1px solid #ddd;
+        margin-top: -1px; /* Prevent double borders */
+        background-color: #f6f6f6;
+        padding: 8px;
+        text-decoration: none;
+        font-size: 10px;
+        color: black;
+        display: block
+    }
+
+
+
+    .myUL li a:hover:not(.header) {
+        background-color: black;
+        color:white;
+    }
+
+    .myUL::-webkit-scrollbar {
+        width:  4%;
+        height: 5%;
+    }
+
+    .myUL::-webkit-scrollbar-thumb {
+        background: black;
+    }
+
+    .myUL::-webkit-scrollbar-track {
+        background: lightslategray;
+    }
+
+    .myUL::-webkit-scrollbar-button {
+        background: grey;
+    }
+
+    /*END STYLE FOR DROPDOWN SEARCH*/
+
+    /*BEGIN STYLE FOR TABS PREVIOUS AND NEXT*/
+
+    .wizard {
+        margin: 20px auto;
+        background: #fff;
+    }
+
+    .wizard .nav-tabs {
+        position: relative;
+        margin: 40px auto;
+        margin-bottom: 0;
+        border-bottom-color: #e0e0e0;
+    }
+
+    .wizard > div.wizard-inner {
+        position: relative;
+    }
+
+    .connecting-line {
+        height: 2px;
+        background: #e0e0e0;
+        position: absolute;
+        width: 80%;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: 50%;
+        z-index: 1;
+    }
+
+    .wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+        color: #555555;
+        cursor: default;
+        border: 0;
+        border-bottom-color: transparent;
+    }
+
+    span.round-tab {
+        /*width: 70px;
+        height: 70px;
+        line-height: 70px;*/
+        display: inline-block;
+        border-radius: 80px;
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        text-align: center;
+        font-size: 12px;
+    }
+    span.round-tab i{
+        color:#555555;
+    }
+    .wizard li.active span.round-tab {
+        background: #fff;
+        border: 2px solid #5bc0de;
+
+    }
+    .wizard li.active span.round-tab i{
+        color: #5bc0de;
+    }
+
+    span.round-tab:hover {
+        color: #333;
+        border: 2px solid #333;
+    }
+
+    .wizard .nav-tabs > li {
+        width: 15%;
+    }
+
+    .wizard li:after {
+        content: " ";
+        position: absolute;
+        left: 46%;
+        opacity: 0;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 5px solid transparent;
+        border-bottom-color: #5bc0de;
+        transition: 0.1s ease-in-out;
+    }
+
+    .wizard li.active:after {
+        content: " ";
+        position: absolute;
+        left: 46%;
+        opacity: 1;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 10px solid transparent;
+        border-bottom-color: #5bc0de;
+    }
+
+    .wizard .nav-tabs > li a {
+        width: 70px;
+        height: 70px;
+        margin: 20px auto;
+        border-radius: 100%;
+        padding: 0;
+    }
+
+    .wizard .nav-tabs > li a:hover {
+        background: transparent;
+    }
+
+    .wizard .tab-pane {
+        position: relative;
+        padding-top: 50px;
+    }
+
+    .wizard h3 {
+        margin-top: 0;
+    }
+
+    @media( max-width : 585px ) {
+
+        .wizard {
+            width: 90%;
+            height: auto !important;
+        }
+
+        span.round-tab {
+            font-size: 16px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .wizard .nav-tabs > li a {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .wizard li.active:after {
+            content: " ";
+            position: absolute;
+            left: 35%;
+        }
+    }
+
+    /*END STYLE FOR TABS PREVIOUS AND NEXT*/
+	
+	
+	/*BEGIN OF STYLE FOR FIXED TABLE HEAD*/
+	
+		.tbl_order {
+			border-collapse: collapse;
+			width: auto;
+			overflow-x: scroll;
+			display: block;
+		}
+		.tbl_order > thead {
+			background-color: #EFEFEF;
+		}
+		.tbl_order > thead, .tbl_order > tbody {
+			display: block;
+		}
+		.tbl_order > tbody {
+			overflow-y: scroll;
+			overflow-x: hidden;
+			height: 400px;
+		}
+		.tbl_order th, .tbl_order td {
+			min-width: 200px;
+			border: dashed 1px lightblue;
+			text-overflow: ellipsis;
+			max-width: 200px;
+		}
+	
+	/*END STYLE FOR FIXED TABLE HEAD*/
+	
+	/*BEGIN OF STYLE FOR SMALL FIXED TABLE HEAD*/
+	
+		.tbl_order_sm {
+			border-collapse: collapse;
+			width: auto;
+			overflow-x: scroll;
+			display: block;
+		}
+		.tbl_order_sm > thead {
+			background-color: #EFEFEF;
+		}
+		.tbl_order_sm > thead, .tbl_order_sm > tbody {
+			display: block;
+		}
+		.tbl_order_sm > tbody {
+			overflow-y: scroll;
+			overflow-x: hidden;
+			height: 200px;
+		}
+		.tbl_order_sm th, .tbl_order_sm td {
+			min-width: 200px;
+			border: dashed 1px lightblue;
+			text-overflow: ellipsis;
+			max-width: 200px;
+		}
+	
+	/*END STYLE FOR SMALL FIXED TABLE HEAD*/
+	
+	.tbl_scroll {
+		height:500px;
+		overflow-y:scroll;
+	}
+	
+    /*BEGIN OVERLAY LAODING*/
+    
+    #overlay_app_body {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+      }
+      
+      #overlay_loading_icon{
+        position: absolute;
+        display:none;
+        top: 50%;
+        left: 50%;
+        font-size: 50px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+      }
+
+      #overlay_loading_text{
+        position: absolute;
+        display:none;
+        top: 50%;
+        left: 50%;
+        font-size: 50px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+      }
+
+    /*END OF OVERLAY LOADING*/
+
+
+	
+	
+	
+	
+	

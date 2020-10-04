@@ -1,0 +1,464 @@
+@extends('layouts.app')
+
+@section('content')
+   
+    <!-- Bordered Table -->
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        Bank Reconciliation Report
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>Export
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                @include('includes/export',[$exportId = 'reload_data', $exportDocId = 'reload_data'])
+                            </ul>
+                        </li>
+
+                    </ul>
+                    
+                </div>
+                <div class="body table-responsive" id="reload_data">
+                    
+                    <table>
+                        <thead>
+                            <th style="font-weight: bold;">{{$accountData->acct_name}} ({{$accountData->acct_no}}) Reconciliation</th>
+                        </thead>
+                    </table><hr>
+                    
+                    <div class="row clearfix">
+                    
+                        <div class="col-md-4">
+                            <span class="text-center" style="font-weight:bold" id="ending_balance">{{Utility::numberFormat($endingBalance)}}</span><br>
+                            <span class="text-center">Ending Balance {{\App\Helpers\Utility::defaultCurrency()}}</span>
+                        </div>
+                    
+                        <div class="col-md-4">
+                            <span class="text-center" style="font-weight:bold" id="cleared_balance">{{Utility::numberFormat($clearedBalance)}}</span><br>
+                            <span class="text-center">---Cleared Balance {{\App\Helpers\Utility::defaultCurrency()}}</span>
+                        </div>
+                        <div class="col-md-4">
+                            @php $signStatus = ($balanceDifference != 0) ? 'fa fa-exclamation-triangle fa-2 btn-danger' : 'fa fa-check-circle fa-2 btn-success'; @endphp
+                            <span class="text-center" style="font-weight:bold" id="difference_balance">{{Utility::numberFormat($balanceDifference)}}</span>
+                            <span class=""><i id="sign_status" class="{{$signStatus}}" aria-hidden="true"></i></span><br/>
+                            <span class="text-center">=Difference {{\App\Helpers\Utility::defaultCurrency()}}</span>
+                        </div>
+                    
+                    </div><hr>
+                    
+                    <div class="row clearfix">
+                    
+                        <div class="col-md-4">
+                            <p class="text-center" style="font-weight:bold" id="begining_balance">{{Utility::numberFormat($beginingBalance)}}</p><br>
+                            <p class="text-center">Begining Balance {{\App\Helpers\Utility::defaultCurrency()}} =</p>
+                        </div>
+                    
+                        <div class="col-md-4">
+                            <p class="text-center" style="font-weight:bold" id="deposits">{{Utility::numberFormat($edit->deposits_cleared)}}</p><br/>
+                            <p class="text-center"> <span style="font-weight: bold" id="deposit_num">{{$edit->count_cleared_deposits}}</span> Deposit(s) {{\App\Helpers\Utility::defaultCurrency()}}</p>
+                        </div>
+                    
+                        <div class="col-md-4">
+                            <p class="text-center" style="font-weight:bold" id="payments">{{Utility::numberFormat($edit->payments_cleared)}}</p><br>
+                            <p class="text-center">---  <span style="font-weight: bold" id="payment_num">{{$edit->count_cleared_payments}}</span> Payment(s) {{\App\Helpers\Utility::defaultCurrency()}} </p>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="row clearfix">
+                        <table class="table table-responsive table-bordered table-hover table-striped" id="">
+                            <thead>
+                            <tr>
+                                
+                                <th>Ending Date</th>
+                                <th>Register Balance {{\App\Helpers\Utility::defaultCurrency()}}</th>
+                                <th>Bank Balance {{\App\Helpers\Utility::defaultCurrency()}}</th>                    
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{$edit->ending_date}}</td>
+                                    <td>{{Utility::roundNum($edit->register_balance)}}</td>
+                                    <td>{{Utility::roundNum($edit->bank_balance)}}</td>
+                                </tr>
+                            </tbody>
+                        </table>        
+                    </div><hr>
+                    
+                    <div class="row clearfix">
+                        <table class="table table-responsive table-bordered table-hover table-striped" id="">
+                            <thead>
+                            <tr>                                
+                            <th>{{$edit->count_uncleared_deposits}} Uncleared Deposit(s) {{\App\Helpers\Utility::defaultCurrency()}}</th>
+                            <th>{{$edit->count_uncleared_payments}} Uncleared Payment(s) {{\App\Helpers\Utility::defaultCurrency()}}</th>                                             
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{Utility::roundNum($edit->uncleared_deposits)}}</td>
+                                    <td>{{Utility::roundNum($edit->uncleared_payments)}}</td>
+                                </tr>
+                            </tbody>
+                        </table>        
+                    </div>      
+                    
+                    <div class="row clearfix">
+                    
+                            <div class="col-md-6 col-lg-6 col-sm-12" style="width:50%; overflow-x:scroll;" >
+                                <b>Deposit(s)</b>
+                                <table class="table table-responsive table-bordered table-hover table-striped" id="">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="parent_check_deposit"
+                                                    name="check_all_deposit" class="filled-in chk-col-blue-grey" />
+                            
+                                        </th>
+                                        <th>Post Date</th>
+                                        <th>Transaction Type</th>
+                                        <th>Deposits {{\App\Helpers\Utility::defaultCurrency()}}</th>
+                                        <th>Payee/Payer</th>
+                                        <th>Status</th>
+                            
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($deposits as $data)
+                                    <tr>
+                                        @php $checkData = ($data->reconcile_status == Finance::reconciled) ? 'checked' : '';  @endphp
+                                        <td scope="row">
+                                            <input {{$checkData}} value="{{$data->id}}" type="checkbox" id="deposit_{{$data->id}}" 
+                                            data-amount="{{$data->trans_total}}" class="kid_checkbox_deposit reconciled filled-in chk-col-green" />
+                            
+                                        </td>   
+                                        <!-- ENTER YOUR DYNAMIC COLUMNS HERE -->
+                                        <td>{{$data->post_date}}</td>
+                                        <td>{{Finance::transType($data->transaction_type)}}</td>
+                                        <td>{{Utility::numberFormat($data->trans_total)}}</td>
+                                        <td>
+                                            @if(!empty($data->contact_type))
+                                            {{$data->vendorCon->name}}
+                                            @endif
+                                            @if(!empty($data->employee_id))
+                                            {{$data->employee->first_name}} {{$data->employee->last_name}}
+                                            @endif
+                                        </td>
+                                        <td>{{Finance::reconcileStatus($data->reconcile_status)}}</td>
+                            
+                            
+                                        <!--END ENTER YOUR DYNAMIC COLUMNS HERE -->
+                                    </tr>
+                                    @endforeach
+                            
+                                    </tbody>
+                                </table>
+                            </div>
+                    
+                            <div class="col-md-6 col-lg-6 col-sm-12" style="width:50%; overflow-x:scroll;">
+                                <b>Payment(s)</b>
+                                <table class="table table-bordered table-hover table-striped" id="">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" name="check_all_payment" class="filled-in chk-col-blue-grey" />
+                            
+                                        </th>
+                                        <th>Post Date</th>
+                                        <th>Transaction Type</th>
+                                        <th>Payments {{\App\Helpers\Utility::defaultCurrency()}}</th>
+                                        <th>Payee/Payer</th>
+                                        <th>Status</th>
+                            
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($payments as $data)
+                                    <tr>
+                                        @php $checkData = ($data->reconcile_status == Finance::reconciled) ? 'checked' : '';  @endphp
+                                        <td scope="row">
+                                            <input {{$checkData}} value="{{$data->id}}" type="checkbox" id="payment_{{$data->id}}" 
+                                            data-amount="{{$data->trans_total}}" class="kid_checkbox_payment reconciled filled-in chk-col-green" />
+                            
+                                        </td>   
+                                        <!-- ENTER YOUR DYNAMIC COLUMNS HERE -->
+                                        <td>{{$data->post_date}}</td>
+                                        <td>{{Finance::transType($data->transaction_type)}}</td>
+                                        <td>{{Utility::numberFormat($data->trans_total)}}</td>
+                                        <td>
+                                            @if(!empty($data->contact_type))
+                                            {{$data->vendorCon->name}}
+                                            @endif
+                                            @if(!empty($data->employee_id))
+                                            {{$data->employee->first_name}} {{$data->employee->last_name}}
+                                            @endif
+                                        </td>
+                                        <td>{{Finance::reconcileStatus($data->reconcile_status)}}</td>
+                            
+                            
+                                        <!--END ENTER YOUR DYNAMIC COLUMNS HERE -->
+                                    </tr>
+                                    @endforeach
+                            
+                                    </tbody>
+                                </table>
+                            </div>
+                    
+                        <form name="processReconciliation" id="processReconciliation" onsubmit="false;" class="form form-horizontal" method="post" enctype="multipart/form-data">
+                        
+                            <input type="hidden" name="begining_balance" value="{{$beginingBalance}}" id="begining_balance_hidden">
+                            <input type="hidden" name="ending_balance" value="{{$endingBalance}}" id="ending_balance_hidden">
+                            <input type="hidden" name="cleared_balance" value="{{$clearedBalance}}" id="cleared_balance_hidden">
+                            <input type="hidden" name="payments" value="{{$edit->payments_cleared}}" id="payments_hidden">
+                            <input type="hidden" name="deposits" value="{{$edit->deposits_cleared}}" id="deposits_hidden">
+                            <input type="hidden" name="payment_num" value="{{$edit->count_cleared_payments}}" id="payment_num_hidden">
+                            <input type="hidden" name="deposit_num" value="{{$edit->count_cleared_deposits}}" id="deposit_num_hidden">
+                            <input type="hidden" name="difference_balance" value="{{$balanceDifference}}" id="difference_balance_hidden">
+                            <input type="hidden" name="account_category" value="{{$accountData->acct_cat_id}}" >
+                            <input type="hidden" name="account_id" value="{{$accountData->id}}" >
+                            <input type="hidden" name="ending_date" value="{{$endingDate}}" >
+                            <input type="hidden" name="begining_date" value="{{$beginingDate}}" >
+                            <input type="hidden" name="update_status" value="1" >
+                            <input type="hidden" name="edit_id" value="{{$edit->id}}" >
+                    
+                        </form>
+                    
+                    </div>
+                    
+                    <div class="row">
+                       
+                    </div>   
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- #END# Bordered Table -->
+
+
+
+    <script>
+              //toggle to check/uncheck all (this.id,class)
+    function checkAllAmount(master,idClass,begBalId,endBalId,clearedBalId,paymentDepositId,sisterId,differenceId,countId,amountType){
+        
+        var depositType = 1;
+        var paymentType = 2;
+
+        var clearedBal = getId(clearedBalId);
+        var paymentDeposit = getId(paymentDepositId);
+        var difference = getId(differenceId);
+        var endBal = getId(endBalId);
+        var begBal = getId(begBalId);
+        var sister = getId(sisterId);
+        var count = getId(countId);
+
+
+        var clearedBalHidden = getId(clearedBalId+'_hidden');
+        var paymentDepositHidden = getId(paymentDepositId+'_hidden');
+        var differenceHidden = getId(differenceId+'_hidden');
+        var endBalHidden = getId(endBalId+'_hidden');
+        var begBalHidden = getId(begBalId+'_hidden');
+        var sisterHidden = getId(sisterId+'_hidden');
+        var countHidden = getId(countId+'_hidden');
+
+        var goodStatus = 'fa fa-check-circle fa-2 btn-success';
+        var badStatus = 'fa fa-exclamation-triangle fa-2 btn-danger';
+        var signStatus = $('#sign_status');
+        
+        var all = document.getElementsByClassName(idClass); //CLASS OF ALL ID's TO BE CHECKED
+        var totalAmount = 0.00;
+        var countData = 0;
+        for(var i=0; i < all.length; i++){
+            var getIdd = document.getElementById(all[i].id);
+            getIdd.checked = master.checked;
+            if(master.checked){
+                var getAmount = parseFloat(getIdd.dataset.amount);
+                
+                totalAmount+=getAmount;
+                countData+=1
+            }
+        }
+
+        sisterHiddenVal = sisterHidden.val();
+
+        //SUBTRACT PAYMENT FROM DEPOSIT TO GET SUM
+        var sumTotal = (amountType == depositType) ? totalAmount - sisterHiddenVal : sisterHiddenVal - totalAmount;
+
+        //CLEARED BALANCE EQUALS BEGINING BALANCE PLUS SUMTOTAL
+        var newClearedBal = begBalHidden.val() + sumTotal;
+
+        //DIFFERENCE IS SUBTRACTION OF CLEARED BALANCE FROM ENDING BALANCE
+        var newDiff = parseFloat(endBalHidden.val()) - newClearedBal;
+        
+        paymentDeposit.html(decPoints(totalAmount,2));    //CHANGE IN THE DISPLAYED AMOUNT OF DEPOSIT/PAYMENT
+        difference.html(decPoints(newDiff,2));    //CHANGE IN THE DISPLAYED AMOUNT OF BALANCE DIFFERENCE
+        clearedBal.html(decPoints(newClearedBal,2));    //CHANGE IN THE DISPLAYED AMOUNT OF  CLEARED BALANCE
+        count.html(countData);
+
+        //HIDDEN
+        paymentDepositHidden.val(decPoints(totalAmount,2));    //CHANGE IN THE HIDDEN AMOUNT OF DEPOSIT/PAYMENT
+        differenceHidden.val(decPoints(newDiff,2));    //CHANGE IN THE HIDDEN AMOUNT OF BALANCE DIFFERENCE
+        clearedBalHidden.val(decPoints(newClearedBal,2));    //CHANGE IN THE HIDDEN AMOUNT OF  CLEARED BALANCE
+        countHidden.val(countData);
+
+        //DISPLAY IF THE STATUS IS GOOD/BAD FOR A STANDARD RECONCILIATION
+        if(newDiff == 0){
+            signStatus.removeClass();
+            signStatus.addClass(goodStatus);
+        }else{
+            signStatus.removeClass();
+            signStatus.addClass(badStatus);
+        }
+
+    }
+
+       
+    function checkAmount(transElemId,begBalId,endBalId,clearedBalId,paymentDepositId,sisterId,differenceId,countId,amountType){
+    
+        var depositType = 1;
+        var paymentType = 2;
+
+        var transElem = getId(transElemId);
+        var clearedBal = getId(clearedBalId);
+        var paymentDeposit = getId(paymentDepositId);
+        var difference = getId(differenceId);
+        var endBal = getId(endBalId);
+        var begBal = getId(begBalId);
+        var sister = getId(sisterId);
+        var count = getId(countId);
+
+
+        var clearedBalHidden = getId(clearedBalId+'_hidden');
+        var paymentDepositHidden = getId(paymentDepositId+'_hidden');
+        var differenceHidden = getId(differenceId+'_hidden');
+        var endBalHidden = getId(endBalId+'_hidden');
+        var begBalHidden = getId(begBalId+'_hidden');
+        var countHidden = getId(countId+'_hidden');
+        var sisterHidden = getId(sisterId+'_hidden');
+
+        var goodStatus = 'fa fa-check-circle fa-2 btn-success';
+        var badStatus = 'fa fa-exclamation-triangle fa-2 btn-danger';
+        var signStatus = $('#sign_status');
+        
+        var currPaymentDepositVal = (paymentDepositHidden.val() == '') ? 0.00 : parseFloat(paymentDepositHidden.val());        
+        var transElemAmount = transElem.attr('data-amount'); //AMOUNT OF THE CHECKED/UNCHECKED ID
+        var amount = (transElem).is(':checked') ? transElemAmount : 0 - transElemAmount;
+        var countData = (transElem).is(':checked') ? parseFloat(countHidden.val()) + 1 : parseFloat(countHidden.val()) - 1;
+        var newPaymentDepositVal = (transElem).is(':checked') ? currPaymentDepositVal + parseFloat(transElemAmount) :  currPaymentDepositVal - parseFloat(transElemAmount);
+
+
+        
+        sisterVal = parseFloat(sisterHidden.val());
+
+        //SUBTRACT PAYMENT FROM DEPOSIT TO GET SUM
+        var sumTotal = (amountType == depositType) ? newPaymentDepositVal - sisterVal : sisterVal - newPaymentDepositVal;
+
+        //CLEARED BALANCE EQUALS BEGINING BALANCE PLUS SUMTOTAL
+        var newClearedBal = begBalHidden.val() + sumTotal;
+
+        //DIFFERENCE IS SUBTRACTION OF CLEARED BALANCE FROM ENDING BALANCE
+        var newDiff = parseFloat(endBalHidden.val()) - newClearedBal;
+
+        paymentDeposit.html(decPoints(newPaymentDepositVal,2));    //CHANGE IN THE DISPLAYED AMOUNT OF DEPOSIT/PAYMENT
+        difference.html(decPoints(newDiff,2));    //CHANGE IN THE DISPLAYED AMOUNT OF BALANCE DIFFERENCE
+        clearedBal.html(decPoints(newClearedBal,2));    //CHANGE IN THE DISPLAYED AMOUNT OF  CLEARED BALANCE
+        count.html(countData);
+
+        //HIDDEN
+        paymentDepositHidden.val(decPoints(newPaymentDepositVal,2));    //CHANGE IN THE HIDDEN AMOUNT OF DEPOSIT/PAYMENT
+        differenceHidden.val(decPoints(newDiff,2));    //CHANGE IN THE HIDDEN AMOUNT OF BALANCE DIFFERENCE
+        clearedBalHidden.val(decPoints(newClearedBal,2));    //CHANGE IN THE HIDDEN AMOUNT OF  CLEARED BALANCE
+        countHidden.val(countData);
+
+        //DISPLAY IF THE STATUS IS GOOD/BAD FOR A STANDARD RECONCILIATION
+        if(newDiff == 0){
+            signStatus.removeClass();
+            signStatus.addClass(goodStatus);
+        }else{
+            signStatus.removeClass();
+            signStatus.addClass(badStatus);
+        }
+
+
+
+
+    }
+
+    //SUBMIT FORM WITH A FILE
+    function submitReconcileForm(formId,submitUrl,reload_id,reloadUrl,token){
+        var form_get = $('#'+formId);
+        var form = document.forms.namedItem(formId);
+        var postVars = new FormData(form);
+
+        var allCheckedId = group_val('reconciled');
+        var unClearedDeposits = amountArrayUnchecked('kid_checkbox_deposit'); //ARRAY OF ALL DEPOSITS UNCLEARED
+        var unClearedPayments = amountArrayUnchecked('kid_checkbox_payment'); //ARRAY OF ALL PAYMENTS UNCLEARED
+        var countUnclearedDeposits = unClearedDeposits.length;
+        var countUnclearedPayments = unClearedPayments.length;
+
+        postVars.append('token',token);
+        postVars.append('dataId',JSON.stringify(allCheckedId));
+        postVars.append('unclearedDeposits',JSON.stringify(unClearedDeposits));
+        postVars.append('unclearedPayments',JSON.stringify(unClearedPayments));
+        postVars.append('countUnclearedDeposits',countUnclearedDeposits);
+        postVars.append('countUnclearedPayments',countUnclearedPayments);
+
+        $('#loading_modal').modal('show');
+        console.log(allCheckedId);
+        sendRequestMediaForm(submitUrl,token,postVars);
+        ajax.onreadystatechange = function(){
+            if(ajax.readyState == 4 && ajax.status == 200) {
+                $('#loading_modal').modal('hide');
+                
+                var rollback = JSON.parse(ajax.responseText);
+                var message2 = rollback.message2;
+                if(message2 == 'fail'){
+
+                    var messageError = rollback.message;
+                    swal("Error",messageError, "error");
+
+                }else if(message2 == 'saved'){
+
+                   var successMessage = swalSuccess('Data saved successfully');
+                    swal("Success!", "Data saved successfully!", "success");
+                    location.reload();
+
+                }else if(message2 == 'token_mismatch'){
+
+                    location.reload();
+
+                }else {
+                    var infoMessage = swalWarningError(message2);
+                    swal("Warning!", infoMessage, "warning");
+                }
+
+            }
+        }
+
+    }
+
+    //ADD GROUP OF UNCHECKED INPUT CHECKBOX INTO AN ARRAY
+    function amountArrayUnchecked(klass){
+
+        var approve = document.getElementsByClassName(klass);
+        var values = [];
+        for(var i=0; i < approve.length; i++){
+            if(approve[i].checked){                
+            }else{
+
+                values.push(approve[i].getAttribute('data-amount'));
+            }
+        }
+        return values;
+    }
+    </script>
+
+@endsection
