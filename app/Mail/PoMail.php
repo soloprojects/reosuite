@@ -43,8 +43,8 @@ class PoMail extends Mailable
             $name = $company->name;
         }
 
-        $message = $this->from($this->data['fromEmail'])->view('mail_views.purchase_order');
-            $message->from($address, $name);/*
+        $message = $this->from(Utility::DEFAULT_MAIL)->view('mail_views.purchase_order');
+            $message->from(Utility::DEFAULT_MAIL, $name);/*
             ->cc($address, $name)
             ->bcc($address, $name)
             ->replyTo($address, $name)*/

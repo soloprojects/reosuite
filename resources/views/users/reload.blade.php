@@ -40,7 +40,7 @@
     </thead>
     <tbody>
     @foreach($mainData as $data)
-    @if($data->role == Utility::CONTROLLER)
+    @if($data->role == Utility::CONTROLLER  || Auth::user()->id == $data->id)
     @else
     <tr>
         <td scope="row">
@@ -117,3 +117,13 @@
     @endforeach
     </tbody>
 </table>
+
+<div class=" pagination pull-right">
+    {!! $mainData->render() !!}
+</div>
+
+<script>
+    $('.tbl_order').on('scroll', function () {
+        $(".tbl_order > *").width($(".tbl_order").width() + $(".tbl_order").scrollLeft());
+    });
+</script>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 
 <head>
@@ -403,9 +403,6 @@
                         </li>
                         <li>
                             <a href="{{url('loan_interest_rate')}}">Loan Interest Rate Config</a>
-                        </li>
-                        <li>
-                            <a href="{{url('admin_category')}}">Admin Request Category</a>
                         </li>
 
                         <li>
@@ -1033,6 +1030,11 @@
                         <span class="icon-name">Admin Request</span>
                     </a>
                     <ul class="ml-menu">
+                        @if(in_array(Auth::user()->role,\App\Helpers\Utility::TOP_USERS))                        
+                        <li>
+                            <a href="{{url('admin_category')}}">Admin Request Category</a>
+                        </li>
+                        @endif
                         <li>
                             <a href="{{url('admin_requisition')}}">My Requests</a>
                         </li>

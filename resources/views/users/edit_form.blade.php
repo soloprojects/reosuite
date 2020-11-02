@@ -261,7 +261,7 @@
                 <b>Kin Phone</b>
                 <div class="form-group">
                     <div class="form-line">
-                        <input type="number" class="form-control" value="{{$edit->next_kin_phone}}" name="next_of_kin_Phone" placeholder="Kin phone" >
+                        <input type="number" class="form-control" value="{{$edit->next_kin_phone}}" name="next_of_kin_phone" placeholder="Kin phone" >
                     </div>
                 </div>
             </div>

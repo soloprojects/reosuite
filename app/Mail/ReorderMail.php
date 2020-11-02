@@ -43,7 +43,7 @@ class ReorderMail extends Mailable
         }
 
         return $this->view('mail_views.reorder')
-            ->from($address, $name)/*
+            ->from(Utility::DEFAULT_MAIL, $name)/*
             ->cc($address, $name)
             ->bcc($address, $name)
             ->replyTo($address, $name)*/

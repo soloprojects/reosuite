@@ -74,7 +74,7 @@ class CompanyController extends Controller
                     $filename = date('Y-m-d-H-i-s')."_".$image->getClientOriginalName();
                     $path = Utility::IMG_URL().$filename;
 
-                    Image::make($image->getRealPath())->resize(160,160)->save($path);
+                    Image::make($image->getRealPath())->resize(300,250)->save($path);
                     $photo = $filename;
 
                 }
@@ -144,7 +144,7 @@ class CompanyController extends Controller
                 $filename = date('Y-m-d-H-i-s')."_".$image->getClientOriginalName();
                 $path = Utility::IMG_URL().$filename;
 
-                Image::make($image->getRealPath())->resize(72,72)->save($path);
+                Image::make($image->getRealPath())->resize(300,250)->save($path);
                 $photo = $filename;
                 if($request->get('prev_photo') != 'logo.jpg'){
                     unlink($request->get('prev_photo'));

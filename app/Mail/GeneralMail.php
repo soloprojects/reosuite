@@ -44,8 +44,8 @@ class GeneralMail extends Mailable
         }
 
         $fromEmail = (isset($this->data['fromEmail'])) ? $this->data['fromEmail'] : $address;
-        $message = $this->from($this->data['fromEmail'])->view('mail_views.general');
-        $message->from($address, $name);/*
+        $message = $this->from(Utility::DEFAULT_MAIL)->view('mail_views.general');
+        $message->from(Utility::DEFAULT_MAIL, $name);/*
             ->cc($address, $name)
             ->bcc($address, $name)
             ->replyTo($address, $name)*/

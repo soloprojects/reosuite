@@ -258,7 +258,7 @@
                                 <b>Kin Phone</b>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="number" class="form-control" name="next_of_kin_Phone" placeholder="Kin phone" >
+                                        <input type="number" class="form-control" name="next_of_kin_phone" placeholder="Kin phone" >
                                     </div>
                                 </div>
                             </div>
@@ -494,7 +494,7 @@
                         </thead>
                         <tbody>
                         @foreach($mainData as $data)
-                        @if($data->role == Utility::CONTROLLER)
+                        @if($data->role == Utility::CONTROLLER  || Auth::user()->id == $data->id)
                         @else
                         <tr>
                             <td scope="row">

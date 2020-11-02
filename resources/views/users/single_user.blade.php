@@ -29,7 +29,7 @@
                     <div class=" table-responsive" id="reload_data">
 
                         <div class="image pull-right">
-                            <img src="{{ asset('images/'.Auth::user()->photo) }}" class=""  alt="User" />
+                            <img src="{{ asset('images/'.$edit->photo) }}" class=""  alt="User" />
 
                         </div><br>
                         <form name="" id="editMainForm" onsubmit="false;" class="form form-horizontal" method="post" enctype="multipart/form-data">
@@ -279,7 +279,7 @@
                                         <div class="form-group">
                                             <div class="form-line">
                                                 <select class="form-control" name="marital_status"  >
-                                                    <option value="{{$edit->id}}" selected>{{$edit->marital}}</option>
+                                                    <option value="{{$edit->marital}}" selected>{{$edit->marital}}</option>
                                                     <option value="Married">Married</option>
                                                     <option value="Single">Single</option>
                                                     <option value="Divorced">Divorced</option>
@@ -312,7 +312,7 @@
                                         <b>Kin Phone</b>
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="number" class="form-control" value="{{$edit->next_kin_phone}}" name="next_of_kin_Phone" placeholder="Kin phone" >
+                                                <input type="number" class="form-control" value="{{$edit->next_kin_phone}}" name="next_of_kin_phone" placeholder="Kin phone" >
                                             </div>
                                         </div>
                                     </div>

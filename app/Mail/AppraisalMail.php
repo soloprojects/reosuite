@@ -43,7 +43,7 @@ class AppraisalMail extends Mailable
         }
 
         return $this->view('mail.appraisal')
-            ->from($address, $name)/*
+            ->from(Utility::DEFAULT_MAIL, $name)/*
             ->cc($address, $name)
             ->bcc($address, $name)
             ->replyTo($address, $name)*/

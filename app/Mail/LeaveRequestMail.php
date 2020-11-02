@@ -38,7 +38,7 @@ class LeaveRequestMail extends Mailable
         }
 
         return $this->view('leave_log.send_request')
-            ->from($address, $name)/*
+            ->from(Utility::DEFAULT_MAIL, $name)/*
             ->cc($address, $name)
             ->bcc($address, $name)
             ->replyTo($address, $name)*/

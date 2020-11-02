@@ -305,8 +305,8 @@ class HelpDeskController extends Controller
         $validator = Validator::make($request->all(),Helpdesk::$mainRules);
         if($validator->passes()) {
 
-            $ticketCat = $request->input('subject');
-            $subject = $request->input('ticket_category');
+            $subject = $request->input('subject');
+            $ticketCat = $request->input('ticket_category');
             $details = $request->input('ckInput');
 
             $dbDATA = [

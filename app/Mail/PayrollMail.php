@@ -38,7 +38,7 @@ class PayrollMail extends Mailable
         }
 
         return $this->view('Mail_views.payroll_mail')
-            ->from($address, $name)/*
+            ->from(Utility::DEFAULT_MAIL, $name)/*
             ->cc($address, $name)
             ->bcc($address, $name)
             ->replyTo($address, $name)*/
