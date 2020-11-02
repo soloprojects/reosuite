@@ -72,7 +72,7 @@
                                     <div class="form-group">
                                         <div class="form-line">
                                             <select  class="form-control show-tick" id="" name="ticket_category" data-selected-text-format="count">
-                                                   <option value="0">Select Ticket Category</option>
+                                                   <option value="">Select Ticket Category</option>
                                                 @foreach($ticketCat as $ap)
                                                     <option value="{{$ap->id}}">{{$ap->request_name}}</option>
                                                 @endforeach
