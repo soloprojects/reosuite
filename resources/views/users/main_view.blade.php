@@ -211,7 +211,7 @@
                                 <b>Local Govt.</b>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="number" class="form-control" name="local_govt" placeholder="Local Govt." >
+                                        <input type="text" class="form-control" name="local_govt" placeholder="Local Govt." >
                                     </div>
                                 </div>
                             </div>
