@@ -145,7 +145,7 @@
                                         <div class="form-line">
                                             <select type="text" class="form-control" name="role"  required>
                                                 <option value="" selected>Select</option>
-                                                @if(Auth::user()->role == '1' || Auth::user()->role == '2')
+                                                @if(in_array(Auth::user()->role,Utility::HR_MANAGEMENT))
                                                     @foreach($roles as $role)
                                                         @if($role->id != 1)
 
