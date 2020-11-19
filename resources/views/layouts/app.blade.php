@@ -2,6 +2,13 @@
 <html>
 
 <head>
+    @php
+         $subscription = Utility::subscription(); 
+         $appArr = $subscription->appArray;
+         $userApps = $subscription->userApps;
+         
+    @endphp
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- CSRF Token -->
@@ -413,22 +420,35 @@
                                 <li>
                                     <a href="{{url('request_access')}}">Config User Fund Request Access for Other Users</a>
                                 </li>
+                                @if(in_array($appArr[5],$userApps) || in_array($appArr[12],$userApps))
                                 <li>
                                     <a href="{{url('inventory_access')}}">Config Inventory System Access</a>
                                 </li>
+                                @endif
+
+                                @if(in_array($appArr[3],$userApps))
                                 <li>
                                     <a href="{{url('survey_access')}}">Config Individual Survey Access</a>
                                 </li>
+                                @endif
 
+                                @if(in_array($appArr[14],$userApps))
                                 <li>
                                     <a href="{{url('vehicle_fleet_access')}}">Config Fleet Management Access</a>
                                 </li>
+                                @endif
+
+                                @if(in_array($appArr[16],$userApps))
                                 <li>
-                                    <a href="{{url('jobs_access')}}">Config Jobs/Talent Access</a>
+                                    <a href="{{url('jobs_access')}}">Config Jobs/Recruitment Access</a>
                                 </li>
+                                @endif
+
+                                @if(in_array($appArr[7],$userApps))
                                 <li>
                                     <a href="{{url('hse_access')}}">Config HSE Administrators</a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
 
@@ -443,18 +463,23 @@
                                 <li>
                                     <a href="{{url('approval_dept')}}">Departmental Approval</a>
                                 </li><hr/>
+                                @if(in_array($appArr[17],$userApps))
                                 <li>
                                     <a href="{{url('leave_approval_system')}}">HRIS Leave Approval System</a>
                                 </li>
                                 <li>
                                     <a href="{{url('leave_approval')}}">HRIS Leave Departmental Approval</a>
                                 </li><hr/>
+                                @endif
+
+                                @if(in_array($appArr[2],$userApps))
                                 <li>
                                     <a href="{{url('admin_approval_system')}}">Admin Approval System</a>
                                 </li>
                                 <li>
                                     <a href="{{url('admin_approval_dept')}}">Admin Departmental Approval</a>
                                 </li><hr/>
+                                @endif
                             </ul>
                         </li>
                     </ul>
@@ -483,6 +508,9 @@
                         <span class="icon-name">Manage Customers</span>
                     </a>
                 </li>
+
+                <!-- SURVEY SYSTEM MENU ITEM -->
+                @if(in_array($appArr[3],$userApps))
 
                 @if(in_array(Auth::user()->role,\App\Helpers\Utility::HR_MANAGEMENT) || \App\Helpers\Utility::moduleAccessCheck('survey_access'))
                 <li>
@@ -524,6 +552,11 @@
                 </li>
                 @endif
 
+                @endif
+
+                <!-- CBT SYSTEM MENU ITEM -->
+                @if(in_array($appArr[4],$userApps))
+
                 @if(in_array(Auth::user()->role,\App\Helpers\Utility::HR_MANAGEMENT))
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
@@ -560,6 +593,11 @@
                         </a>
                     </li>
                 @endif
+
+                @endif
+
+                <!-- INVENTORY SYSTEM AND WAREHOUSE MENU ITEM -->
+                @if(in_array($appArr[5],$userApps) || in_array($appArr[12],$userApps))
 
                 @if(in_array(Auth::user()->role,\App\Helpers\Utility::SCM_MANAGEMENT))
                 <li>
@@ -599,7 +637,7 @@
                             <a href="{{url('picks')}}">Pick(s)</a>
                         </li>
                         <li>
-                            <a href="{{url('warehouse_inventory')}}">Warehouse Inventory (Contracts)</a>
+                            <a href="{{url('warehouse_inventory')}}">Warehouse Inventory/Items</a>
                         </li>
                     </ul>
                 </li>
@@ -655,6 +693,10 @@
                     </ul>
                 </li>
 
+                @endif  <!-- END OF WAREHOUSE AND INVENTORY APP -->
+
+                <!-- HELP DESK APP -->
+                @if(in_array($appArr[6],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">help</i>
@@ -677,7 +719,10 @@
                         @endif
                     </ul>
                 </li>
+                @endif  <!-- END OF HELP DESK APP -->
 
+                <!-- HSE APP -->
+                @if(in_array($appArr[7],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">accessibility</i>
@@ -697,14 +742,20 @@
                         @endif
                     </ul>
                 </li>
+                @endif  <!-- END OF HSE APP -->
 
+                <!-- NEWS SYSTEM MENU ITEM -->
+                @if(in_array($appArr[9],$userApps))
                 <li>
                     <a href="{{url('news')}}">
                         <i class="material-icons">record_voice_over</i>
                         <span class="icon-name">News/Notice/Tips</span>
                     </a>
                 </li>
+                @endif  <!-- END OF NEWS APP -->
 
+                <!-- EVENT SYSTEM MENU ITEM -->
+                @if(in_array($appArr[8],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">event</i>
@@ -722,7 +773,10 @@
                         </li>
                     </ul>
                 </li>
+                @endif  <!-- END OF EVENT APP -->
 
+                <!-- DOCUMENT MANAGEMENT SYSTEM MENU ITEM -->
+                @if(in_array($appArr[10],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">folder</i>
@@ -743,7 +797,10 @@
                         @endif
                     </ul>
                 </li>
+                @endif  <!-- END OF DOCUMENT MANAGEMENT SYSTEM APP -->
 
+                <!-- CRM SYSTEM MENU ITEM -->
+                @if(in_array($appArr[1],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">device_hub</i>
@@ -773,7 +830,10 @@
                         </li>
                     </ul>
                 </li>
+                @endif  <!-- END OF CRM APP -->
 
+                <!-- PO/RFQ/QUOTES/SALES (WAREHOUSING AND INVENTORY) ORDER APP -->
+                @if(in_array($appArr[5],$userApps) || in_array($appArr[12],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">business_center</i>
@@ -794,7 +854,10 @@
                         </li>
                     </ul>
                 </li>
+                @endif  <!-- END OF PO/RFQ/QUOTES/SALES ORDER (WAREHOUSING AND INVENTORY) APP -->
 
+                <!-- DISCUSS/FORUM MENU ITEM -->
+                @if(in_array($appArr[11],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">chat</i>
@@ -812,7 +875,10 @@
                         @endif
                     </ul>
                 </li>
+                @endif  <!-- END OF DISCUSS/FORUM APP -->
 
+                <!-- FINANCE/ACCOUNTING SYSTEM MENU ITEM -->
+                @if(in_array($appArr[12],$userApps))
                 @if(in_array(Auth::user()->role,\App\Helpers\Utility::ACCOUNT_MANAGEMENT))
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
@@ -994,7 +1060,10 @@
                         </ul>
                     </li>
                 @endif
+                @endif  <!-- END OF FINANCE/ACCOUNTING SYSTEM APP -->
 
+                <!-- BUDGET SYSTEM MENU ITEM -->
+                @if(in_array($appArr[13],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">import_contacts</i>
@@ -1023,7 +1092,10 @@
                         </li>
                     </ul>
                 </li>
+                @endif  <!-- END OF BUDGET SYSTEM APP -->
 
+                <!-- ADMIN REQUISITION SYSTEM MENU ITEM -->
+                @if(in_array($appArr[2],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">library_books</i>
@@ -1050,7 +1122,10 @@
 
                     </ul>
                 </li>
+                @endif  <!-- END OF ADMIN REQUISITION APP -->
 
+                <!-- FLEET MANAGEMENT SYSTEM MENU ITEM -->
+                @if(in_array($appArr[14],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">local_shipping</i>
@@ -1117,7 +1192,10 @@
                         </li>
                     </ul>
                 </li>
+                @endif  <!-- END OF FLEET MANAGEMENT SYSTEM APP -->
 
+                <!-- FUND REQUISITION SYSTEM MENU ITEM -->
+                @if(in_array($appArr[0],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">next_week</i>
@@ -1148,7 +1226,10 @@
 
                     </ul>
                 </li>
+                @endif  <!-- END OF FUND REQUISITION SYSTEM APP -->
 
+                <!-- PROJECT MANAGEMENT SYSTEM MENU ITEM -->
+                @if(in_array($appArr[15],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">view_carousel</i>
@@ -1176,7 +1257,10 @@
 
                     </ul>
                 </li>
+                @endif  <!-- END OF PROJECT MANAGEMENT SYSTEM APP -->
 
+                <!-- JOBS AND RECRUITMENT SYSTEM MENU ITEM -->
+                @if(in_array($appArr[16],$userApps))
                 @if(in_array(Auth::user()->role,\App\Helpers\Utility::HR_MANAGEMENT) || \App\Helpers\Utility::moduleAccessCheck('jobs_access'))
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
@@ -1194,82 +1278,82 @@
                         </ul>
                     </li>
                 @endif
+                @endif  <!-- END OF JOBS AND RECRUITMENT SYSTEM APP -->
 
+                <!-- HRIS MANAGEMENT SYSTEM APP -->
+                @if(in_array($appArr[17],$userApps) || in_array($appArr[18],$userApps))
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">trending_down</i>
                         <span>HRIS(HR)</span>
                     </a>
                     <ul class="ml-menu">
-                            <li>
-                                <a href="{{url('temp_user')}}">Contract/External Users</a>
-                            </li>
-                            <li>
-                                <a href="{{url('user_pin_code')}}">External Signup Pin code</a>
-                            </li>
-                            <li>
-                                <a href="{{url('idp')}}">Individual Development Plan</a>
-                            </li>
-                            <li>
-                                <a href="{{url('birthday')}}">Birthdays</a>
-                            </li>
-                            <li>
-                                <a href="{{url('salary_advance_requests')}}">Salary Advance Requests</a>
-                            </li>
-                            <li>
-                                <a href="{{url('training')}}">Training Schedule</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
-                                    <span>Payroll System</span>
-                                </a>
-                                <ul class="ml-menu">
-                                    @if(in_array(Auth::user()->role,\App\Helpers\Utility::ACCOUNT_HR_MANAGEMENT))
-                                    <li>
-                                        <a href="{{url('payroll')}}">
-                                            <span>Process/Pay Salary</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url('payroll_report')}}">
-                                            <span>Payroll Report</span>
-                                        </a>
-                                    </li>
-                                    @endif
-                                    <li>
-                                        <a href="{{url('payslip')}}">
-                                            <span>Payroll Slip</span>
-                                        </a>
-                                    </li>
+                        <li>
+                            <a href="{{url('temp_user')}}">Contract/External Users</a>
+                        </li>
+                        <li>
+                            <a href="{{url('user_pin_code')}}">External Signup Pin code</a>
+                        </li>
+                        <li>
+                            <a href="{{url('birthday')}}">Birthdays</a>
+                        </li>
 
-                                </ul>
-                            </li>
+                        <!-- PAYROLL/EXTERNAL PAYROLL/SALARY ADVANCE/LOAN/LEAVE SYSTEM MENU ITEM -->
+                        @if(in_array($appArr[17],$userApps))
+                        <li>
+                            <a href="{{url('salary_advance_requests')}}">Salary Advance Requests</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle">
+                                <span>Payroll System</span>
+                            </a>
+                            <ul class="ml-menu">
+                                @if(in_array(Auth::user()->role,\App\Helpers\Utility::ACCOUNT_HR_MANAGEMENT))
+                                <li>
+                                    <a href="{{url('payroll')}}">
+                                        <span>Process/Pay Salary</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{url('payroll_report')}}">
+                                        <span>Payroll Report</span>
+                                    </a>
+                                </li>
+                                @endif
+                                <li>
+                                    <a href="{{url('payslip')}}">
+                                        <span>Payroll Slip</span>
+                                    </a>
+                                </li>
 
-                            <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
-                                    <span>External Payroll System</span>
-                                </a>
-                                <ul class="ml-menu">
-                                    @if(in_array(Auth::user()->role,\App\Helpers\Utility::ACCOUNT_HR_MANPOWER_MANAGEMENT))
-                                    <li>
-                                        <a href="{{url('external_payroll')}}">
-                                            <span>Process/Pay Salary</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url('external_payroll_report')}}">
-                                            <span>Payroll Report</span>
-                                        </a>
-                                    </li>
-                                    @endif
-                                    <li>
-                                        <a href="{{url('external_payslip')}}">
-                                            <span>Payroll Slip</span>
-                                        </a>
-                                    </li>
+                            </ul>
+                        </li>
 
-                                </ul>
-                            </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle">
+                                <span>External Payroll System</span>
+                            </a>
+                            <ul class="ml-menu">
+                                @if(in_array(Auth::user()->role,\App\Helpers\Utility::ACCOUNT_HR_MANPOWER_MANAGEMENT))
+                                <li>
+                                    <a href="{{url('external_payroll')}}">
+                                        <span>Process/Pay Salary</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{url('external_payroll_report')}}">
+                                        <span>Payroll Report</span>
+                                    </a>
+                                </li>
+                                @endif
+                                <li>
+                                    <a href="{{url('external_payslip')}}">
+                                        <span>Payroll Slip</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
 
                         <li>
                             <a href="{{url('loan_requests')}}">Loan Requests</a>
@@ -1304,6 +1388,16 @@
                                 @endif
 
                             </ul>
+                        </li>
+                        @endif  <!-- END OF PAYROLL/EXTERNAL PAYROLL/SALARY ADVANCE/LOAN/LEAVE SYSTEM MENU ITEM APP -->
+
+                        <!-- PERFORMANCE APPRAISAL/TRAININGS/INDIVIDUAL DEVELOPEMENT PLAN SYSTEM MENU ITEM -->
+                        @if(in_array($appArr[18],$userApps))
+                        <li>
+                            <a href="{{url('idp')}}">Individual Development Plan</a>
+                        </li>
+                        <li>
+                            <a href="{{url('training')}}">Training Schedule</a>
                         </li>
 
                         <li>
@@ -1375,8 +1469,11 @@
                             </ul>
                         </li>
                         @endif
+                        @endif  <!-- END OF PERFORMANCE APPRAISAL/TRAININGS/INDIVIDUAL DEVELOPEMENT PLAN SYSTEM APP -->
+
                     </ul>
                 </li>
+                @endif  <!-- END OF HRIS MANAGEMENT SYSTEM APP -->
 
                 <li>
                     {{--<a href="javascript:void(0);" class="menu-toggle">

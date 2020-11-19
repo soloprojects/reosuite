@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Utility;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\User;
@@ -33,18 +34,25 @@ class LoginController extends Controller
     */
 
     public function login(Request $request) {
+
+        $subscription = Utility::subscription();
+        $activeStatus = $subscription->activeStatus;
+        $memoryStatus = $subscription->memoryStatus;
+        if($activeStatus != Utility::STATUS_ACTIVE && $memoryStatus != Utility::STATUS_ACTIVE){
+            return redirect()->route('login')
+            ->with('message','**please ensure that your subscription is not expired/Memory Full**');
+
+        }
+
         $credentials = array('email'=> $request->input('email'), 'password'=>$request->input('password'),
-            'active_status' => '1','status' => '1');
+            'active_status' => '1', 'dormant_status' => '1','status' => '1');
         $remember = true;
+
         if(Auth::attempt($credentials)){
             $newCurr = Currency::firstRow('active_status','1');
             session(['currency' => $newCurr]);
             return redirect()->route('dashboard')->with('message', '');
         }
-
-        /*if(Auth::user()->active_status == 1 && Auth::user()->status == 1){
-            return Redirect::to('dashboard')->with('message', 'welcome.');
-        }*/
 
         return redirect()->route('login')
             ->with('message','**Incorrect Email/Password, please try again**');

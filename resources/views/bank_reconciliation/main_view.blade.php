@@ -408,7 +408,7 @@
         return values;
     }
 
-     //ADD GROUP OF UNCHECKED INPUT CHECKBOX INTO AN ARRAY
+     //ADD GROUP OF CHECKED INPUT CHECKBOX INTO AN ARRAY
     function amountArrayChecked(klass){
 
         var approve = document.getElementsByClassName(klass);

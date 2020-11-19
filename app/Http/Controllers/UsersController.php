@@ -58,6 +58,17 @@ class UsersController extends Controller
         $validator = Validator::make($request->all(),User::$mainRules);
         if($validator->passes()){
 
+            $subscription = Utility::subscription();
+            $userCountSubscription = $subscription->userCount;
+            $userCount = User::countAll();
+            //CHECK IF NUMBER OF SUBSCRIBED USERS HAS EXCEEDED ITS VALUE
+            if($userCount >= $userCountSubscription){
+                return response()->json([
+                    'message' => 'good',
+                    'message2' => 'You have exceeded the number of users subscribed ('.$userCount.') to this platform'
+                ]);
+            }
+
             $countData = User::countData('email',$request->input('email'));
             if($countData > 0){
 
@@ -376,6 +387,23 @@ class UsersController extends Controller
         $status = $request->input('status');
         $dbData = [
             'active_status' => $status
+        ];
+        $delete = user::massUpdate('id',$idArray,$dbData);
+
+        return response()->json([
+            'message2' => 'changed successfully',
+            'message' => 'Status change'
+        ]);
+
+    }
+
+    public function changeDormantStatus(Request $request)
+    {
+        //
+        $idArray = json_decode($request->input('all_data'));
+        $status = $request->input('status');
+        $dbData = [
+            'dormant_status' => $status
         ];
         $delete = user::massUpdate('id',$idArray,$dbData);
 

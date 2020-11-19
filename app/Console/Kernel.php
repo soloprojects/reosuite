@@ -15,6 +15,13 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         'App\Console\Commands\InventoryReorderLevel',
+        'App\Console\Commands\Birthday',
+        'App\Console\Commands\BirthdayForTempUsers',
+        'App\Console\Commands\InventoryContractNotify',
+        'App\Console\Commands\LoanDeduction',
+        'App\Console\Commands\OdometerLogReminder',
+        'App\Console\Commands\VehicleMaintenanceScheduling',
+        'App\Console\Commands\EventReminder',
 
     ];
 

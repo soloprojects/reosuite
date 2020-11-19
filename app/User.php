@@ -62,7 +62,6 @@ class User extends Authenticatable
         'employ_type' => 'required',
         'position' => 'required',
         'department' => 'required',
-        'salary' => 'required',
     ];
 
     public function department(){
@@ -103,6 +102,12 @@ class User extends Authenticatable
     public static function countData($column, $post)
     {
         return Utility::countData(self::table(),$column, $post);
+
+    }
+
+    public static function countAll()
+    {
+        return Utility::countAll(self::table());
 
     }
 

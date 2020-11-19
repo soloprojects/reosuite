@@ -113,6 +113,7 @@ class Utility
     const OPEN_ACCOUNT_STATUS = 1, CLOSED_ACCOUNT_STATUS = 2;
     const MAIN_TRANSACTION = 1;
     const DEFAULT_MAIL = 'email@reosuite.com';
+    const DEFAULT_APP_URL = 'http://www.reosuite.com';
 
     public static function IMG_URL($image = ''){
         return public_path() . '/images/'.$image;
@@ -439,6 +440,14 @@ class Utility
     {
         return DB::table($table)
             ->where($column, $post)
+            ->where('status', self::STATUS_ACTIVE)
+            ->orderBy('id','DESC')->count();
+
+    }
+
+    public static function countAll($table)
+    {
+        return DB::table($table)
             ->where('status', self::STATUS_ACTIVE)
             ->orderBy('id','DESC')->count();
 
@@ -2207,6 +2216,24 @@ class Utility
         $floatNum = floatval($num);
         $format = number_format($floatNum,$decimalParam,'.',', ');
         return $format;
+    }
+
+    public static function subscription(){
+
+        $data = DB::table('subscription')
+            ->where('status', self::STATUS_ACTIVE)->first();
+
+        $appArray = json_decode($data->app_format,TRUE);
+        $userApps = json_decode($data->apps,TRUE);
+        $subscription = new \stdClass();
+        $subscription->appArray = $appArray;
+        $subscription->userApps = $userApps;
+        $subscription->activeStatus = $data->active_status;
+        $subscription->memoryStatus = $data->memory_status;
+        $subscription->userCount = $data->user_count;
+
+        return $subscription;
+
     }
 
 
