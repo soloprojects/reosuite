@@ -17,8 +17,10 @@ use DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\model\Position;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Log;
 
 class JobsController extends Controller
 {
@@ -47,14 +49,169 @@ class JobsController extends Controller
         //
         //$req = new Request();
         $mainData = Jobs::getAllData2();
+        $department = Department::getAllData();
         if ($request->ajax()) {
-            return \Response::json(view::make('jobs.applicants_reload',array('mainData' => $mainData))->render());
+            return \Response::json(view::make('jobs.applicants_reload',array('mainData' => $mainData,
+            'department' => $department))->render());
 
         }else {
-            return view::make('jobs.applicants')->with('mainData', $mainData);
+            return view::make('jobs.applicants')->with('mainData', $mainData)->with('department', $department);
         }
 
     }
+
+    public function JobCvPool(Request $request)
+    {
+        //
+        //$req = new Request();
+        $mainData = JobApplicants::paginateAllData();
+        $jobs = Jobs::getAllData2();
+        $department = Department::getAllData();
+        $position = Position::getAllData();
+        if ($request->ajax()) {
+            return \Response::json(view::make('job_cv_pool.reload',array('mainData' => $mainData,
+            'jobs' => $jobs,'department' => $department,'position' => $position))->render());
+
+        }else {
+            return view::make('job_cv_pool.main_view')->with('mainData', $mainData)->with('department', $department)
+            ->with('jobs', $jobs)->with('position', $position);
+        }
+
+    }
+
+    //CV POOL STARTS HERE
+    public function createJobCvPool(Request $request)
+    {
+        //
+        $validator = Validator::make($request->all(),Jobs::$cvPoolRules);
+        if($validator->passes()){
+
+            $cv = '';
+            if($request->hasFile('cv_file')){
+
+                $file = $request->file('cv_file');
+                $filename = date('Y-m-d-H-i-s')."_". Utility::generateUID(null, 10) .$file->getClientOriginalName();
+                $file->move(
+                    Utility::FILE_URL(), $filename
+                );
+                $cv = $filename;
+
+            }
+
+            $dbDATA = [
+                'email' => ucfirst($request->input('email')),
+                'cover_letter' => ucfirst($request->input('cover_letter')),
+                'job_id' => $request->input('job'),
+                'dept_id' => $request->input('department'),
+                'position_id' => $request->input('position'),
+                'firstname' => ucfirst($request->input('firstname')),
+                'lastname' => ucfirst($request->input('lastname')),
+                'salary_expectation' => ucfirst($request->input('salary_expectation')),
+                'phone' => ucfirst($request->input('phone')),
+                'address' => ucfirst($request->input('address')),
+                'experience' => ucfirst($request->input('experience')),
+                'remark' => $request->input('remark'),
+                'cv_file' => $cv,
+                'status' => Utility::STATUS_ACTIVE
+            ];
+            JobApplicants::create($dbDATA);
+
+            return response()->json([
+                'message' => 'good',
+                'message2' => 'saved'
+            ]);
+        }
+        $errors = $validator->errors();
+        return response()->json([
+            'message2' => 'fail',
+            'message' => $errors
+        ]);
+
+
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editFormJobCvPool(Request $request)
+    {
+        //
+        
+        $jobs = Jobs::getAllData2();
+        $department = Department::getAllData();
+        $position = Position::getAllData();
+        $dept = JobApplicants::firstRow('id',$request->input('dataId'));
+        return view::make('job_cv_pool.edit_form')->with('edit',$dept)->with('department', $department)
+        ->with('jobs', $jobs)->with('position', $position);
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editJobCvPool(Request $request)
+    {
+        //
+        $validator = Validator::make($request->all(),Jobs::$cvPoolRules);
+        if($validator->passes()) {
+
+                $cv = '';
+                if($request->hasFile('cv_file')){
+
+                    $file = $request->file('cv_file');
+                    $filename = date('Y-m-d-H-i-s')."_". Utility::generateUID(null, 10) .$file->getClientOriginalName();
+                    $file->move(
+                        Utility::FILE_URL(), $filename
+                    );
+                    $cv = $filename;
+
+                    if($request->get('prev_cv') != ''){
+                        $fileUrl = Utility::FILE_URL($request->get('prev_cv'));
+                        unlink($fileUrl);
+                    }
+                }
+
+            $dbDATA = [
+                    'email' => ucfirst($request->input('email')),
+                    'cover_letter' => ucfirst($request->input('cover_letter')),
+                    'job_id' => $request->input('job'),
+                    'dept_id' => $request->input('department'),
+                    'position_id' => $request->input('position'),
+                    'firstname' => ucfirst($request->input('firstname')),
+                    'lastname' => ucfirst($request->input('lastname')),
+                    'salary_expectation' => ucfirst($request->input('salary_expectation')),
+                    'phone' => ucfirst($request->input('phone')),
+                    'address' => ucfirst($request->input('address')),
+                    'remark' => ucfirst($request->input('remark')),
+                    'experience' => $request->input('experience'),
+                    'cv_file' => $cv,
+                    'status' => Utility::STATUS_ACTIVE
+            ];
+                       
+            JobApplicants::defaultUpdate('id', $request->input('edit_id'), $dbDATA);
+
+                return response()->json([
+                    'message' => 'good',
+                    'message2' => 'saved'
+                ]);
+        }
+        $errors = $validator->errors();
+        return response()->json([
+            'message2' => 'fail',
+            'message' => $errors
+        ]);
+
+
+    }
+
+    //END OF JOB CV POOL
 
     public function availablePositions(Request $request)
     {
@@ -129,19 +286,35 @@ class JobsController extends Controller
 
         $job = $request->input('job');
         $exp = $request->input('experience');
+        $dept = $request->input('department');
         $startDate = Utility::standardDate($request->input('from_date'));
         $endDate = Utility::standardDate($request->input('to_date'));
         $dateArray = [$startDate,$endDate];
         $mainData = [];
 
-            if($job != '' && $exp != ''){
-                $mainData = JobApplicants::specialColumns2Date('job_id', $job, 'experience', $exp,$dateArray);
+            if($job != ''  && $dept != '' && $exp != ''){
+                $mainData = JobApplicants::specialColumnsDate7('job_id', $job, 'dept_id', $dept, 'experience', $exp, $dateArray);
             }
-            if($job != '' && $exp == '00'){
-                $mainData = JobApplicants::specialColumnsDate('job_id', $job,$dateArray);
+            if($job != '' && $dept != '' && $exp == ''){
+                $mainData = JobApplicants::specialColumnsDate5('job_id', $job, 'dept_id', $dept, $dateArray);
             }
-            if($exp != '00' && $job == ''){
-                $mainData = JobApplicants::specialColumnsDate('experience', $exp,$dateArray);
+            if($job != '' && $dept == '' && $exp == ''){
+                $mainData = JobApplicants::specialColumnsDate3('job_id', $job, $dateArray);
+            }
+            if($job == '' && $dept != '' && $exp != ''){
+                $mainData = JobApplicants::specialColumnsDate5('dept_id', $dept,'experience', $exp, $dateArray);
+            }
+            if($job == '' && $dept == '' && $exp != ''){
+                $mainData = JobApplicants::specialColumnsDate3('experience', $exp, $dateArray);
+            }
+            if($job != '' && $dept == '' && $exp != ''){
+                $mainData = JobApplicants::specialColumnsDate5('job_id', $job, 'experience', $exp, $dateArray);
+            }
+            if($job == '' && $dept != '' && $exp == ''){
+                $mainData = JobApplicants::specialColumnsDate3('dept_id', $dept, $dateArray);
+            }
+            if($job == '' && $dept == '' && $exp == ''){
+                $mainData = JobApplicants::specialColumnsDate1($dateArray);
             }
 
         //return $exp.$job;exit();

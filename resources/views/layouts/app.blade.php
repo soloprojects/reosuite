@@ -1274,6 +1274,9 @@
                             <li>
                                 <a href="{{url('filter_job_applicants')}}">Filter Job Applicants</a>
                             </li>
+                            <li>
+                                <a href="{{url('job_cv_pool')}}">CV Pool</a>
+                            </li>
 
                         </ul>
                     </li>

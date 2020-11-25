@@ -83,14 +83,27 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3" id="">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <select  class="form-control show-tick"   name="department" data-selected-text-format="count">
+                                                <option value="">Select Department (not compulsory)</option>
+                                                @foreach($department as $de)
+                                                    <option value="{{$de->id}}">{{$de->dept_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
                                     <div class="form-group">
                                         <div class="form-line">
                                             <select class="form-control" name="experience" >
                                                 <option value="">Select Experience</option>
-                                                <option value="00">All Experience</option>
+                                                {{-- <option value="00">All Experience</option> --}}
                                                 @for($i=0;$i<30;$i++)
-                                                    <option value="{{$i}}">{{$i}}</option>
+                                                    <option value="{{$i}}">{{$i}} yr(s)</option>
                                                 @endfor
                                             </select>
                                         </div>

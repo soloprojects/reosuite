@@ -93,6 +93,12 @@ Route::any('/search_user', 'UsersController@searchUser')->name('user_search');
 Route::post('/delete_user', 'UsersController@destroy')->name('delete_user');
 Route::post('/change_user_status', 'UsersController@changeStatus')->name('change_user_status');
 
+// -------------USER API MODULE-----------
+Route::any('/user_api', 'UsersApiController@index')->name('user_api');
+Route::any('/get_user_count_api', 'UsersApiController@getUserCount')->name('get_user_count_api');
+Route::any('/change_user_dormant_status_api', 'UsersController@changeUserDormantStatus')->name('change_user_dormant_status_api');
+Route::any('/activate_user_portal_api', 'UsersController@activateUserPortal')->name('activate_user_portal_api');
+
 // -------------CURRENCY UNIT ROUTES FOR FUNCTIONS-----------
 Route::any('/currencies', 'CurrencyController@index')->name('currencies')->middleware('auth');
 Route::any('/currency_status', 'CurrencyController@currencyStatus')->name('currency_status');
@@ -890,6 +896,12 @@ Route::any('/filter_job_applicants', 'JobsController@filterApplicants')->name('f
 Route::any('/search_job_applicants', 'JobsController@searchApplicants')->name('search_job_applicants');
 Route::any('/OByxRFDeOtxHYxnTTfJmSukkJZ7aCY/positions/2y101HS5A2C30Nex/available', 'JobsController@availablePositions')->name('available_positions');
 Route::any('/OByxRFDeOtxHYxnTTfJmSukkJZ7aCY/positions/2y101HS5A2C30Nex/available/job/{id}/', 'JobsController@jobPosition')->name('job_position');
+
+// -------------JOB CV POOL MODULE-----------
+Route::any('/job_cv_pool', 'JobsController@jobCvPool')->name('job_cv_pool')->middleware('auth');
+Route::post('/create_job_cv_pool', 'jobsController@createJobCvPool')->name('create_job_cv_pool');
+Route::post('/edit_job_cv_pool_form', 'jobsController@EditFormjobCvPool')->name('edit_job_cv_pool_form');
+Route::post('/edit_job_cv_pool', 'jobsController@editJobCvPool')->name('edit_job_cv_pool');
 
 // -------------JOBS ACCESS MODULE-----------
 Route::any('/jobs_access', 'JobsAccessController@index')->name('jobs_access')->middleware('auth.admin');

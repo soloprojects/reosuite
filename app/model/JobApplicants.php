@@ -30,17 +30,27 @@ class JobApplicants extends Model
         ];
 
     public function user_c(){
-        return $this->belongsTo('App\User','created_by','id');
+        return $this->belongsTo('App\User','created_by','id')->withDefault();
 
     }
 
     public function user_u(){
-        return $this->belongsTo('App\User','updated_by','id');
+        return $this->belongsTo('App\User','updated_by','id')->withDefault();
 
     }
 
     public function job(){
-        return $this->belongsTo('App\model\Jobs','job_id','id');
+        return $this->belongsTo('App\model\Jobs','job_id','id')->withDefault();
+
+    }
+
+    public function department(){
+        return $this->belongsTo('App\model\Department','dept_id','id')->withDefault();
+
+    }
+
+    public function position(){
+        return $this->belongsTo('App\model\Position','position_id','id')->withDefault();
 
     }
 
@@ -110,6 +120,35 @@ class JobApplicants extends Model
         //Utility::specialColumns(self::table(),$column, $post);
         return static::where('status', '=',Utility::STATUS_ACTIVE)->where($column, '=',$post)
             ->where($column2, '=',$post2)->whereBetween('created_at',$dateArray)->orderBy('id','DESC')->get();
+
+    }
+
+    public static function specialColumnsDate1($dateArray)
+    {
+        return static::where('status', '=',Utility::STATUS_ACTIVE)->whereBetween('created_at',$dateArray)
+            ->orderBy('id','DESC')->get();
+
+    }
+
+    public static function specialColumnsDate3($column, $post, $dateArray)
+    {
+        return static::where('status', '=',Utility::STATUS_ACTIVE)->where($column,$post)
+            ->whereBetween('created_at',$dateArray)->orderBy('id','DESC')->get();
+
+    }
+
+    public static function specialColumnsDate5($column, $post, $column2, $post2, $dateArray)
+    {
+        return static::where('status', '=',Utility::STATUS_ACTIVE)->where($column, '=',$post)
+            ->where($column2,$post2)->whereBetween('created_at',$dateArray)
+            ->orderBy('id','DESC')->get();
+
+    }
+
+    public static function specialColumnsDate7($column, $post, $column2, $post2, $column3, $post3, $dateArray)
+    {
+        return static::where('status', '=',Utility::STATUS_ACTIVE)->where($column, '=',$post)
+            ->where($column2, '=',$post2)->where($column3, '=',$post3)->whereBetween('created_at',$dateArray)->orderBy('id','DESC')->get();
 
     }
 

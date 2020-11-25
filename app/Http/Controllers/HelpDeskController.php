@@ -174,7 +174,7 @@ class HelpDeskController extends Controller
         //PROCESS SEARCH REQUEST
         //$mainData = Helpdesk::specialColumnsDate5('ticket_cat', $ticketCat, 'dept_id', $dept, 'response_status', $status, $dateArray);
 
-        if($ticketCat != '' && $dept != '' && $status != ''){
+            if($ticketCat != '' && $dept != '' && $status != ''){
                 $mainData = Helpdesk::specialColumnsDate7('ticket_cat', $ticketCat, 'dept_id', $dept, 'response_status', $status, $dateArray);
             }
             if($ticketCat != '' && $dept != '' && $status == ''){

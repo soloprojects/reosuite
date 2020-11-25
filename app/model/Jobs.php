@@ -25,7 +25,14 @@ class Jobs extends Model
         'job_type' => 'required',
         'job_desc' => 'required',
         'experience' => 'required',
-        'job_status' => 'required',
+
+    ];
+
+    public static $cvPoolRules = [
+        'experience' => 'required',
+        'job' => 'required',
+        'cv_file' => 'required',
+        'department' => 'required',
 
     ];
 

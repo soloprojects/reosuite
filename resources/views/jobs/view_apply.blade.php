@@ -98,7 +98,7 @@
             <div class="row clearfix">
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="cursor:pointer;" onclick="navigatePage('<?php echo url('OByxRFDeOtxHYxnTTfJmSukkJZ7aCY/positions/2y101HS5A2C30Nex/available/job/'.$data->id)?>')">
+                        <div class="header" style="cursor:pointer;" onclick="navigatePage('<?php echo url('OByxRFDeOtxHYxnTTfJmSukkJZ7aCY/positions/2y101HS5A2C30Nex/available/job/'.$data->id); ?>')">
                             <h2>
                                 {{$data->job_title}}
                                 <small>Posted {{$data->created_at->diffForHumans()}}</small>
