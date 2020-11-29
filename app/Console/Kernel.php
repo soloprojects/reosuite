@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
         'App\Console\Commands\OdometerLogReminder',
         'App\Console\Commands\VehicleMaintenanceScheduling',
         'App\Console\Commands\EventReminder',
+        'App\Console\Commands\LeaveDates',
 
     ];
 
@@ -55,6 +56,9 @@ class Kernel extends ConsoleKernel
             ->everyMinute();
 
         $schedule->command('command:LoanDeduction')
+            ->everyMinute();
+
+        $schedule->command('command:LeaveDates')
             ->everyMinute();
 
 

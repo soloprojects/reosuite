@@ -27,6 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'HomeController@index')->name('dashboard')->middleware('auth');
 Route::any('/login', 'Auth\LoginController@login')->name('login_user');
 Route::any('/logout', 'Auth\LoginController@signout')->name('logout');
+Route::any('/check_user_auth', 'Auth\LoginController@checkUserAuth')->name('check_user_auth');
 
 Route::get('/external', 'Auth\TempUserLoginController@signin')->name('temp_user_login');
 Route::get('/temp_user_dashboard', 'Auth\TempUserHomeController@index')->name('temp_user_dashboard')->middleware('auth:temp_user');
@@ -454,6 +455,13 @@ Route::post('/edit_leave_attachment', 'LeaveLogController@editAttachment')->name
 Route::post('/remove_leave_attachment', 'LeaveLogController@removeAttachment')->name('remove_leave_attachment');
 Route::any('/download_leave_attachment', 'LeaveLogController@downloadAttachment')->name('download_leave_attachment');
 Route::post('/delete_leave', 'LeaveLogController@destroy')->name('delete_leave');
+
+// -------------LEAVE VACATION DATES MODULE-----------
+Route::any('/leave_vacation_dates', 'LeaveVacationDatesController@index')->name('leave_vacation_dates')->middleware('auth');
+Route::post('/create_leave_vacation_dates', 'LeaveVacationDatesController@create')->name('create_leave_vacation_dates');
+Route::post('/edit_leave_vacation_dates_form', 'LeaveVacationDatesController@editForm')->name('edit_leave_vacation_dates_form');
+Route::post('/edit_leave_vacation_dates', 'LeaveVacationDatesController@edit')->name('edit_leave_vacation_dates');
+Route::post('/delete_leave_vacation_dates', 'LeaveVacationDatesController@destroy')->name('delete_leave_vacation_dates');
 
 // -------------LOAN INTEREST RATE MODULE-----------
 Route::any('/loan_interest_rate', 'LoanRatesController@index')->name('loan_interest_rate')->middleware('auth.admin');

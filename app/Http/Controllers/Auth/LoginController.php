@@ -60,6 +60,11 @@ class LoginController extends Controller
 
     }
 
+    public function checkUserAuth(){
+       $logoutDeterminer = (Auth::check() || Auth::guard('temp_user')->check()) ? 1 : 0 ;
+        return $logoutDeterminer;
+    }
+
     public function signout(){
         session()->forget('currency');
         Auth::logout();

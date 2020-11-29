@@ -60,12 +60,24 @@
         setInterval(refreshToken, 3600000); // 1 hour
 
         function refreshToken(){
-            $.get('refresh-csrf').done(function(data){
+            var refreshCsrf = "{{url('refresh-csrf')}}";
+            $.get(refreshCsrf).done(function(data){
                 csrfToken = data; // the new token
             });
         }
 
         setInterval(refreshToken, 3600000); // 1 hour
+
+        function checkUserAuth(){
+            var checkAuthUrl = "{{url('check_user_auth')}}";
+            $.get(checkAuthUrl).done(function(data){
+                if(data == 0){
+                    swal("Session Expired!", "Your login session has expired!", "warning");
+                    window.location.href = "{{url('temp_user_logout')}}";
+                }
+            });
+        }
+        setInterval(checkUserAuth, 3600); // 1 second
 
     </script>
 
