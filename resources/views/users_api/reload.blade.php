@@ -1,4 +1,4 @@
-<table class="table table-bordered table-hover table-striped " id="main_table">
+<table class="table table-bordered table-hover table-striped tbl_order" id="main_table">
     <thead>
     <tr>
         <th>
@@ -6,12 +6,15 @@
                    name="check_all" class="" />
 
         </th>
-        <th>Manage</th>
         <th>Name</th>
+        <th>Dormant Status</th>
+        <th>Department</th>
+        <th>Position</th>
         <th>Employment Type</th>
         <th>Email</th>
         <th>Gender</th>
         <th>Phone</th>
+        <th>Salary Structure</th>
         <th>Job Role</th>
         <th>Date of Birth</th>
         <th>Address</th>
@@ -26,6 +29,7 @@
         <th>Emergency Contact Address</th>
         <th>emergency Contact Name</th>
         <th>emergency Phone</th>
+        <th>Role</th>
         <th>Created by</th>
         <th>Updated by</th>
         <th>Created at</th>
@@ -36,15 +40,12 @@
     </thead>
     <tbody>
     @foreach($mainData as $data)
-    {{-- @if($data->role == Utility::CONTROLLER  || Auth::user()->id == $data->id) --}}
-    {{-- @else --}}
+    @if($data->role == Utility::CONTROLLER  || Auth::user()->id == $data->id)
+    @else
     <tr>
         <td scope="row">
             <input value="{{$data->id}}" type="checkbox" id="{{$data->id}}" class="kid_checkbox" />
 
-        </td>
-        <td>
-            <a style="cursor: pointer;" onclick="editForm('{{$data->id}}','edit_content','<?php echo url('edit_user_form') ?>','<?php echo csrf_token(); ?>')"><i class="fa fa-pencil-square-o fa-2x"></i></a>
         </td>
         <!-- ENTER YOUR DYNAMIC COLUMNS HERE -->
         <td>
@@ -56,10 +57,37 @@
                 </a>
             @endif
         </td>
+        <td>
+            @if($data->dormant_status == 1)
+            <a href="#">Dormant</a>
+            @else
+                <a href="#">
+                    <span class="alert-warning">Not Dormant/Active</span>
+                </a>
+            @endif
+        </td>
+        <td>
+            @if($data->dept_id == '' || $data->dept_id == 0)
+            @else
+                {{$data->department->dept_name}}
+            @endif
+        </td>
+        <td>
+            @if($data->position_id == '' || $data->position_id == 0)
+            @else
+                {{$data->position->position_name}}
+            @endif
+        </td>
         <td>{{$data->employ_type}}</td>
         <td>{{$data->email}}</td>
         <td>{{$data->sex}}</td>
         <td>{{$data->phone}}</td>
+        <td>
+            @if($data->salary_id == '' || $data->salary_id == 0)
+            @else
+            {{$data->salary->salary_name}}
+            @endif
+        </td>
         <td>{{$data->job_role}}</td>
         <td>{{$data->dob}}</td>
         <td>{{$data->address}}</td>
@@ -74,6 +102,7 @@
         <td>{{$data->emergency_contact}}</td>
         <td>{{$data->emergency_name}}</td>
         <td>{{$data->emergency_phone}}</td>
+        <td>{{$data->roles->role_name}}</td>
         <td>{{$data->created_by}}</td>
         <td>{{$data->updated_by}}</td>
         <td>{{$data->created_at}}</td>
@@ -90,7 +119,7 @@
         <!--END ENTER YOUR DYNAMIC COLUMNS HERE -->
 
     </tr>
-    {{-- @endif --}}
+    @endif
     @endforeach
     </tbody>
 </table>

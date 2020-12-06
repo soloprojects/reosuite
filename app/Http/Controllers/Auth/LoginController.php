@@ -45,7 +45,7 @@ class LoginController extends Controller
         }
 
         $credentials = array('email'=> $request->input('email'), 'password'=>$request->input('password'),
-            'active_status' => '1', 'dormant_status' => '1','status' => '1');
+            'active_status' => '1', 'dormant_status' => '0','status' => '1');
         $remember = true;
 
         if(Auth::attempt($credentials)){

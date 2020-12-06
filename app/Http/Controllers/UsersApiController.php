@@ -30,7 +30,7 @@ class UsersApiController extends Controller
     {
         //
         //$req = new Request();
-        $mainData =  TempUsers::paginateAllData();
+        $mainData =  User::paginateAllData();
         //print_r($mainData);exit();
 
         if ($request->ajax()) {

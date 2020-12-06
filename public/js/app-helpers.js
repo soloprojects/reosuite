@@ -1493,7 +1493,7 @@
                 function (isConfirm) {
                     if (isConfirm) {
                         changeStatusMethod(klass, reloadId, reloadUrl, submitUrl, token,status);
-                        swal("Deleted!", "Status of selected item(s) have been changed.", "success");
+                        swal("Success!", "Status of selected item(s) have been changed.", "success");
                     } else {
                         swal("Status change Cancelled", "Status remains the same :)", "error");
                     }

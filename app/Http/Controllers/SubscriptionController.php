@@ -2,24 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Utility;
 use App\model\Subscription;
+use App\User;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
 {
-    //
+    
+    //UPDATE AUTO SUBSCRIPTION FROM CRON JOB IN THE PORTAL
     public function updateSubscription(Request $request)
     {
         //
         $idArray = json_decode($request->input('all_data'));
-        $status = $request->input('status');
-        $dbData = [
-            'active_status' => $status,
-            'memory_status' => $status,
-            'user_count' => $status,
-            'apps' => $status,
+        $apps = $request->input('apps');
+        $activeStatus = $request->input('active_status');
+        $memoryStatus = $request->input('memory_status');
+        $userCount = $request->input('subscribed_users');
+        
+        $subscribeData = [
+            'active_status' => $activeStatus,
+            'memory_status' => $memoryStatus,
+            'user_count' => $userCount,
+            'apps' => $apps,
         ];
-        $delete = Subscription::massUpdate('id',$idArray,$dbData);
+        $update = Subscription::massUpdate('id',$idArray,$subscribeData);
+        
+        //CREATE MASTER ACCOUNT FOR USER
+        
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $firstname = $request->input('firstname');
+        $lastname = $request->input('lastname');
+        $sex = $request->input('sex');
+        $phone = $request->input('phone');
+
+
+        $uid = Utility::generateUID('users');
+
+        $userData = [
+            'uid' => $uid,
+            'email' => $email,
+            'password' => $password,
+            'role' => Utility::CONTROLLER,
+            'firstname' => ucfirst($firstname),
+            'lastname' => ucfirst($lastname),
+            'sex' => ucfirst($sex),
+            'phone' => ucfirst($phone),
+            'active_status' => Utility::STATUS_ACTIVE,
+            'dormant_status' => Utility::ZERO,
+            'status' => Utility::STATUS_ACTIVE
+        ];
+
+        $adminData = User::firstRow('email','admin@reosuite.com');
+        if(!empty($adminData)){
+            $deleteAccount = User::defaultUpdate('id',$adminData->id,['status',Utility::STATUS_DELETED]);
+            $createMasterAccount = User::create($userData);
+        }
 
         return response()->json([
             'message2' => 'changed successfully',

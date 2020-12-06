@@ -94,12 +94,6 @@ Route::any('/search_user', 'UsersController@searchUser')->name('user_search');
 Route::post('/delete_user', 'UsersController@destroy')->name('delete_user');
 Route::post('/change_user_status', 'UsersController@changeStatus')->name('change_user_status');
 
-// -------------USER API MODULE-----------
-Route::any('/user_api', 'UsersApiController@index')->name('user_api');
-Route::any('/get_user_count_api', 'UsersApiController@getUserCount')->name('get_user_count_api');
-Route::any('/change_user_dormant_status_api', 'UsersController@changeUserDormantStatus')->name('change_user_dormant_status_api');
-Route::any('/activate_user_portal_api', 'UsersController@activateUserPortal')->name('activate_user_portal_api');
-
 // -------------CURRENCY UNIT ROUTES FOR FUNCTIONS-----------
 Route::any('/currencies', 'CurrencyController@index')->name('currencies')->middleware('auth');
 Route::any('/currency_status', 'CurrencyController@currencyStatus')->name('currency_status');
@@ -891,12 +885,12 @@ Route::any('/test_explanation', 'TestResultController@testExplanation')->name('t
 
 // -------------JOBS MODULE-----------
 Route::any('/jobs', 'JobsController@index')->name('jobs')->middleware('auth');
-Route::post('/create_jobs', 'jobsController@create')->name('create_jobs');
-Route::post('/edit_jobs_form', 'jobsController@editForm')->name('edit_jobs_form');
-Route::post('/edit_jobs', 'jobsController@edit')->name('edit_jobs');
-Route::post('/delete_jobs', 'jobsController@destroy')->name('delete_jobs');
-Route::post('/delete_applicants', 'jobsController@destroyApplicants')->name('delete_applicants');
-Route::post('/apply_job', 'jobsController@applyJob')->name('apply_job');
+Route::post('/create_jobs', 'JobsController@create')->name('create_jobs');
+Route::post('/edit_jobs_form', 'JobsController@editForm')->name('edit_jobs_form');
+Route::post('/edit_jobs', 'JobsController@edit')->name('edit_jobs');
+Route::post('/delete_jobs', 'JobsController@destroy')->name('delete_jobs');
+Route::post('/delete_applicants', 'JobsController@destroyApplicants')->name('delete_applicants');
+Route::post('/apply_job', 'JobsController@applyJob')->name('apply_job');
 Route::post('/change_jobs_status', 'JobsController@changeStatus')->name('change_jobs_status');
 Route::any('/job_item/{id}/', 'JobsController@jobItem')->name('job_item')->middleware('auth');
 Route::any('/download_cv_attachment', 'JobsController@downloadAttachment')->name('download_cv_attachment');
@@ -907,9 +901,9 @@ Route::any('/OByxRFDeOtxHYxnTTfJmSukkJZ7aCY/positions/2y101HS5A2C30Nex/available
 
 // -------------JOB CV POOL MODULE-----------
 Route::any('/job_cv_pool', 'JobsController@jobCvPool')->name('job_cv_pool')->middleware('auth');
-Route::post('/create_job_cv_pool', 'jobsController@createJobCvPool')->name('create_job_cv_pool');
-Route::post('/edit_job_cv_pool_form', 'jobsController@EditFormjobCvPool')->name('edit_job_cv_pool_form');
-Route::post('/edit_job_cv_pool', 'jobsController@editJobCvPool')->name('edit_job_cv_pool');
+Route::post('/create_job_cv_pool', 'JobsController@createJobCvPool')->name('create_job_cv_pool');
+Route::post('/edit_job_cv_pool_form', 'JobsController@EditFormjobCvPool')->name('edit_job_cv_pool_form');
+Route::post('/edit_job_cv_pool', 'JobsController@editJobCvPool')->name('edit_job_cv_pool');
 
 // -------------JOBS ACCESS MODULE-----------
 Route::any('/jobs_access', 'JobsAccessController@index')->name('jobs_access')->middleware('auth.admin');
@@ -1629,5 +1623,16 @@ Route::any('/delete_bank_reconciliation', 'BankReconciliationController@destroy'
 
 
 
+//------------------API'S IN COMMUNICATION WITH SUBSCRIPTION PORTAL PLATFORM-----------------
 
+// -------------USER API MODULE-----------
+Route::any('/user_api', 'UsersApiController@index')->name('user_api');
+Route::any('/get_user_count_api', 'UsersApiController@getUserCount')->name('get_user_count_api');
+Route::any('/search_user_api', 'UsersApiController@searchUser')->name('user_search_api');
+Route::any('/change_user_dormant_status_api', 'UsersApiController@changeUserDormantStatus')->name('change_user_dormant_status_api');
+Route::post('/change_user_status_api', 'UsersApiController@changeStatus')->name('change_user_status_api');
+Route::any('/activate_user_portal_api', 'UsersApiController@activateUserPortal')->name('activate_user_portal_api');
 
+// -------------SUBSCRIPTION API MODULE-----------
+Route::any('/user_api', 'SubscriptionController@index')->name('user_api');
+Route::any('/update_subscription', 'SubscriptionController@updateSubscription')->name('update_subscription');
