@@ -149,7 +149,8 @@
                                     <div class="form-group">
                                         <div class="form-line">
                                             <input type="number" name="credit_applied{{$num1}}" id="credit_applied{{$po->id}}" class="credit_applied_class"
-                                            onkeyup="DebitCreditMemoApply('credit_applied{{$po->id}}','credit_applied_class','default_credit{{$po->vendor_customer}}','curr_credit{{$po->vendor_customer}}','payment{{$po->id}}','default_total{{$po->id}}','curr_total{{$po->id}}','curr_total_hidden{{$po->id}}','sum_total','sum_total_hidden','total_amount')" />
+                                            onkeyup="DebitCreditMemoApply('credit_applied{{$po->id}}','credit_applied_class','default_credit{{$po->vendor_customer}}','curr_credit{{$po->vendor_customer}}','payment{{$po->id}}','default_total{{$po->id}}','curr_total{{$po->id}}','curr_total_hidden{{$po->id}}','sum_total','sum_total_hidden','total_amount')" 
+                                            onchange="DebitCreditMemoApply('credit_applied{{$po->id}}','credit_applied_class','default_credit{{$po->vendor_customer}}','curr_credit{{$po->vendor_customer}}','payment{{$po->id}}','default_total{{$po->id}}','curr_total{{$po->id}}','curr_total_hidden{{$po->id}}','sum_total','sum_total_hidden','total_amount')" />
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +161,8 @@
                                     <div class="form-group">
                                         <div class="form-line">
                                             <input type="number" name="payment{{$num1}}" id="payment{{$po->id}}"
-                                            onkeyup="financePaymentOrReceipt('credit_applied{{$po->id}}','payment{{$po->id}}','curr_total{{$po->id}}','default_total{{$po->id}}','curr_total_hidden{{$po->id}}','sum_total','sum_total_hidden','total_amount')" />
+                                            onkeyup="financePaymentOrReceipt('credit_applied{{$po->id}}','payment{{$po->id}}','curr_total{{$po->id}}','default_total{{$po->id}}','curr_total_hidden{{$po->id}}','sum_total','sum_total_hidden','total_amount')" 
+                                            onchange="financePaymentOrReceipt('credit_applied{{$po->id}}','payment{{$po->id}}','curr_total{{$po->id}}','default_total{{$po->id}}','curr_total_hidden{{$po->id}}','sum_total','sum_total_hidden','total_amount')" />
                                         </div>
                                     </div>
                                 </div>

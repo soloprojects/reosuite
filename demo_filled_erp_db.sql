@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2020 at 03:08 PM
+-- Generation Time: Dec 09, 2020 at 03:15 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -879,7 +879,7 @@ CREATE TABLE `company_info` (
 --
 
 INSERT INTO `company_info` (`id`, `name`, `address`, `email`, `phone1`, `phone2`, `logo`, `active_status`, `created_by`, `updated_by`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Hyprops Nigeria Limited', 'Enter your full address here', 'Info@hyprops.com', '', '', '2018-02-22-10-14-18_logo.jpg', 1, 'Solomon Nweze', 'Solomon Nweze', '1', '2018-02-22 09:14:18', '2020-08-22 10:08:22');
+(1, 'Hyprops Nigeria Limited', 'Enter your full address here', 'Info@hyprops.com', '', '', '2020-10-09-19-50-39_HNL_logo2.png', 1, 'Solomon Nweze', 'Solomon Nweze', '1', '2018-02-22 09:14:18', '2020-10-09 18:50:39');
 
 -- --------------------------------------------------------
 
@@ -5114,15 +5114,21 @@ CREATE TABLE `job_applicants` (
   `cv_file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `dept_id` int(11) DEFAULT NULL,
+  `position_id` int(11) DEFAULT NULL,
+  `salary_expectation` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remark` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `job_applicants`
 --
 
-INSERT INTO `job_applicants` (`id`, `job_id`, `firstname`, `lastname`, `email`, `phone`, `address`, `experience`, `cover_letter`, `cv_file`, `status`, `created_at`, `updated_at`) VALUES
-(25, 1, 'Bill', 'Gomez', 'Nwezesolomon@yahoo.com', '8062403687', 'No 1 Stacks lane, onikoyi street, Aguda, Surulere, Lagos state', 3, 'Oopokl', '2019-08-15-12-30-20_0881807798Personal Reference Form.pdf', 1, '2019-08-15 11:30:20', '2019-08-15 11:30:20');
+INSERT INTO `job_applicants` (`id`, `job_id`, `firstname`, `lastname`, `email`, `phone`, `address`, `experience`, `cover_letter`, `cv_file`, `status`, `created_at`, `updated_at`, `dept_id`, `position_id`, `salary_expectation`, `location`, `remark`) VALUES
+(25, 1, 'Bill', 'Gomez', 'Nwezesolomon@yahoo.com', '8062403687', 'No 1 Stacks lane, onikoyi street, Aguda, Surulere, Lagos state', 3, 'Oopokl', '2019-08-15-12-30-20_0881807798Personal Reference Form.pdf', 1, '2019-08-15 11:30:20', '2019-08-15 11:30:20', NULL, NULL, NULL, NULL, NULL),
+(27, 6, 'Solomon', 'Nweze', 'Nwezesolomon@yahoo.com', '08062403687', 'No 7 Green Ville Estate, Agungi, Lekki Phase 2, Lagos State', 5, 'Fffffffffji', '2020-11-25-08-47-56_17888791782020-11-24-18-53-23_0980181077download.xls', 1, '2020-11-25 07:47:56', '2020-11-25 07:47:56', 8, 0, '2000000', NULL, 'Salary is too much');
 
 -- --------------------------------------------------------
 
@@ -5418,6 +5424,34 @@ INSERT INTO `leave_type` (`id`, `leave_type`, `days`, `leave_desc`, `status`, `c
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `leave_vacation_dates`
+--
+
+CREATE TABLE `leave_vacation_dates` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `year` int(11) DEFAULT NULL,
+  `month` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `week` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `leave_vacation_dates`
+--
+
+INSERT INTO `leave_vacation_dates` (`id`, `user_id`, `year`, `month`, `week`, `created_at`, `updated_at`, `status`) VALUES
+(1, 37, 2021, '1', '2', '2020-11-29 10:59:35', '2020-11-29 11:18:37', 1),
+(9, 1, 2021, '2', '1', '2020-11-29 12:53:24', '2020-11-29 12:53:24', 1),
+(10, 1, 2021, '2', '1', '2020-11-29 12:54:03', '2020-11-29 12:54:03', 1),
+(11, 1, 2021, '4', '3', '2020-11-29 12:54:03', '2020-11-29 12:54:03', 1),
+(12, 1, 2024, '5', '2', '2020-11-29 12:54:03', '2020-11-29 12:54:03', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `lessons_learnt`
 --
 
@@ -5679,7 +5713,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (207, '2020_09_01_112223_rename_jobs_table', 107),
 (208, '2020_09_01_112705_create_jobs_table', 108),
 (209, '2020_09_01_115000_create_failed_jobs_table', 109),
-(210, '2020_09_29_125651_modify_users_table', 110);
+(210, '2020_09_29_125651_modify_users_table', 110),
+(211, '2020_10_04_032039_create_subscription_table', 111),
+(212, '2020_10_11_202551_add_to_subscription_table', 112),
+(214, '2020_11_18_122538_add_to_subscription_table', 113),
+(217, '2020_11_18_122425_add_to_users_table', 114),
+(218, '2020_11_23_132227_add_to_job_applicants_table', 115),
+(219, '2020_11_23_132827_create_leave_vacation_dates_table', 116),
+(220, '2020_11_26_100455_add_to_leave_vacation_dates_table', 117);
 
 -- --------------------------------------------------------
 
@@ -5835,7 +5876,7 @@ INSERT INTO `payroll` (`id`, `component`, `user_id`, `gross_pay`, `total_amount`
 (29, '[{\"component\":\"House Allowance\",\"amount\":\"50000\",\"component_type\":\"Deduction\"},{\"component\":\"Basic Salary\",\"amount\":\"800\",\"component_type\":\"Earnings\"}]', 4, '1000000', '860000', '150000', 108, 1, 9, 1, '10000', 'query', 1, '0', '0', 0, '2019-12-05', NULL, '[]', '6', 2018, 1, 1, '1', '2019-12-05 12:41:12', '2020-08-21 19:08:13'),
 (30, '[{\"component\":\"House Allowance\",\"amount\":\"50000\",\"component_type\":\"Deduction\"},{\"component\":\"Basic Salary\",\"amount\":\"800\",\"component_type\":\"Earnings\"}]', 30, '1000000', '600000', '150000', 108, 1, 14, 2, '50000', 'bhji', 2, NULL, NULL, 0, '2018-06-27', NULL, NULL, '6', 2018, 1, 4, '0', '2018-06-26 14:43:21', '2018-06-26 14:43:21'),
 (32, '[{\"component\":\"House Allowance\",\"amount\":\"50000\",\"component_type\":\"Deduction\"},{\"component\":\"Basic Salary\",\"amount\":\"800\",\"component_type\":\"Earnings\"}]', 1, '1000000', '693000', '150000', 108, 1, 8, 2, '50000', 'call query', 2, '0', '107000', 0, '2018-06-16', '2018-06-27', '[]', '6', 2018, 1, 4, '1', '2018-06-27 09:40:54', '2020-08-21 23:38:27'),
-(37, '[{\"component\":\"House Allowance\",\"amount\":\"50000\",\"component_type\":\"Deduction\"},{\"component\":\"Basic Salary\",\"amount\":\"800\",\"component_type\":\"Earnings\"}]', 5, '1000000', '850000', '150000', 108, 1, 15, 2, '0', NULL, 0, '0', '0', 0, NULL, NULL, '{\"1\":\"1\",\"2\":\"2\"}', '11', 2019, 1, 1, '1', '2019-12-21 20:28:54', '2019-12-22 09:22:01');
+(37, '[{\"component\":\"House Allowance\",\"amount\":\"50000\",\"component_type\":\"Deduction\"},{\"component\":\"Basic Salary\",\"amount\":\"800\",\"component_type\":\"Earnings\"}]', 5, '1000000', '850000', '150000', 108, 1, 8, 2, '0', NULL, 0, '', '', 0, '2019-11-02', NULL, '{\"1\":\"1\",\"2\":\"2\"}', '11', 2019, 1, 1, '1', '2019-12-21 20:28:54', '2020-10-02 16:30:06');
 
 -- --------------------------------------------------------
 
@@ -5881,7 +5922,6 @@ CREATE TABLE `position` (
 --
 
 INSERT INTO `position` (`id`, `position_name`, `status`, `created_at`, `updated_at`) VALUES
-(0, 'Senior Engineer', '1', '2019-11-19 08:34:37', '2019-11-19 08:34:54'),
 (1, 'Executive', '1', '2017-12-06 08:23:55', '2017-12-06 08:23:55'),
 (2, 'Officer', '1', '2017-12-06 08:24:48', '2017-12-06 08:24:48'),
 (3, 'Manager', '1', '2018-04-25 10:22:16', '2018-04-25 10:22:16'),
@@ -6932,6 +6972,32 @@ INSERT INTO `stock` (`id`, `item_id`, `po_id`, `sales_id`, `qty`, `qty_remain`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subscription`
+--
+
+CREATE TABLE `subscription` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `apps` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '["1"]',
+  `user_count` int(11) DEFAULT '0',
+  `temp_user_count` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `app_format` text COLLATE utf8mb4_unicode_ci,
+  `memory_status` int(11) DEFAULT '0',
+  `active_status` int(11) DEFAULT '0',
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `subscription`
+--
+
+INSERT INTO `subscription` (`id`, `apps`, `user_count`, `temp_user_count`, `app_format`, `memory_status`, `active_status`, `status`, `created_at`, `updated_at`) VALUES
+(1, '[\"18\",\"17\",\"16\",\"15\",\"14\",\"13\",\"12\",\"11\",\"10\",\"9\",\"8\",\"7\",\"6\",\"5\",\"4\",\"3\",\"2\",\"1\"]', 4, NULL, '{\"0\":\"1\",\"1\":\"2\",\"2\":\"3\",\"3\":\"4\",\"4\":\"5\",\"5\":\"6\",\"6\":\"7\",\"7\":\"8\",\"8\":\"9\",\"9\":\"10\",\"10\":\"11\",\"11\":\"12\",\"12\":\"13\",\"13\":\"14\",\"14\":\"15\",\"15\":\"16\",\"16\":\"17\",\"17\":\"18\",\"18\":\"19\"}', NULL, 1, 1, '2020-10-04 13:52:46', '2020-10-04 13:52:46');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `survey`
 --
 
@@ -7519,7 +7585,7 @@ CREATE TABLE `temp_users` (
 
 INSERT INTO `temp_users` (`id`, `uid`, `email`, `password`, `role`, `title`, `firstname`, `lastname`, `othername`, `sex`, `dob`, `phone`, `discipline`, `experience`, `address`, `rate_type`, `rate`, `cv`, `dept_id`, `nationality`, `photo`, `qualification`, `cert`, `cert_expiry_date`, `cert_issue_date`, `bupa_hmo_expiry_date`, `green_card_expiry_date`, `active_status`, `created_by`, `updated_by`, `status`, `remember_token`, `created_at`, `updated_at`, `salary_id`) VALUES
 (1, '771877009770', 'Tolu@hyprops.com', '$2y$10$oP5A36qK3Nksfav3a8QZEuIoBNKi.Lkybil2JeKkfrIKsUJh8vdie', 2, 'Engr', 'Adebola', 'Tolu', '', 'Male', '2019-08-21', '', '', '', '', 'Rate Per Hour', NULL, NULL, 13, '', 'user.png', '', '', NULL, NULL, NULL, NULL, '1', 'Solomon Nweze', 'Solomon Nweze', 1, NULL, '2019-04-11 14:23:35', '2020-08-21 19:25:32', NULL),
-(2, '798090789780', 'Ademola@hyprops.com', '$2y$10$AhJSdYew2bsugBKeQpCwUeZblJzb4Dwk8TOSU1Zf9ojfGH50JRjlC', 2, 'Engr', 'Adedeji', 'Ademola', '', 'Male', '', '', '', '', '', 'Rate Per Day', NULL, NULL, 13, '', 'user.png', '', '', NULL, NULL, NULL, NULL, '1', 'Solomon Nweze', 'Solomon Nweze', 1, 'ZiyE1fXXQDMEj0S583Jfq9WjZd1EuZYJhKtldR18suTIQDnrtQx8Tx2MDgOf', '2019-04-11 14:42:39', '2020-08-21 20:51:32', 1);
+(2, '798090789780', 'Ademola@hyprops.com', '$2y$10$AhJSdYew2bsugBKeQpCwUeZblJzb4Dwk8TOSU1Zf9ojfGH50JRjlC', 2, 'Engr', 'Adedeji', 'Ademola', '', 'Male', '', '', '', '', '', 'Rate Per Day', NULL, NULL, 13, '', 'user.png', '', '', NULL, NULL, NULL, NULL, '1', 'Solomon Nweze', 'Solomon Nweze', 1, 'wwxZxFhCFks9Qj2THCUcbmqGTfd2jgJnpgncBq4q33aXInZGg1NGBWYu5kQK', '2019-04-11 14:42:39', '2020-08-21 20:51:32', 1);
 
 -- --------------------------------------------------------
 
@@ -8246,6 +8312,7 @@ CREATE TABLE `users` (
   `affiliate_dept` int(11) NOT NULL DEFAULT '0',
   `resign_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dormant_status` int(11) NOT NULL DEFAULT '0',
   `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -8259,48 +8326,48 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `uid`, `email`, `password`, `other_email`, `role`, `firstname`, `lastname`, `othername`, `sex`, `dob`, `phone`, `job_role`, `address`, `employ_type`, `position_id`, `dept_id`, `salary_id`, `nationality`, `marital`, `blood_group`, `next_kin`, `next_kin_phone`, `state`, `local_govt`, `emergency_name`, `emergency_phone`, `emergency_contact`, `photo`, `sign`, `title`, `qualification`, `employ_date`, `affiliate_dept`, `resign_date`, `active_status`, `status`, `remember_token`, `created_by`, `created_at`, `updated_by`, `updated_at`, `religion`) VALUES
-(1, '2147483647', 'Snweze@hyprops.com', '$2y$10$1HS5A2C30Nex/OByxRFDeOtxHYxnTTfJmSukkJZ7aCY.iiADbHK32', '', '1', 'Solomon', 'Nweze', '', 'Male', '2019-08-22', '', '', '', 'Permanent', '2', '8', '1', '', '1', '', '', '', '', '', '', '', NULL, 'user.png', '2018-07-25-08-59-11_code-2434271_960_720.jpg', '', '', '', 0, NULL, '1', '1', 'mNAM0kaxoosE1TRKrY3hlrbSo9VwBJwShFKLgYXMb5MLV1pdFnnzFKYz7t7f', '1', '2017-11-17 09:19:26', 'Solomon Nweze', '2020-09-29 12:27:29', NULL),
-(2, '2158783047', 'solomonnweze@gmail.com', '$2y$10$MWnEmgFEr3r1ii2vhvLiTuVK71PfOeNDouaWItywrKsnWu7T.VxPC', '', '4', 'Bill', 'Gates', 'Rich', 'Male', '', '2536535', '', '', 'Permanent', '2', '10', '1', '', '2', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', '1m0TGa1lcIE4hvvWSCOLR6gPX84SoTKAQjRQ2irXDf0fpwGldWDCcFuxpEXr', '1', '2017-12-13 12:50:37', 'Solomon Nweze', '2017-12-13 12:50:37', NULL),
-(3, '21400036471', 'Nwezesolomon@yahoo.com', '$2y$10$aYDENbQJvN/.oU0xAf9l9OCedMhhplqdAse2JkV6W8YhCpzwjw1NW', '', '3', 'Asdfas', 'Kalu', '', 'Male', '', '45736', '', '', 'Permanent', '1', '10', '1', '', '3', 'O', '', '', '', '', '', '', NULL, 'user.png', '2017-12-15-13-49-46_thumbs-up.png', 'DSFSF', '', '', 0, NULL, '1', '1', 'Pwzkb9skFMFyiOkbvXOSxurDnVN0CkVVHcbOIbIzmwJXQiWClr0KLJ7MTsjt', '1', '2017-12-15 07:00:43', 'Solomon Nweze', '2017-12-15 07:00:43', NULL),
-(4, '891079110988', 'Ookereke@hyprops.com', '$2y$10$NYsx9c3jzW9oQjSlecewCu5fVWMR9A4y/.gwE/TuFDRnnWr68fbOe', '', '3', 'Okereke', 'Kalu', 'Okereke', 'Male', 'Thursday 15 March 2007', '', '', '', 'Permanent', '1', '8', '1', '', '4', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', '3yJ130lSmInRZClv8l7F5F60lUQGcO8HFUnqAyi0ELtyAzallAEvQ7sYhNj8', 'Solomon Nweze', '2018-03-15 10:07:07', 'Solomon Nweze', '2018-03-15 10:07:07', NULL),
-(5, '018870918108', 'Uakwiwu@hypropsngltd.com', '$2y$10$9rB4D5eJMdFLBzuvqdvznOTLD3uZpZ9HRcQcDAb5ZLxboY42WKG52', '', '2', 'Ugochukwu', 'Akwiwu', '', 'Male', '', '', '', '', 'Permanent', '2', '8', '1', '', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', '0LrMApXcV2SvM5aMF823MZli6U9vAhzKR6HzQAC6iUnHsULHG2ibpJd4iMOD', 'Solomon Nweze', '2018-04-25 09:04:51', '0', '2018-04-25 09:04:51', NULL),
-(6, '180009901100', 'Jdoe@hyprops.com', '$2y$10$s5B7NJ03LF5i9Ih2GgaPp.Tdds4bHIwycI8B3U3KfotRH5i8uy/..', '', '2', 'Okezie', 'Akwiwu', '', 'Male', NULL, '', '', '', 'Permanent', '5', '18', '1', 'Nigeria', '6', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', 'NupSwGltFwvhJs5ePXejVhUs31qQAj0tbPUnz1yuLw59iTvgiNgB0QNUBPBz', 'Ugochukwu Akwiwu', '2018-04-25 10:01:19', 'Solomon Nweze', '2020-03-17 10:24:13', NULL),
-(7, '197078001970', 'Eijekhueme@hyprops.com', '$2y$10$NHXitz4zFWZAz3RiQ/c5k.VVh77gIo.RBlJfWSzf0AXWplVKdJ2TK', '', '2', 'Emmanuel', 'IJEKHUEME', '', 'Male', '', '', '', '', 'Permanent', '6', '18', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', 'VX95LmxrkQtbzstJMuZN3ATNj8w67T3TQjeQrlhQYw8BGvt2tzfylnm8g53r', 'Ugochukwu Akwiwu', '2018-04-25 10:03:21', 'Solomon Nweze', '2018-04-25 10:03:21', NULL),
-(8, '118770109019', 'Egula@hyprops.com', '$2y$10$hhC3W/8lrnGYdiUmgLOiIO4wolYKzRTmDs1DSWeSiIRGDYGjbPgdq', '', '4', 'Emiko', 'Gula', '', 'Male', '', '', '', '', 'Permanent', '3', '3', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', 'm4PnUiRd7vzg6zY6A35tddtxNjTiwQ34HbpkVIyGjRkjhwXjOcATcpZkqRjz', 'Ugochukwu Akwiwu', '2018-04-25 10:05:13', '0', '2018-04-25 10:05:13', NULL),
-(9, '071178999079', 'Okolawole@hyprops.com', '$2y$10$Co9S3WUVFbvqK/VgEJhXpeQsTuBeeABihRmseDgYht/zkyVAFAHwm', '', '4', 'Opeyemi', 'Kolawole', '', 'Male', '', '', '', '', 'Permanent', '10', '3', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:15:09', '0', '2018-04-25 10:15:09', NULL),
-(10, '817011008119', 'Cagbo@hyprops.com', '$2y$10$gN98QI4VXXYySrvQBkCEouA8dZTByZHtPEbka.ItXvnCFMsqgelH.', '', '4', 'Clement', 'Agbo', '', 'Male', '', '', '', '', 'Permanent', '1', '3', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:16:25', '0', '2018-04-25 10:16:25', NULL),
-(11, '700717011898', 'Nabasilim@hyprops.com', '$2y$10$.z4TyxWg2OErCB84zELG4.GceMyy/jSVARhuEFBrwVk06/GmJAZeu', '', '4', 'NKIRU', 'CHIMA-EZEONUGO', '', 'Female', NULL, '', '', '', 'Permanent', '1', '17', '1', 'Nigeria', '11', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:18:01', 'Solomon Nweze', '2019-12-08 13:49:46', NULL),
-(12, '788000979000', 'Sevanson@hyprops.com', '$2y$10$Lj3N.5hStX5PIRXH8pQ.R.jNfFWI8jvY90xLxngbnwhCKBhRvry5W', '', '5', 'Sunny', 'Evanson', '', 'Male', '', '', '', '', 'Permanent', '8', '2', '1', 'Nigeria', '12', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', 'VmtotbzqXNustEoAa5PT9bC8cNj5M8vZkpPnaX7gwxu2wJ1oLKviEVouhUrA', 'Ugochukwu Akwiwu', '2018-04-25 10:23:23', 'Solomon Nweze', '2018-04-25 10:23:23', NULL),
-(13, '010011107070', 'Soleghie@hyprops.com', '$2y$10$9qPiG03/rjZKtW68KwSTgusqUoMLCLgb3jBlrWrOFjm63OGaTqlfe', '', '5', 'SAMUEL', 'OLEIGHE', '', 'Male', '', '', '', '', 'Permanent', '1', '2', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:27:03', '0', '2018-04-25 10:27:03', NULL),
-(14, '809818891997', 'Fezirim@hyprops.com', '$2y$10$1W2I1BaIN6QkZXgFGcAgx.m/znEmmZ8derPu6oVIxwUe335GYOJqa', '', '4', 'FRANKLIN', 'EZIRIM', '', 'Male', '', '', '', '', 'Permanent', '2', '2', '1', '', '14', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', '7lat7pWCCecydQCh9jlHuxNUJJ6KKtcYbvwfB35M71RxPwSAkjPfWDrwryWZ', 'Ugochukwu Akwiwu', '2018-04-25 10:30:10', 'Solomon Nweze', '2018-04-25 10:30:10', NULL),
-(15, '817718009980', 'Oanipole@hyprops.com', '$2y$10$uOYU7FMHONVadc048PpVc.JfksbkCfwVlsMr6tpnyZcbDXjobNaK.', '', '4', 'Wale', 'ANIPOLE', '', 'Male', '', '', '', '', 'Permanent', '9', '13', '1', '', '15', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', '51FHS7fM2g5CNGIqyEPICCqwEBQbtPpeLNLAPNEcBvEbvKf6QbhiYi9qi8n4', 'Ugochukwu Akwiwu', '2018-04-25 10:32:43', 'Solomon Nweze', '2018-04-25 10:32:43', NULL),
-(16, '819979901810', 'Uazubuike@hyprops.com', '$2y$10$ZrY2UU20EwrQGtGQN3GeAOuN5Ff3C15gb33T1Kl.mXbaQDo4ijlVG', '', '4', 'Uzoma', 'Azubike', '', 'Male', '', '', '', '', 'Permanent', '1', '13', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:36:29', '0', '2018-04-25 10:36:29', NULL),
-(17, '988991997111', 'Cagonsi@hyprops.com', '$2y$10$dzuJsWn2cKIzJ2.5bwJobuEUqokSF4.G780TRqb/tgI0hUdEDvZ46', '', '4', 'CHISOM', 'AGONSI', '', 'Male', '', '', '', '', 'Permanent', '2', '13', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:39:09', '0', '2018-04-25 10:39:09', NULL),
-(18, '911717980971', 'Sunday@umoh.com', '$2y$10$hlcwFEQsbHTBhuufxwHEce3lcmIsC1ltQy91CSmzC/fQ3Q4uWYSD.', '', '4', 'SUNDAY', 'UMOH', '', 'Male', '', '', '', '', 'Permanent', '1', '13', '1', 'Nigerian', '18', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:49:22', 'Solomon Nweze', '2018-04-25 10:49:22', NULL),
-(19, '907819181899', 'Cokpalaji@hyprops.com', '$2y$10$jdzvcQLay6FeMDVJA1aOZ.Q0.diK7gCpsvMPGDYp4oYXKq29e3llC', '', '4', 'CHINWEOKE', 'OKPALAJI', '', 'Female', '', '', '', '', 'Permanent', '9', '6', '1', 'Nigerian', '19', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:51:40', 'Solomon Nweze', '2018-04-25 10:51:40', NULL),
-(20, '791098787890', 'Sotuu@hyprops.com', '$2y$10$oTncK7h.EdaP0.nCCndqr.RAu0/O8AHM3WzZdQmKjoLLgjCRjEuki', '', '4', 'STEPHANIE', 'OTUU', '', 'Female', '', '', '', '', 'Permanent', '2', '6', '1', 'Nigerian', '20', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', '1', '9YRC0vZRinPY28IR5E9RKix4iXLuPHeduTEEpdGXpqBQc5IAwocv4PVuPLTb', 'Ugochukwu Akwiwu', '2018-04-25 10:54:06', 'Solomon Nweze', '2018-04-25 10:54:06', NULL),
-(21, '781117008800', 'Iagwunobi@hypropsngltd.com', '$2y$10$zIWW/m0NJXV6m/a1sMR6e.KlAox.SqAxJZ.KxcijymR4lnJzhsouy', '', '4', 'IFEANYI', 'AGWUNOBI', '', 'Male', '', '', '', '', 'Permanent', '2', '6', '1', 'Nigerian', 'Divorced', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:56:03', '0', '2018-04-25 10:56:03', NULL),
-(22, '707190979070', 'Uegere@hyprops.com', '$2y$10$aL4kBWLp1SA8RY10a4S8/.eBa4TUH4XaUGSRuWMocFRGwEpKw7CWi', '', '4', 'UCHE', 'EGERE', 'IFEANYI', 'Male', '', '', '', '', 'Permanent', '3', '10', '1', 'Nigerian', '22', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:59:09', 'Solomon Nweze', '2018-04-25 10:59:09', NULL),
-(23, '171897011099', 'Oogunmodede@hyprops.com', '$2y$10$w.FtMhbNwcmjVEd4KzcFiObsT02rg5Eok3V5pHx7t4/rlzCBAYEOu', '', '4', 'BUNMI', 'OGUNMODEDE', '', 'Female', '', '', '', '', 'Permanent', '3', '10', '1', 'Nigerian', '23', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', '1', 'UXKNWFjrNaV39xBPxVL6GbzmT4qzbHPMWKO3D6tKwSlvqW28bAwJ4sMpvypM', 'Ugochukwu Akwiwu', '2018-04-25 11:01:19', 'Solomon Nweze', '2018-04-25 11:01:19', NULL),
-(24, '809817171089', 'Toghojafor@hyprops.com', '$2y$10$jThmWlmy5VY8HZ8JYBHz7uz80Rhu2zIbi/q8gmO9APmhtFb77b8yi', '', '4', 'THERESA', 'OGHOJAFOR', '', 'Female', '', '', '', '', 'Permanent', '1', '10', '1', 'Nigerian', '24', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Miss', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 11:05:54', 'Solomon Nweze', '2018-04-25 11:05:54', NULL),
-(25, '908707798997', 'Jefevwia@hyprops.com', '$2y$10$9MTWUJxIhv0D6qfF/PY.EunHzL0QROVjOT7He5B2cqnERAVHkN6uS', '', '4', 'JOLOMI', 'EFEVWIA-PARKER', '', 'Female', '', '', '', '', 'Permanent', '3', '4', '1', 'Nigerian', '25', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', '1', 'B4Uv3t14ELNPiOEsRlL5VOcSlcuB5JGgUrUeA10JWUqYWLF6Pw6Ii4MJLOao', 'Ugochukwu Akwiwu', '2018-04-25 11:09:53', 'Okereke Kalu', '2018-04-25 11:09:53', NULL),
-(26, '018177011188', 'Jkighir@hyprops.com', '$2y$10$dgHdNIRsxgA3xT9/mHq2qeMdsbGg1NEiTAgDFLdvqSFaURR55zRby', '', '4', 'JANE', 'KIGHIR', '', 'Female', '', '', '', '', 'Permanent', '8', '4', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mrs', '', '', 0, NULL, '1', '1', 'GAgJ4ZpFDVr4156RUyI6A9m3hkILIOnxCuixC15JFOjCXTwkmVWvCETKfN4F', 'Ugochukwu Akwiwu', '2018-04-25 11:14:04', '0', '2018-04-25 11:14:04', NULL),
-(27, '189710971017', 'Cokeiyi@hyprops.com', '$2y$10$Gz6MX2ITZs9e0RMWu7YkfOi.Ki8yRbE.h3BifdxiNLfuoAvjnfJAK', '', '4', 'EMEKA', 'OKEIYI', '', 'Male', '', '', '', '', 'Permanent', '8', '4', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', 'mfGvi0nJKLRi4ksaCHeaFZ0Tl8XPVo2Mh6qEARysMu05qAdaGv8Bufeotnqb', 'Ugochukwu Akwiwu', '2018-04-25 11:17:39', '0', '2018-04-25 11:17:39', NULL),
-(28, '991878098909', 'Eatuwaogu@hyprops.com', '$2y$10$kjLR1PY63v/PVBoOxLqJz./5nPpS8Zlh6UCl0ta8ZzAAVX16Tn.9O', '', '6', 'EBERE', 'ATUWAOGU', '', 'Female', '', '', '', '', 'Permanent', '1', '9', '1', 'Nigerian', '28', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', '1', '1QdhmKHVcJTkoN4vT5o6LJI0KSW7QFXI4pzjw3C3zXP5CDWT5FdRRK4jutql', 'Ugochukwu Akwiwu', '2018-04-25 11:20:37', 'Solomon Nweze', '2018-04-25 11:20:37', NULL),
-(29, '718977770711', 'Eabili@hyprops.com', '$2y$10$1Mdvmz86vMQrfQ17GRMpJuv/GCkPtOdJPycbBwzASbBK0v6rvEr2m', '', '4', 'ELIZABETH', 'ABILI', '', 'Female', '', '', '', '', 'Permanent', '2', '9', '1', 'Nigerian', '29', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', '1', '6DJHdYgttK1R7126rpqlZGgg8Bu4sotAdBaQqT902FHBzSgh7CjOn0wFYYZg', 'Ugochukwu Akwiwu', '2018-04-25 11:23:03', 'Solomon Nweze', '2018-04-25 11:23:03', NULL),
-(30, '989701909817', 'Jebubechukwu@hyprops.com', '$2y$10$4SY3Imr6WQHOug4uZWzqrex6HGZvlhACJbTiDE.tHvBeJox79Kcmm', '', '4', 'John', 'Ebubechukwu', '', 'Male', '', '', '', '', 'Permanent', '1', '14', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 11:27:52', '0', '2018-04-25 11:27:52', NULL),
-(31, '007981908800', 'Foladunjoye@hyprops.com', '$2y$10$iSOCaYWfkk.cbpNoGbpJoOANZgrjn6Ue.4.7MwW432iuNa3jvSr.i', '', '4', 'FEMI', 'Oladunjoye', '', 'Male', '', '', '', '', 'Permanent', '3', '15', '1', '', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:07:13', '0', '2018-04-25 13:07:13', NULL),
-(32, '898171900070', 'Anwosu@hyprops.com', '$2y$10$1kOFRu9oAgr2IG3.yqiwxejQo1ZfdDDYyXiSO/JC92wkSMHv3GRyq', '', '4', 'AMBROSE', 'NWOSU', '', 'Male', '', '', '', '', 'Permanent', '8', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:11:17', '0', '2018-04-25 13:11:17', NULL),
-(33, '770009788777', 'Mabah@hyprops.com', '$2y$10$IHXubLUGWQmEPcvvAK4Sn.Q5lXUj1pF5zWVD3XBupdP4EgsiogcWK', '', '4', 'MOSES', 'ABAH', '', 'Male', '', '', '', '', 'Permanent', '8', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:12:15', '0', '2018-04-25 13:12:15', NULL),
-(34, '107080818918', 'Hokwars@hyprops.com', '$2y$10$UCWEq9Toe8Y8.z2e.xlHqeXhAUOBDAH2DonNMvqEDkyJSFto2FVoG', '', '4', 'JOHN', 'OKWARA', '', 'Male', '', '', '', '', 'Permanent', '8', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:13:38', '0', '2018-04-25 13:13:38', NULL),
-(35, '001999181787', 'Oegwin@hyprops.com', '$2y$10$UuYiOdYfd9zq7Q3mQO8n6euAc5ZetH2LEXdaiCnw/MAF/EhSv0gAq', '', '4', 'OBINNA', 'EGWIN', '', 'Male', '', '', '', '', 'Permanent', '8', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:14:53', '0', '2018-04-25 13:14:53', NULL),
-(36, '718079097997', 'Kwasiu@hyprops.com', '$2y$10$Q2EIBu/8tLx3QbeJzsnej.73USbVRYnDcuXPC1QIWeqyMUFu/6Giy', '', '4', 'KAYODE', 'WASIU', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:15:59', '0', '2018-04-25 13:15:59', NULL),
-(37, '108019007788', 'Magadi@hyprops.com', '$2y$10$iRCauFYf0K.lh5DWPuXBLeB3ptFMQytLh/WfjzI1KPijAFM.9f0GK', '', '4', 'MICHAEL', 'AGADI', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:19:53', '0', '2018-04-25 13:19:53', NULL),
-(38, '900891877778', 'Cnzeteh@hyprops.com', '$2y$10$kI2PgKE0nX27xTUussstmelldPNNLsevd3O3.yHpt2qM62DzumRbu', '', '4', 'CHUKWUTEM', 'NZETEH', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:20:55', '0', '2018-04-25 13:20:55', NULL),
-(39, '077199098110', 'Mmba@hyprops.com', '$2y$10$RlloYj6B3hGiEo0Gcuf63OJ7BVEj0c5zhnfvclKGipz/Va4aJS7Ay', '', '4', 'MICHAEL', 'MBA', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:22:15', '0', '2018-04-25 13:22:15', NULL),
-(40, '098991791989', 'Sabba@hyprops.com', '$2y$10$OqcaP/KoJdFL3EqmllTbWuKpdBSjKUgdbILvknhNyuoAfUmK5lwou', '', '4', 'SUNDAY', 'ABBA', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:23:13', '0', '2018-04-25 13:23:13', NULL),
-(41, '100780879887', 'Aomenendo@hyprops.com', '$2y$10$RdGfVdhB1YS.MokKcJLtjeBnVwtkaeyfvSc8jidlr5If/rG2VpkZm', 'Nwezesolomon@yahoo.com', '4', 'ABEL', 'OMENENDO', '', 'Male', NULL, '8062403687', 'Coordinator', 'No 1 Stacks lane, onikoyi street, Aguda, Surulere, Lagos state', 'Permanent', '2', '15', '1', 'Nigeria', 'Married', '', 'Solomon Nweze', '', 'ENUGU', '', '', '', '0907657845', 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 13:24:36', 'Solomon Nweze', '2020-05-27 12:04:55', 'Chrisitianity');
+INSERT INTO `users` (`id`, `uid`, `email`, `password`, `other_email`, `role`, `firstname`, `lastname`, `othername`, `sex`, `dob`, `phone`, `job_role`, `address`, `employ_type`, `position_id`, `dept_id`, `salary_id`, `nationality`, `marital`, `blood_group`, `next_kin`, `next_kin_phone`, `state`, `local_govt`, `emergency_name`, `emergency_phone`, `emergency_contact`, `photo`, `sign`, `title`, `qualification`, `employ_date`, `affiliate_dept`, `resign_date`, `active_status`, `dormant_status`, `status`, `remember_token`, `created_by`, `created_at`, `updated_by`, `updated_at`, `religion`) VALUES
+(1, '2147483647', 'Salamanda@reosuite.com', '$2y$10$1HS5A2C30Nex/OByxRFDeOtxHYxnTTfJmSukkJZ7aCY.iiADbHK32', '', '1', 'Salamanda', 'Musk', '', 'Male', '2019-08-22', '', '', '', 'Permanent', '2', '8', '1', '', '1', '', '', '', '', '', '', '', NULL, 'user.png', '2018-07-25-08-59-11_code-2434271_960_720.jpg', '', '', '', 0, NULL, '1', 0, '1', 'W4g7ZZe3Ka2cRprLzF0Rb348Aczc12VJVSUggmZPARstfPC4eRLVf1vF8dv5', '1', '2017-11-17 08:19:26', 'Salamanda Musk', '2020-11-17 11:55:05', NULL),
+(2, '2158783047', 'solomonnweze@gmail.com', '$2y$10$MWnEmgFEr3r1ii2vhvLiTuVK71PfOeNDouaWItywrKsnWu7T.VxPC', '', '4', 'Bill', 'Gates', 'Rich', 'Male', '', '2536535', '', '', 'Permanent', '2', '10', '1', '', '2', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 0, '1', '1m0TGa1lcIE4hvvWSCOLR6gPX84SoTKAQjRQ2irXDf0fpwGldWDCcFuxpEXr', '1', '2017-12-13 11:50:37', 'Solomon Nweze', '2017-12-13 11:50:37', NULL),
+(3, '21400036471', 'Nwezesolomon@yahoo.com', '$2y$10$aYDENbQJvN/.oU0xAf9l9OCedMhhplqdAse2JkV6W8YhCpzwjw1NW', '', '3', 'Asdfas', 'Kalu', '', 'Male', '', '45736', '', '', 'Permanent', '1', '10', '1', '', '3', 'O', '', '', '', '', '', '', NULL, 'user.png', '2017-12-15-13-49-46_thumbs-up.png', 'DSFSF', '', '', 0, NULL, '1', 1, '1', 'Pwzkb9skFMFyiOkbvXOSxurDnVN0CkVVHcbOIbIzmwJXQiWClr0KLJ7MTsjt', '1', '2017-12-15 06:00:43', 'Solomon Nweze', '2020-11-17 13:38:44', NULL),
+(4, '891079110988', 'Ookereke@hyprops.com', '$2y$10$NYsx9c3jzW9oQjSlecewCu5fVWMR9A4y/.gwE/TuFDRnnWr68fbOe', '', '3', 'Okereke', 'Kalu', 'Okereke', 'Male', 'Thursday 15 March 2007', '', '', '', 'Permanent', '1', '8', '1', '', '4', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 1, '1', '3yJ130lSmInRZClv8l7F5F60lUQGcO8HFUnqAyi0ELtyAzallAEvQ7sYhNj8', 'Solomon Nweze', '2018-03-15 09:07:07', 'Solomon Nweze', '2018-03-15 09:07:07', NULL),
+(5, '018870918108', 'Uakwiwu@hypropsngltd.com', '$2y$10$9rB4D5eJMdFLBzuvqdvznOTLD3uZpZ9HRcQcDAb5ZLxboY42WKG52', '', '2', 'Ugochukwu', 'Akwiwu', '', 'Male', '', '', '', '', 'Permanent', '2', '8', '1', '', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', '0LrMApXcV2SvM5aMF823MZli6U9vAhzKR6HzQAC6iUnHsULHG2ibpJd4iMOD', 'Solomon Nweze', '2018-04-25 08:04:51', '0', '2018-04-25 08:04:51', NULL),
+(6, '180009901100', 'Jdoe@hyprops.com', '$2y$10$s5B7NJ03LF5i9Ih2GgaPp.Tdds4bHIwycI8B3U3KfotRH5i8uy/..', '', '2', 'Okezie', 'Akwiwu', '', 'Male', NULL, '', '', '', 'Permanent', '5', '18', '1', 'Nigeria', '6', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 1, '1', 'NupSwGltFwvhJs5ePXejVhUs31qQAj0tbPUnz1yuLw59iTvgiNgB0QNUBPBz', 'Ugochukwu Akwiwu', '2018-04-25 09:01:19', 'Solomon Nweze', '2020-03-17 09:24:13', NULL),
+(7, '197078001970', 'Eijekhueme@hyprops.com', '$2y$10$NHXitz4zFWZAz3RiQ/c5k.VVh77gIo.RBlJfWSzf0AXWplVKdJ2TK', '', '2', 'Emmanuel', 'IJEKHUEME', '', 'Male', '', '', '', '', 'Permanent', '6', '18', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 1, '1', 'VX95LmxrkQtbzstJMuZN3ATNj8w67T3TQjeQrlhQYw8BGvt2tzfylnm8g53r', 'Ugochukwu Akwiwu', '2018-04-25 09:03:21', 'Solomon Nweze', '2018-04-25 09:03:21', NULL),
+(8, '118770109019', 'Egula@hyprops.com', '$2y$10$hhC3W/8lrnGYdiUmgLOiIO4wolYKzRTmDs1DSWeSiIRGDYGjbPgdq', '', '4', 'Emiko', 'Gula', '', 'Male', '', '', '', '', 'Permanent', '3', '3', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', 'm4PnUiRd7vzg6zY6A35tddtxNjTiwQ34HbpkVIyGjRkjhwXjOcATcpZkqRjz', 'Ugochukwu Akwiwu', '2018-04-25 09:05:13', '0', '2018-04-25 09:05:13', NULL),
+(9, '071178999079', 'Okolawole@hyprops.com', '$2y$10$Co9S3WUVFbvqK/VgEJhXpeQsTuBeeABihRmseDgYht/zkyVAFAHwm', '', '4', 'Opeyemi', 'Kolawole', '', 'Male', '', '', '', '', 'Permanent', '10', '3', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:15:09', '0', '2018-04-25 09:15:09', NULL),
+(10, '817011008119', 'Cagbo@hyprops.com', '$2y$10$gN98QI4VXXYySrvQBkCEouA8dZTByZHtPEbka.ItXvnCFMsqgelH.', '', '4', 'Clement', 'Agbo', '', 'Male', '', '', '', '', 'Permanent', '1', '3', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:16:25', '0', '2018-04-25 09:16:25', NULL),
+(11, '700717011898', 'Nabasilim@hyprops.com', '$2y$10$.z4TyxWg2OErCB84zELG4.GceMyy/jSVARhuEFBrwVk06/GmJAZeu', '', '4', 'NKIRU', 'CHIMA-EZEONUGO', '', 'Female', NULL, '', '', '', 'Permanent', '1', '17', '1', 'Nigeria', '11', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:18:01', 'Solomon Nweze', '2019-12-08 12:49:46', NULL),
+(12, '788000979000', 'Sevanson@hyprops.com', '$2y$10$Lj3N.5hStX5PIRXH8pQ.R.jNfFWI8jvY90xLxngbnwhCKBhRvry5W', '', '5', 'Sunny', 'Evanson', '', 'Male', '', '', '', '', 'Permanent', '8', '2', '1', 'Nigeria', '12', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 1, '1', 'VmtotbzqXNustEoAa5PT9bC8cNj5M8vZkpPnaX7gwxu2wJ1oLKviEVouhUrA', 'Ugochukwu Akwiwu', '2018-04-25 09:23:23', 'Solomon Nweze', '2018-04-25 09:23:23', NULL),
+(13, '010011107070', 'Soleghie@hyprops.com', '$2y$10$9qPiG03/rjZKtW68KwSTgusqUoMLCLgb3jBlrWrOFjm63OGaTqlfe', '', '5', 'SAMUEL', 'OLEIGHE', '', 'Male', '', '', '', '', 'Permanent', '1', '2', '1', 'Nigeria', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:27:03', '0', '2018-04-25 09:27:03', NULL),
+(14, '809818891997', 'Fezirim@hyprops.com', '$2y$10$1W2I1BaIN6QkZXgFGcAgx.m/znEmmZ8derPu6oVIxwUe335GYOJqa', '', '4', 'FRANKLIN', 'EZIRIM', '', 'Male', '', '', '', '', 'Permanent', '2', '2', '1', '', '14', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 1, '1', '7lat7pWCCecydQCh9jlHuxNUJJ6KKtcYbvwfB35M71RxPwSAkjPfWDrwryWZ', 'Ugochukwu Akwiwu', '2018-04-25 09:30:10', 'Solomon Nweze', '2018-04-25 09:30:10', NULL),
+(15, '817718009980', 'Oanipole@hyprops.com', '$2y$10$uOYU7FMHONVadc048PpVc.JfksbkCfwVlsMr6tpnyZcbDXjobNaK.', '', '4', 'Wale', 'ANIPOLE', '', 'Male', '', '', '', '', 'Permanent', '9', '13', '1', '', '15', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 1, '1', '51FHS7fM2g5CNGIqyEPICCqwEBQbtPpeLNLAPNEcBvEbvKf6QbhiYi9qi8n4', 'Ugochukwu Akwiwu', '2018-04-25 09:32:43', 'Solomon Nweze', '2018-04-25 09:32:43', NULL),
+(16, '819979901810', 'Uazubuike@hyprops.com', '$2y$10$ZrY2UU20EwrQGtGQN3GeAOuN5Ff3C15gb33T1Kl.mXbaQDo4ijlVG', '', '4', 'Uzoma', 'Azubike', '', 'Male', '', '', '', '', 'Permanent', '1', '13', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:36:29', '0', '2018-04-25 09:36:29', NULL),
+(17, '988991997111', 'Cagonsi@hyprops.com', '$2y$10$dzuJsWn2cKIzJ2.5bwJobuEUqokSF4.G780TRqb/tgI0hUdEDvZ46', '', '4', 'CHISOM', 'AGONSI', '', 'Male', '', '', '', '', 'Permanent', '2', '13', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:39:09', '0', '2018-04-25 09:39:09', NULL),
+(18, '911717980971', 'Sunday@umoh.com', '$2y$10$hlcwFEQsbHTBhuufxwHEce3lcmIsC1ltQy91CSmzC/fQ3Q4uWYSD.', '', '4', 'SUNDAY', 'UMOH', '', 'Male', '', '', '', '', 'Permanent', '1', '13', '1', 'Nigerian', '18', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:49:22', 'Solomon Nweze', '2018-04-25 09:49:22', NULL),
+(19, '907819181899', 'Cokpalaji@hyprops.com', '$2y$10$jdzvcQLay6FeMDVJA1aOZ.Q0.diK7gCpsvMPGDYp4oYXKq29e3llC', '', '4', 'CHINWEOKE', 'OKPALAJI', '', 'Female', '', '', '', '', 'Permanent', '9', '6', '1', 'Nigerian', '19', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:51:40', 'Solomon Nweze', '2018-04-25 09:51:40', NULL),
+(20, '791098787890', 'Sotuu@hyprops.com', '$2y$10$oTncK7h.EdaP0.nCCndqr.RAu0/O8AHM3WzZdQmKjoLLgjCRjEuki', '', '4', 'STEPHANIE', 'OTUU', '', 'Female', '', '', '', '', 'Permanent', '2', '6', '1', 'Nigerian', '20', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', 1, '1', '9YRC0vZRinPY28IR5E9RKix4iXLuPHeduTEEpdGXpqBQc5IAwocv4PVuPLTb', 'Ugochukwu Akwiwu', '2018-04-25 09:54:06', 'Solomon Nweze', '2018-04-25 09:54:06', NULL),
+(21, '781117008800', 'Iagwunobi@hypropsngltd.com', '$2y$10$zIWW/m0NJXV6m/a1sMR6e.KlAox.SqAxJZ.KxcijymR4lnJzhsouy', '', '4', 'IFEANYI', 'AGWUNOBI', '', 'Male', '', '', '', '', 'Permanent', '2', '6', '1', 'Nigerian', 'Divorced', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:56:03', '0', '2018-04-25 09:56:03', NULL),
+(22, '707190979070', 'Uegere@hyprops.com', '$2y$10$aL4kBWLp1SA8RY10a4S8/.eBa4TUH4XaUGSRuWMocFRGwEpKw7CWi', '', '4', 'UCHE', 'EGERE', 'IFEANYI', 'Male', '', '', '', '', 'Permanent', '3', '10', '1', 'Nigerian', '22', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 09:59:09', 'Solomon Nweze', '2018-04-25 09:59:09', NULL),
+(23, '171897011099', 'Oogunmodede@hyprops.com', '$2y$10$w.FtMhbNwcmjVEd4KzcFiObsT02rg5Eok3V5pHx7t4/rlzCBAYEOu', '', '4', 'BUNMI', 'OGUNMODEDE', '', 'Female', '', '', '', '', 'Permanent', '3', '10', '1', 'Nigerian', '23', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', 1, '1', 'UXKNWFjrNaV39xBPxVL6GbzmT4qzbHPMWKO3D6tKwSlvqW28bAwJ4sMpvypM', 'Ugochukwu Akwiwu', '2018-04-25 10:01:19', 'Solomon Nweze', '2018-04-25 10:01:19', NULL),
+(24, '809817171089', 'Toghojafor@hyprops.com', '$2y$10$jThmWlmy5VY8HZ8JYBHz7uz80Rhu2zIbi/q8gmO9APmhtFb77b8yi', '', '4', 'THERESA', 'OGHOJAFOR', '', 'Female', '', '', '', '', 'Permanent', '1', '10', '1', 'Nigerian', '24', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Miss', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:05:54', 'Solomon Nweze', '2018-04-25 10:05:54', NULL),
+(25, '908707798997', 'Jefevwia@hyprops.com', '$2y$10$9MTWUJxIhv0D6qfF/PY.EunHzL0QROVjOT7He5B2cqnERAVHkN6uS', '', '4', 'JOLOMI', 'EFEVWIA-PARKER', '', 'Female', '', '', '', '', 'Permanent', '3', '4', '1', 'Nigerian', '25', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', 1, '1', 'B4Uv3t14ELNPiOEsRlL5VOcSlcuB5JGgUrUeA10JWUqYWLF6Pw6Ii4MJLOao', 'Ugochukwu Akwiwu', '2018-04-25 10:09:53', 'Okereke Kalu', '2018-04-25 10:09:53', NULL),
+(26, '018177011188', 'Jkighir@hyprops.com', '$2y$10$dgHdNIRsxgA3xT9/mHq2qeMdsbGg1NEiTAgDFLdvqSFaURR55zRby', '', '4', 'JANE', 'KIGHIR', '', 'Female', '', '', '', '', 'Permanent', '8', '4', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mrs', '', '', 0, NULL, '1', 1, '1', 'GAgJ4ZpFDVr4156RUyI6A9m3hkILIOnxCuixC15JFOjCXTwkmVWvCETKfN4F', 'Ugochukwu Akwiwu', '2018-04-25 10:14:04', '0', '2018-04-25 10:14:04', NULL),
+(27, '189710971017', 'Cokeiyi@hyprops.com', '$2y$10$Gz6MX2ITZs9e0RMWu7YkfOi.Ki8yRbE.h3BifdxiNLfuoAvjnfJAK', '', '4', 'EMEKA', 'OKEIYI', '', 'Male', '', '', '', '', 'Permanent', '8', '4', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', 'mfGvi0nJKLRi4ksaCHeaFZ0Tl8XPVo2Mh6qEARysMu05qAdaGv8Bufeotnqb', 'Ugochukwu Akwiwu', '2018-04-25 10:17:39', '0', '2018-04-25 10:17:39', NULL),
+(28, '991878098909', 'Eatuwaogu@hyprops.com', '$2y$10$kjLR1PY63v/PVBoOxLqJz./5nPpS8Zlh6UCl0ta8ZzAAVX16Tn.9O', '', '6', 'EBERE', 'ATUWAOGU', '', 'Female', '', '', '', '', 'Permanent', '1', '9', '1', 'Nigerian', '28', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', 1, '1', '1QdhmKHVcJTkoN4vT5o6LJI0KSW7QFXI4pzjw3C3zXP5CDWT5FdRRK4jutql', 'Ugochukwu Akwiwu', '2018-04-25 10:20:37', 'Solomon Nweze', '2018-04-25 10:20:37', NULL),
+(29, '718977770711', 'Eabili@hyprops.com', '$2y$10$1Mdvmz86vMQrfQ17GRMpJuv/GCkPtOdJPycbBwzASbBK0v6rvEr2m', '', '4', 'ELIZABETH', 'ABILI', '', 'Female', '', '', '', '', 'Permanent', '2', '9', '1', 'Nigerian', '29', '', '', '', '', '', '', '', NULL, 'user.png', NULL, 'Mrs', '', '', 0, NULL, '1', 1, '1', '6DJHdYgttK1R7126rpqlZGgg8Bu4sotAdBaQqT902FHBzSgh7CjOn0wFYYZg', 'Ugochukwu Akwiwu', '2018-04-25 10:23:03', 'Solomon Nweze', '2018-04-25 10:23:03', NULL),
+(30, '989701909817', 'Jebubechukwu@hyprops.com', '$2y$10$4SY3Imr6WQHOug4uZWzqrex6HGZvlhACJbTiDE.tHvBeJox79Kcmm', '', '4', 'John', 'Ebubechukwu', '', 'Male', '', '', '', '', 'Permanent', '1', '14', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 10:27:52', '0', '2018-04-25 10:27:52', NULL),
+(31, '007981908800', 'Foladunjoye@hyprops.com', '$2y$10$iSOCaYWfkk.cbpNoGbpJoOANZgrjn6Ue.4.7MwW432iuNa3jvSr.i', '', '4', 'FEMI', 'Oladunjoye', '', 'Male', '', '', '', '', 'Permanent', '3', '15', '1', '', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:07:13', '0', '2018-04-25 12:07:13', NULL),
+(32, '898171900070', 'Anwosu@hyprops.com', '$2y$10$1kOFRu9oAgr2IG3.yqiwxejQo1ZfdDDYyXiSO/JC92wkSMHv3GRyq', '', '4', 'AMBROSE', 'NWOSU', '', 'Male', '', '', '', '', 'Permanent', '8', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:11:17', '0', '2018-04-25 12:11:17', NULL),
+(33, '770009788777', 'Mabah@hyprops.com', '$2y$10$IHXubLUGWQmEPcvvAK4Sn.Q5lXUj1pF5zWVD3XBupdP4EgsiogcWK', '', '4', 'MOSES', 'ABAH', '', 'Male', '', '', '', '', 'Permanent', '8', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:12:15', '0', '2018-04-25 12:12:15', NULL),
+(34, '107080818918', 'Hokwars@hyprops.com', '$2y$10$UCWEq9Toe8Y8.z2e.xlHqeXhAUOBDAH2DonNMvqEDkyJSFto2FVoG', '', '4', 'JOHN', 'OKWARA', '', 'Male', '', '', '', '', 'Permanent', '8', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:13:38', '0', '2018-04-25 12:13:38', NULL),
+(35, '001999181787', 'Oegwin@hyprops.com', '$2y$10$UuYiOdYfd9zq7Q3mQO8n6euAc5ZetH2LEXdaiCnw/MAF/EhSv0gAq', '', '4', 'OBINNA', 'EGWIN', '', 'Male', '', '', '', '', 'Permanent', '8', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:14:53', '0', '2018-04-25 12:14:53', NULL),
+(36, '718079097997', 'Kwasiu@hyprops.com', '$2y$10$Q2EIBu/8tLx3QbeJzsnej.73USbVRYnDcuXPC1QIWeqyMUFu/6Giy', '', '4', 'KAYODE', 'WASIU', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:15:59', '0', '2018-04-25 12:15:59', NULL),
+(37, '108019007788', 'Magadi@hyprops.com', '$2y$10$iRCauFYf0K.lh5DWPuXBLeB3ptFMQytLh/WfjzI1KPijAFM.9f0GK', '', '4', 'MICHAEL', 'AGADI', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:19:53', '0', '2018-04-25 12:19:53', NULL),
+(38, '900891877778', 'Cnzeteh@hyprops.com', '$2y$10$kI2PgKE0nX27xTUussstmelldPNNLsevd3O3.yHpt2qM62DzumRbu', '', '4', 'CHUKWUTEM', 'NZETEH', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:20:55', '0', '2018-04-25 12:20:55', NULL),
+(39, '077199098110', 'Mmba@hyprops.com', '$2y$10$RlloYj6B3hGiEo0Gcuf63OJ7BVEj0c5zhnfvclKGipz/Va4aJS7Ay', '', '4', 'MICHAEL', 'MBA', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:22:15', '0', '2018-04-25 12:22:15', NULL),
+(40, '098991791989', 'Sabba@hyprops.com', '$2y$10$OqcaP/KoJdFL3EqmllTbWuKpdBSjKUgdbILvknhNyuoAfUmK5lwou', '', '4', 'SUNDAY', 'ABBA', '', 'Male', '', '', '', '', 'Permanent', '2', '15', '1', 'Nigerian', 'Married', '', '', '', '', '', '', '', NULL, 'user.png', '', 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:23:13', '0', '2018-04-25 12:23:13', NULL),
+(41, '100780879887', 'Aomenendo@hyprops.com', '$2y$10$RdGfVdhB1YS.MokKcJLtjeBnVwtkaeyfvSc8jidlr5If/rG2VpkZm', 'Nwezesolomon@yahoo.com', '4', 'ABEL', 'OMENENDO', '', 'Male', NULL, '8062403687', 'Coordinator', 'No 1 Stacks lane, onikoyi street, Aguda, Surulere, Lagos state', 'Permanent', '2', '15', '1', 'Nigeria', 'Married', '', 'Solomon Nweze', '', 'ENUGU', '', '', '', '0907657845', 'user.png', NULL, 'Mr', '', '', 0, NULL, '1', 1, '1', NULL, 'Ugochukwu Akwiwu', '2018-04-25 12:24:36', 'Solomon Nweze', '2020-12-06 13:22:43', 'Chrisitianity');
 
 -- --------------------------------------------------------
 
@@ -9779,6 +9846,12 @@ ALTER TABLE `leave_type`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `leave_vacation_dates`
+--
+ALTER TABLE `leave_vacation_dates`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `lessons_learnt`
 --
 ALTER TABLE `lessons_learnt`
@@ -9987,6 +10060,12 @@ ALTER TABLE `skill_comp_cat`
 -- Indexes for table `stock`
 --
 ALTER TABLE `stock`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subscription`
+--
+ALTER TABLE `subscription`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -10834,7 +10913,7 @@ ALTER TABLE `jobs_access`
 -- AUTO_INCREMENT for table `job_applicants`
 --
 ALTER TABLE `job_applicants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `job_list`
@@ -10873,6 +10952,12 @@ ALTER TABLE `leave_log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `leave_vacation_dates`
+--
+ALTER TABLE `leave_vacation_dates`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `lessons_learnt`
 --
 ALTER TABLE `lessons_learnt`
@@ -10882,7 +10967,7 @@ ALTER TABLE `lessons_learnt`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 
 --
 -- AUTO_INCREMENT for table `milestones`
@@ -10913,6 +10998,12 @@ ALTER TABLE `notes`
 --
 ALTER TABLE `payroll`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `position`
+--
+ALTER TABLE `position`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `po_extention`
@@ -11009,6 +11100,12 @@ ALTER TABLE `sales_order`
 --
 ALTER TABLE `stock`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `subscription`
+--
+ALTER TABLE `subscription`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `survey`

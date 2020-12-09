@@ -25,7 +25,10 @@
         <b>Total Tax Percentage</b>
         <div class="form-group">
             <div class="form-line">
-                <input type="number" class="form-control" id="total_tax_perct" onkeyup="genPercentageTax('total_tax_perct','total_tax_amount','overall_sum','shared_sub_total','vendorCust','total_discount_amount','foreign_overall_sum','<?php echo url('amount_to_default_curr') ?>','vendorCust','posting_date')" name="one_time_tax_perct" placeholder="Percentage" >
+                <input type="number" class="form-control" id="total_tax_perct" 
+                onkeyup="genPercentageTax('total_tax_perct','total_tax_amount','overall_sum','shared_sub_total','vendorCust','total_discount_amount','foreign_overall_sum','<?php echo url('amount_to_default_curr') ?>','vendorCust','posting_date')"
+                onchange="genPercentageTax('total_tax_perct','total_tax_amount','overall_sum','shared_sub_total','vendorCust','total_discount_amount','foreign_overall_sum','<?php echo url('amount_to_default_curr') ?>','vendorCust','posting_date')"
+                name="one_time_tax_perct" placeholder="Percentage" >
             </div>
         </div>
     </div>

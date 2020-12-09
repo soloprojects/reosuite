@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2020 at 03:09 PM
+-- Generation Time: Dec 09, 2020 at 03:10 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -2914,7 +2914,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (207, '2020_09_01_112223_rename_jobs_table', 107),
 (208, '2020_09_01_112705_create_jobs_table', 108),
 (209, '2020_09_01_115000_create_failed_jobs_table', 109),
-(210, '2020_09_29_125651_modify_users_table', 110);
+(210, '2020_09_29_125651_modify_users_table', 110),
+(211, '2020_10_04_032039_create_subscription_table', 111),
+(212, '2020_10_11_202551_add_to_subscription_table', 111),
+(213, '2020_11_18_122425_add_to_users_table', 111);
 
 -- --------------------------------------------------------
 
@@ -3827,6 +3830,32 @@ CREATE TABLE `stock` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subscription`
+--
+
+CREATE TABLE `subscription` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `apps` text COLLATE utf8mb4_unicode_ci,
+  `user_count` text COLLATE utf8mb4_unicode_ci,
+  `app_format` text COLLATE utf8mb4_unicode_ci,
+  `active_status` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `temp_user_count` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `memory_status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `subscription`
+--
+
+INSERT INTO `subscription` (`id`, `apps`, `user_count`, `app_format`, `active_status`, `status`, `created_at`, `updated_at`, `temp_user_count`, `memory_status`) VALUES
+(1, '{0,1}', '4', '{\"0\":\"1\",\"1\":\"2\"}', 0, 1, '2020-12-09 13:05:29', '2020-12-09 13:05:29', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `survey`
 --
 
@@ -4613,15 +4642,16 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `updated_at` timestamp NULL DEFAULT NULL,
-  `religion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `religion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dormant_status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `uid`, `email`, `password`, `other_email`, `role`, `firstname`, `lastname`, `othername`, `sex`, `dob`, `phone`, `job_role`, `address`, `employ_type`, `position_id`, `dept_id`, `salary_id`, `nationality`, `marital`, `blood_group`, `next_kin`, `next_kin_phone`, `state`, `local_govt`, `emergency_name`, `emergency_phone`, `emergency_contact`, `photo`, `sign`, `title`, `qualification`, `employ_date`, `affiliate_dept`, `resign_date`, `active_status`, `status`, `remember_token`, `created_by`, `created_at`, `updated_by`, `updated_at`, `religion`) VALUES
-(1, '2147483647', 'Snweze@hyprops.com', '$2y$10$1HS5A2C30Nex/OByxRFDeOtxHYxnTTfJmSukkJZ7aCY.iiADbHK32', '', '1', 'Solomon', 'Nweze', '', 'Male', '2019-08-22', '', '', '', 'Permanent', '2', '8', '1', '', 'Single', '', '', '', '', '', '', '', NULL, 'user.png', '2018-07-25-08-59-11_code-2434271_960_720.jpg', '', '', '', 0, NULL, '1', '1', 'pdLfy3J0XvEpIJJJmAsCr4aw036UuUmCzynpUkXnMlQP2Q3ymj6CkfA3O80d', '1', '2017-11-17 09:19:26', 'Solomon Nweze', '2020-03-18 08:58:38', NULL);
+INSERT INTO `users` (`id`, `uid`, `email`, `password`, `other_email`, `role`, `firstname`, `lastname`, `othername`, `sex`, `dob`, `phone`, `job_role`, `address`, `employ_type`, `position_id`, `dept_id`, `salary_id`, `nationality`, `marital`, `blood_group`, `next_kin`, `next_kin_phone`, `state`, `local_govt`, `emergency_name`, `emergency_phone`, `emergency_contact`, `photo`, `sign`, `title`, `qualification`, `employ_date`, `affiliate_dept`, `resign_date`, `active_status`, `status`, `remember_token`, `created_by`, `created_at`, `updated_by`, `updated_at`, `religion`, `dormant_status`) VALUES
+(1, '2147483647', 'admin@reosuite.com', '$2y$10$1HS5A2C30Nex/OByxRFDeOtxHYxnTTfJmSukkJZ7aCY.iiADbHK32', '', '1', 'Solomon', 'Nweze', '', 'Male', '2019-08-22', '', '', '', 'Permanent', '2', '8', '1', '', 'Single', '', '', '', '', '', '', '', NULL, 'user.png', '2018-07-25-08-59-11_code-2434271_960_720.jpg', '', '', '', 0, NULL, '1', '1', 'pdLfy3J0XvEpIJJJmAsCr4aw036UuUmCzynpUkXnMlQP2Q3ymj6CkfA3O80d', '1', '2017-11-17 09:19:26', 'Solomon Nweze', '2020-03-18 08:58:38', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -6091,6 +6121,12 @@ ALTER TABLE `stock`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `subscription`
+--
+ALTER TABLE `subscription`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `survey`
 --
 ALTER TABLE `survey`
@@ -6989,7 +7025,7 @@ ALTER TABLE `lessons_learnt`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=214;
 
 --
 -- AUTO_INCREMENT for table `milestones`
@@ -7188,6 +7224,12 @@ ALTER TABLE `skill_comp_cat`
 --
 ALTER TABLE `stock`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `subscription`
+--
+ALTER TABLE `subscription`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `survey`
