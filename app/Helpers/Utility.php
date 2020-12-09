@@ -112,7 +112,7 @@ class Utility
     const REQUEST_CATEGORY_DIMENSION = 1, ACCOUNT_CHART_DIMENSION = 2;
     const OPEN_ACCOUNT_STATUS = 1, CLOSED_ACCOUNT_STATUS = 2;
     const MAIN_TRANSACTION = 1;
-    const DEFAULT_MAIL = 'email@reosuite.com';
+    const DEFAULT_MAIL = 'notifications@reosuite.com';
     const DEFAULT_APP_URL = 'http://www.reosuite.com';
 
     public static function IMG_URL($image = ''){
