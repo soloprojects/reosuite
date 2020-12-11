@@ -2,6 +2,13 @@
 
 @section('content')
 
+    @php
+        $subscription = Utility::subscription(); 
+        $appArr = $subscription->appArray;
+        $userApps = $subscription->userApps;
+
+    @endphp
+
     <!-- News Modal -->
     <div class="modal fade" id="news_modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -23,7 +30,8 @@
     </div>
 
 
-
+    <!-- EVENT SYSTEM REPORTING -->
+    @if(in_array($appArr[8],$userApps))
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -52,6 +60,7 @@
         </div>
 
     </div>
+    @endif
 
 <div id="dashboard_reports"></div>
 
@@ -84,30 +93,33 @@
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('upcoming_events');
 
+        if(calendarEl){
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+                height: 'parent',
+                header: {
+                    left: 'prevYear,prev,next,nextYear today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                defaultView: 'dayGridMonth',
+                defaultDate: '{{date('Y-m-d')}}',
+                navLinks: true, // can click day/week names to navigate views
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-            height: 'parent',
-            header: {
-                left: 'prevYear,prev,next,nextYear today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-            },
-            defaultView: 'dayGridMonth',
-            defaultDate: '{{date('Y-m-d')}}',
-            navLinks: true, // can click day/week names to navigate views
+                selectable: true,
+                selectMirror: true,
+                selectHelper: true,
 
-            selectable: true,
-            selectMirror: true,
-            selectHelper: true,
+                editable: false,
 
-            editable: false,
+                eventLimit: false, // allow "more" link when too many events
+                events: '{{url('load_dashboard_general_calendar')}}'
+            });
 
-            eventLimit: false, // allow "more" link when too many events
-            events: '{{url('load_dashboard_general_calendar')}}'
-        });
+            calendar.render();
 
-        calendar.render();
+        }
+
     });
 
 
