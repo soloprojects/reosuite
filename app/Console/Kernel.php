@@ -38,28 +38,28 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->command('command:InventoryReorder')
-            ->everyMinute();
+            ->daily();
 
         $schedule->command('command:VehicleMaintenanceScheduling')
-            ->everyMinute();
+            ->daily();
 
         $schedule->command('command:Birthday')
-            ->everyMinute();
+            ->daily();
 
         $schedule->command('command:BirthdayForTempUsers')
-            ->everyMinute();
+            ->daily();
 
         $schedule->command('command:OdometerLogReminder')
-            ->everyMinute();
+            ->daily();
 
         $schedule->command('command:EventReminder')
             ->everyMinute();
 
         $schedule->command('command:LoanDeduction')
-            ->everyMinute();
+            ->daily();
 
         $schedule->command('command:LeaveDates')
-            ->everyMinute();
+            ->daily();
 
 
     }

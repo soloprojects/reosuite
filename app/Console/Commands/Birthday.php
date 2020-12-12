@@ -42,12 +42,17 @@ class Birthday extends Command
     {
         //
         $today = date('Y-m-d');
+        $month = date('m');
+        $day = date('d');
         $birthdayUsersArr = [];
         $birthdayNames = [];
-        $birthdayUsers =  User::specialColumns2('active_status',Utility::STATUS_ACTIVE,'dob',$today);
+        $birthdayUsers =  User::specialColumns('active_status',Utility::STATUS_ACTIVE);
         foreach ($birthdayUsers as $userData){
 
-            $birthdayUsersArr[] = $userData->id;
+            $birthDate = strtotime($userData->dob);
+
+            $birthDay = date('d', $birthDate);
+            $birthMonth = date('m', $birthDate);
             $userEmail = $userData->email;
             $names = $userData->firstname.' '.$userData->lastname;
             $birthdayNames[] = $names;
@@ -58,23 +63,28 @@ class Birthday extends Command
             Birthdays comes once in a year, so we celebrate you today. Happy birthday, and have an amazing year.
             From ".Utility::companyInfo()->name;
 
-            $mailContent['message'] = $messageBody;
-            Notify::GeneralMail('mail_views.general', $mailContent, $userEmail);
+            if($birthDay == $day && $birthMonth == $month){
+                $birthdayUsersArr[] = $userData->id;
+                $mailContent['message'] = $messageBody;
+                Notify::GeneralMail('mail_views.general', $mailContent, $userEmail);
+            }
 
         }
 
-        $activeUsers = User::getAllData();
-        foreach($activeUsers as $userData){
-            if(!in_array($userData->id,$birthdayUsersArr)){
-                $userEmail = $userData->email;
+        if(count($birthdayUsersArr) > 0){
+            $activeUsers = User::getAllData();
+            foreach($activeUsers as $userData){
+                if(!in_array($userData->id,$birthdayUsersArr)){
+                    $userEmail = $userData->email;
 
-                $mailContent = [];
+                    $mailContent = [];
 
-                $messageBody = "Dear " . $userData->firstname . ", ".implode(',',$birthdayNames).
-                " have birthday today, please wish them well";
+                    $messageBody = "Dear " . $userData->firstname . ", ".implode(',',$birthdayNames).
+                    " have birthday today, please wish them well";
 
-                $mailContent['message'] = $messageBody;
-                Notify::GeneralMail('mail_views.general', $mailContent, $userEmail);
+                    $mailContent['message'] = $messageBody;
+                    Notify::GeneralMail('mail_views.general', $mailContent, $userEmail);
+                }
             }
         }
 

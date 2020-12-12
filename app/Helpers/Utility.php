@@ -1009,6 +1009,7 @@ class Utility
             $emptyData->email = 'Enter Email';
             $emptyData->phone1 = 'Enter phone 1';
             $emptyData->phone2 = 'Enter phone 2';
+            $emptyData->logo = 'logo.jpg';
             $emptyData->active_status = 'No active status';
 
             return $emptyData;

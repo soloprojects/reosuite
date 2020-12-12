@@ -43,42 +43,35 @@ class BirthdayForTempUsers extends Command
     {
         //
         $today = date('Y-m-d');
+        $month = date('m');
+        $day = date('d');
         $birthdayUsersArr = [];
         $birthdayNames = [];
-        $birthdayUsers =  TempUsers::specialColumns2('active_status',Utility::STATUS_ACTIVE,'dob',$today);
+        $birthdayUsers =  TempUsers::specialColumns('active_status',Utility::STATUS_ACTIVE);
         foreach ($birthdayUsers as $userData){
 
+            $birthDate = strtotime($userData->dob);
+
+            $birthDay = date('d', $birthDate);
+            $birthMonth = date('m', $birthDate);
             $birthdayUsersArr[] = $userData->id;
             $userEmail = $userData->email;
             $names = $userData->firstname.' '.$userData->lastname;
             $birthdayNames[] = $names;
 
             $mailContent = [];
-
+            //Log::info($birthDay.''.$today.'month='.$birthMonth.''.$month);
             $messageBody = "Dear " . $userData->firstname . ", we realize how important today is to you.
             Birthdays comes once in a year, so we celebrate you today. Happy birthday, and have an amazing year.
             From ".Utility::companyInfo()->name;
 
-            $mailContent['message'] = $messageBody;
-            Notify::GeneralMail('mail_views.general', $mailContent, $userEmail);
-
-        }
-
-        $activeUsers = User::getAllData();
-        foreach($activeUsers as $userData){
-            if(!in_array($userData->id,$birthdayUsersArr)){
-                $userEmail = $userData->email;
-
-                $mailContent = [];
-
-                $messageBody = "Dear " . $userData->firstname . ", ".implode(',',$birthdayNames).
-                    " have birthday today, please wish them well";
-
+            if($birthDay == $day && $birthMonth == $month){
                 $mailContent['message'] = $messageBody;
                 Notify::GeneralMail('mail_views.general', $mailContent, $userEmail);
             }
+
         }
 
-
+        
     }
 }
