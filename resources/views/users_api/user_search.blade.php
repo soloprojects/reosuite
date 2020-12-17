@@ -6,8 +6,8 @@
                    name="check_all" class="" />
 
         </th>
-        <th>Manage</th>
         <th>Name</th>
+        <th>Dormant Status</th>
         <th>Department</th>
         <th>Position</th>
         <th>Employment Type</th>
@@ -40,24 +40,29 @@
     </thead>
     <tbody>
     @foreach($mainData as $data)
-    @if($data->role == Utility::CONTROLLER  || Auth::user()->id == $data->id)
-    @else
+    
     <tr>
         <td scope="row">
             <input value="{{$data->id}}" type="checkbox" id="{{$data->id}}" class="kid_checkbox" />
 
         </td>
-        <td>
-            <a style="cursor: pointer;" onclick="editForm('{{$data->id}}','edit_content','<?php echo url('edit_user_form') ?>','<?php echo csrf_token(); ?>')"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-        </td>
         <!-- ENTER YOUR DYNAMIC COLUMNS HERE -->
         <td>
             @if($data->active_status == 1)
-            <a href="{{route('profile', ['uid' => $data->uid])}}">{{$data->title}}&nbsp;{{$data->firstname}}&nbsp;{{$data->othername}}&nbsp;{{$data->lastname}}</a>
+            <a href="#">{{$data->title}}&nbsp;{{$data->firstname}}&nbsp;{{$data->othername}}&nbsp;{{$data->lastname}}</a>
             @else
-                <a href="{{route('profile', ['uid' => $data->uid])}}">
+                <a href="#">
                     <span class="alert-warning">{{$data->title}}&nbsp;{{$data->firstname}}&nbsp;{{$data->othername}}&nbsp;{{$data->lastname}}</span>
                 </a>
+            @endif
+        </td>
+        <td>
+            @if($data->dormant_status == 1)
+            <a href="#">
+                    <span class="alert-warning">Dormant</span>
+                </a>
+            @else
+            <a href="#">Not Dormant/Active</a>
             @endif
         </td>
         <td>
@@ -113,10 +118,13 @@
         <!--END ENTER YOUR DYNAMIC COLUMNS HERE -->
 
     </tr>
-    @endif
     @endforeach
     </tbody>
 </table>
+
+<div class=" pagination pull-right">
+    {!! $mainData->render() !!}
+</div>
 
 <script>
     $('.tbl_order').on('scroll', function () {

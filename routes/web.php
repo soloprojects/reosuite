@@ -1626,13 +1626,12 @@ Route::any('/delete_bank_reconciliation', 'BankReconciliationController@destroy'
 //------------------API'S IN COMMUNICATION WITH SUBSCRIPTION PORTAL PLATFORM-----------------
 
 // -------------USER API MODULE-----------
-Route::any('/user_api', 'UsersApiController@index')->name('user_api');
-Route::any('/get_user_count_api', 'UsersApiController@getUserCount')->name('get_user_count_api');
-Route::any('/search_user_api', 'UsersApiController@searchUser')->name('user_search_api');
-Route::any('/change_user_dormant_status_api', 'UsersApiController@changeUserDormantStatus')->name('change_user_dormant_status_api');
-Route::post('/change_user_status_api', 'UsersApiController@changeStatus')->name('change_user_status_api');
-Route::any('/activate_user_portal_api', 'UsersApiController@activateUserPortal')->name('activate_user_portal_api');
+Route::any('/user_api', 'UsersApiController@index')->name('user_api')->middleware('cors');
+Route::any('/get_user_count_api', 'UsersApiController@getUserCount')->name('get_user_count_api')->middleware('cors');
+Route::any('/search_user_api', 'UsersApiController@searchUser')->name('user_search_api')->middleware('cors');
+Route::any('/change_user_dormant_status_api', 'UsersApiController@changeUserDormantStatus')->name('change_user_dormant_status_api')->middleware('cors');
+Route::post('/change_user_status_api', 'UsersApiController@changeStatus')->name('change_user_status_api')->middleware('cors');
+Route::any('/activate_user_portal_api', 'UsersApiController@activateUserPortal')->name('activate_user_portal_api')->middleware('cors');
 
 // -------------SUBSCRIPTION API MODULE-----------
-Route::any('/user_api', 'SubscriptionController@index')->name('user_api');
-Route::any('/update_subscription', 'SubscriptionController@updateSubscription')->name('update_subscription');
+Route::any('/update_subscription', 'SubscriptionController@updateSubscription')->name('update_subscription')->middleware('cors');

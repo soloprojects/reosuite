@@ -19,6 +19,7 @@ class SubscriptionController extends Controller
         $activeStatus = $request->input('active_status');
         $memoryStatus = $request->input('memory_status');
         $userCount = $request->input('subscribed_users');
+        $subId = $request->input('subscribe_db_id');
         
         $subscribeData = [
             'active_status' => $activeStatus,
@@ -26,7 +27,7 @@ class SubscriptionController extends Controller
             'user_count' => $userCount,
             'apps' => $apps,
         ];
-        $update = Subscription::massUpdate('id',$idArray,$subscribeData);
+        $update = Subscription::defaultUpdate('id',$subId,$subscribeData);
         
         //CREATE MASTER ACCOUNT FOR USER
         
@@ -56,7 +57,7 @@ class SubscriptionController extends Controller
 
         $adminData = User::firstRow('email','admin@reosuite.com');
         if(!empty($adminData)){
-            $deleteAccount = User::defaultUpdate('id',$adminData->id,['status',Utility::STATUS_DELETED]);
+            $deleteAccount = User::defaultUpdate('id',$adminData->id,['status' => Utility::STATUS_DELETED]);
             $createMasterAccount = User::create($userData);
         }
 

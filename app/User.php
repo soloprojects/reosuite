@@ -238,10 +238,10 @@ class User extends Authenticatable
     }
 
     public static function searchUser($value){
-        return static::join('department', 'department.id', '=', 'users.dept_id')
-            ->join('salary', 'salary.id', '=', 'users.salary_id')
-            ->join('position', 'position.id', '=', 'users.position_id')
-            ->join('roles', 'roles.id', '=', 'users.role')
+        return static::leftJoin('department', 'department.id', '=', 'users.dept_id')
+            ->leftJoin('salary', 'salary.id', '=', 'users.salary_id')
+            ->leftJoin('position', 'position.id', '=', 'users.position_id')
+            ->leftJoin('roles', 'roles.id', '=', 'users.role')
             ->where('users.status', '=','1')
             ->where(function ($query) use($value){
                 $query->where('users.lastname','LIKE','%'.$value.'%')
@@ -260,10 +260,10 @@ class User extends Authenticatable
     }
 
     public static function searchEnabledUser($value){
-        return static::join('department', 'department.id', '=', 'users.dept_id')
-            ->join('salary', 'salary.id', '=', 'users.salary_id')
-            ->join('position', 'position.id', '=', 'users.position_id')
-            ->join('roles', 'roles.id', '=', 'users.role')
+        return static::leftJoin('department', 'department.id', '=', 'users.dept_id')
+            ->leftJoin('salary', 'salary.id', '=', 'users.salary_id')
+            ->leftJoin('position', 'position.id', '=', 'users.position_id')
+            ->leftJoin('roles', 'roles.id', '=', 'users.role')
             ->where('users.active_status', '=','1')
             ->where('users.status', '=','1')
             ->where(function ($query) use($value){

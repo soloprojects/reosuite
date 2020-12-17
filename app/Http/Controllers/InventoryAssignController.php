@@ -37,7 +37,7 @@ class InventoryAssignController extends Controller
             if(Utility::detectSelected('inventory_access',Auth::user()->id))
             return view::make('inventory_assign.main_view')->with('mainData',$mainData);
             else
-                return view::make('errors.403');
+            return '<h2>You do not have access to this module, please see your administrator or navigate to configuration to module access grant to config inventory system access</h2>';
         }
 
     }

@@ -40,8 +40,7 @@
     </thead>
     <tbody>
     @foreach($mainData as $data)
-    @if($data->role == Utility::CONTROLLER  || Auth::user()->id == $data->id)
-    @else
+    
     <tr>
         <td scope="row">
             <input value="{{$data->id}}" type="checkbox" id="{{$data->id}}" class="kid_checkbox" />
@@ -50,20 +49,20 @@
         <!-- ENTER YOUR DYNAMIC COLUMNS HERE -->
         <td>
             @if($data->active_status == 1)
-            <a href="{{route('profile', ['uid' => $data->uid])}}">{{$data->title}}&nbsp;{{$data->firstname}}&nbsp;{{$data->othername}}&nbsp;{{$data->lastname}}</a>
+            <a href="#">{{$data->title}}&nbsp;{{$data->firstname}}&nbsp;{{$data->othername}}&nbsp;{{$data->lastname}}</a>
             @else
-                <a href="{{route('profile', ['uid' => $data->uid])}}">
+                <a href="#">
                     <span class="alert-warning">{{$data->title}}&nbsp;{{$data->firstname}}&nbsp;{{$data->othername}}&nbsp;{{$data->lastname}}</span>
                 </a>
             @endif
         </td>
         <td>
             @if($data->dormant_status == 1)
-            <a href="#">Dormant</a>
-            @else
-                <a href="#">
-                    <span class="alert-warning">Not Dormant/Active</span>
+            <a href="#">
+                    <span class="alert-warning">Dormant</span>
                 </a>
+            @else
+            <a href="#">Not Dormant/Active</a>
             @endif
         </td>
         <td>
@@ -119,7 +118,6 @@
         <!--END ENTER YOUR DYNAMIC COLUMNS HERE -->
 
     </tr>
-    @endif
     @endforeach
     </tbody>
 </table>

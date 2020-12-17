@@ -22,6 +22,7 @@ use App\Http\Requests;
 use App\model\TempUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Log;
 
 class UsersApiController extends Controller
 {
@@ -29,17 +30,9 @@ class UsersApiController extends Controller
     public function index(Request $request)
     {
         //
-        //$req = new Request();
         $mainData =  User::paginateAllData();
-        //print_r($mainData);exit();
 
-        if ($request->ajax()) {
-            return \Response::json(view::make('users_api.reload',array('mainData' => $mainData))->render());
-
-        }else{
-            return view::make('users.main_view')->with('mainData',$mainData);
-        }
-
+            return view::make('users_api.reload')->with('mainData',$mainData);
     }
 
   
@@ -84,7 +77,7 @@ class UsersApiController extends Controller
         //print_r($obtain_array); die();
         if (count($user_ids) > 0) {
 
-            return view::make('users.user_search')->with('mainData',$mainData);
+            return view::make('users_api.user_search')->with('mainData',$mainData);
         }else{
             return 'No match found, please search again with sensitive words';
         }
@@ -138,7 +131,17 @@ class UsersApiController extends Controller
 
     }
 
-    public function changeDormantStatus(Request $request)
+    public function getUserCount(Request $request)
+    {
+        //
+       
+        $userData = User::countData('dormant_status',Utility::STATUS_ACTIVE);
+        
+        return $userData;
+
+    }
+
+    public function changeUserDormantStatus(Request $request)
     {
         //
         $idArray = json_decode($request->input('all_data'));

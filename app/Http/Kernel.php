@@ -56,6 +56,7 @@ class Kernel extends HttpKernel
         'auth.manager' => \App\Http\Middleware\AdminManager::class,
         'auth.admin' => \App\Http\Middleware\AdminOnly::class,
         'auth.staff' => \App\Http\Middleware\AdminStaff::class,
+        'cors' => \App\Http\Middleware\Cors::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

@@ -60,7 +60,7 @@ class InventoryController extends Controller
                 ->with('putAwayTemp',$putAwayTemp)->with('itemCategory',$itemCategory)->with('unitMeasure',$unitMeasure)
                 ->with('invCount',$invCount)->with('accountChart',$accountChart)->with('currSymbol',$currSymbol);
             else
-                return view::make('errors.403');
+            return '<h2>You do not have access to this module, please see your administrator or navigate to configuration to module access grant to config inventory system access</h2>';
         }
 
 
@@ -234,7 +234,7 @@ class InventoryController extends Controller
         $accountChart = AccountChart::getAllData();
         $putAwayTemp = PutAwayTemplate::getAllData();
         $currSymbol = session('currency')['symbol'];
-        return view::make('Inventory.edit_form')->with('edit',$inventory)->with('putAwayTemp',$putAwayTemp)
+        return view::make('inventory.edit_form')->with('edit',$inventory)->with('putAwayTemp',$putAwayTemp)
             ->with('inventoryType',$inventoryType)->with('unitMeasure',$unitMeasure)->with('invCount',$invCount)
             ->with('accountChart',$accountChart)->with('itemCategory',$itemCategory)->with('currSymbol',$currSymbol);
 

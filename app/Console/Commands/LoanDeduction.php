@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Helpers\Utility;
 use App\model\Requisition;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;
 
 class LoanDeduction extends Command

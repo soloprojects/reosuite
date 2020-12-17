@@ -46,7 +46,7 @@ class InventoryContractController extends Controller
                 return view::make('inventory_contract.main_view')->with('mainData',$mainData)->with('contractType',$contractType)
                     ->with('contractStatus',$contractStatus)->with('currSymbol',$currSymbol);
             else
-                return view::make('errors.403');
+            return '<h2>You do not have access to this module, please see your administrator or navigate to configuration to module access grant to config inventory system access</h2>';
         }
 
 
