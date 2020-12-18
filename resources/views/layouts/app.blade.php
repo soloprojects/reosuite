@@ -798,10 +798,11 @@
                         <li>
                             <a href="{{url('document')}}">Documents</a>
                         </li>
+                        <li>
+                            <a href="{{url('document_category')}}">Document Category</a>
+                        </li>
+                            
                         @if(in_array(Auth::user()->role,\App\Helpers\Utility::TOP_USERS))
-                            <li>
-                                <a href="{{url('document_category')}}">Document Category</a>
-                            </li>
                             <li>
                                 <a href="{{url('document_archive')}}">Document Archives</a>
                             </li>
