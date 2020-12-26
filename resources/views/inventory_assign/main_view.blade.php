@@ -20,7 +20,7 @@
                                         <div class="form-line">
                                             <input type="text" class="form-control" autocomplete="off" id="select_inv" onkeyup="searchOptionList('select_inv','myUL500','{{url('default_select')}}','search_inventory','inv500');" name="select_user" placeholder="Inventory Item">
 
-                                            <input type="hidden" class="inv_class" value="" name="user" id="inv500" />
+                                            <input type="hidden" class="inv_class" value="" name="inventory" id="inv500" />
                                         </div>
                                     </div>
                                     <ul id="myUL500" class="myUL"></ul>
@@ -149,6 +149,69 @@
 
                     </ul>
                 </div>
+                <div class=" body">
+                    <form name="import_excel" id="searchMainForm" onsubmit="false;" class="form form-horizontal" method="post" enctype="multipart/form-data">
+                        <div class="body">
+
+                            <div class="row clearfix">
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control datepicker" autocomplete="off" id="start_date" name="start_date" placeholder="From e.g 2019-02-22">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control datepicker" autocomplete="off" id="end_date" name="end_date" placeholder="To e.g 2019-04-21">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" autocomplete="off" id="select_user2" onkeyup="searchOptionList('select_user2','myUL2','{{url('default_select')}}','default_search','user2');" name="select_user" placeholder="Select User">
+
+                                            <input type="hidden" class="user_class" name="user" id="user2" />
+                                        </div>
+                                    </div>
+                                    <ul id="myUL2" class="myUL"></ul>
+                                </div>                                                          
+
+                            </div>
+
+                            <div class="row clearfix">
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" autocomplete="off" id="select_inv2" onkeyup="searchOptionList('select_inv2','myUL501','{{url('default_select')}}','search_inventory','inv501');" name="select_user" placeholder="Inventory Item">
+
+                                            <input type="hidden" class="inv_class" value="" name="inventory" id="inv501" />
+                                        </div>
+                                    </div>
+                                    <ul id="myUL501" class="myUL"></ul>
+                                </div>   
+
+                                <div class="col-sm-8" id="" style="">
+                                    <div class="form-group">
+                                        <button class="btn btn-info col-sm-8" type="button" onclick="searchUsingDate('searchMainForm','<?php echo url('search_inv_assign'); ?>','reload_data',
+                                                '<?php echo url('inventory_assign'); ?>','<?php echo csrf_token(); ?>','start_date','end_date')">Search</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+
+                </div>
                 <div class="body table-responsive" id="reload_data">
                     <table class="table table-bordered table-hover table-striped" id="main_table">
                         <thead>
@@ -199,9 +262,11 @@
 
 
                             <!--END ENTER YOUR DYNAMIC COLUMNS HERE -->
+                            @if(in_array(Auth::user()->role,Utility::TOP_USERS) || Auth::user()->id == $data->created_by)
                             <td>
                                 <a style="cursor: pointer;" onclick="editForm('{{$data->id}}','edit_content','<?php echo url('edit_inv_assign_form') ?>','<?php echo csrf_token(); ?>')"><i class="fa fa-pencil-square-o fa-2x"></i></a>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                         </tbody>

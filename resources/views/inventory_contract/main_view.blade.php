@@ -289,7 +289,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        inventory and Contract
+                        Facility and Asset Management
                     </h2>
                     <ul class="header-dropdown m-r--5">
                         <li>

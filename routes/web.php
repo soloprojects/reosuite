@@ -645,6 +645,7 @@ Route::any('/inventory_assign', 'InventoryAssignController@index')->name('invent
 Route::post('/create_inv_assign', 'InventoryAssignController@create')->name('create_inv_assign');
 Route::post('/edit_inv_assign_form', 'InventoryAssignController@editForm')->name('edit_inv_assign_form');
 Route::post('/edit_inv_assign', 'InventoryAssignController@edit')->name('edit_inv_assign');
+Route::post('/search_inv_assign', 'InventoryAssignController@search')->name('search_inv_assign');
 Route::post('/delete_inv_assign', 'InventoryAssignController@destroy')->name('delete_inv_assign');
 
 // -------------INVENTORY RECORD MODULE-----------

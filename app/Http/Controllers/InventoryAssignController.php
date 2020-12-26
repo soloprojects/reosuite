@@ -37,7 +37,7 @@ class InventoryAssignController extends Controller
             if(Utility::detectSelected('inventory_access',Auth::user()->id))
             return view::make('inventory_assign.main_view')->with('mainData',$mainData);
             else
-            return '<h2>You do not have access to this module, please see your administrator or navigate to configuration to module access grant to config inventory system access</h2>';
+            return '<h2>You do not have access to this module, please see your administrator or navigate to configuration to module access grant to config inventory system access</h2>'; 
         }
 
     }
@@ -58,8 +58,15 @@ class InventoryAssignController extends Controller
 
         $rule = [];
 
+        if(count($item) <= 0 || count($user) <= 0){
+            return response()->json([
+                'message' => 'warning',
+                'message2' => 'Please select an item to continue'
+            ]);
+        }
+
         $validator = Validator::make($request->all(),$rule);
-        if(count($item) == count($qty)){
+        if(count($item) == count($qty) && count($item) == count($user)){
 
             for($i=0;$i<count($item);$i++) {
                 if(empty($user[$i])) {
@@ -72,7 +79,7 @@ class InventoryAssignController extends Controller
                     $desc[$i] = '';
                 }
                 $dbDATA = [
-                    'item_id' => $item[$i],
+                    'user_id' => $item[$i],
                     'user_id' => $user[$i],
                     'qty' => $qty[$i],
                     'location' => $location[$i],
@@ -164,18 +171,38 @@ class InventoryAssignController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function search(Request $request)
     {
-        //
-    }
 
+        $startDate = Utility::standardDate($request->input('start_date'));
+        $endDate = Utility::standardDate($request->input('end_date'));
+        $user = $request->input('user');
+        $inventory = $request->input('inventory');
+        $dateArray = [$startDate,$endDate];
+        $mainData = [];
+        
+        $chartObject = new \stdClass();
+
+            //PROCESS SEARCH
+            if(!empty($user) && empty($inventory)){
+                $mainData = InventoryAssign::specialColumnsDate1('user_id', $user,$dateArray);
+            }
+
+            if(empty($user) && !empty($inventory)){
+                $mainData = InventoryAssign::specialColumnsDate1('item_id', $inventory, $dateArray);
+            }
+
+            if(empty($user) && empty($inventory)){
+                $mainData = InventoryAssign::specialColumnsDate($dateArray);
+            }
+
+            if(!empty($user) && !empty($inventory)){
+                $mainData = InventoryAssign::specialColumnsDate2('item_id', $inventory, 'user_id', $user,$dateArray);
+            }
+
+        return view::make('inventory_assign.search')->with('mainData',$mainData);
+
+    }
     /**
      * Remove the specified resource from storage.
      *

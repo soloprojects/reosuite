@@ -119,6 +119,41 @@ class InventoryAssign extends Model
 
     }
 
+    public static function specialColumnsDate2($column, $post, $column2, $post2,$dateArray)
+    {
+        //return Utility::specialColumns2(self::table(),$column, $post, $column2, $post2);
+        return static::where('status', '=',Utility::STATUS_ACTIVE)->where($column, '=',$post)
+            ->where($column2, '=',$post2)->orderBy('id','DESC')
+            ->whereBetween('created_at',$dateArray)->get();
+
+    }
+
+    public static function specialColumnsDate3($column, $post, $column2, $post2, $column3, $post3,$dateArray)
+    {
+        //return Utility::specialColumns2(self::table(),$column, $post, $column2, $post2);
+        return static::where('status', '=',Utility::STATUS_ACTIVE)->where($column, '=',$post)
+            ->where($column2, '=',$post2)->where($column3, '=',$post3)
+            ->whereBetween('created_at',$dateArray)->orderBy('id','DESC')->get();
+
+    }
+
+    public static function specialColumnsDate1($column, $post,$dateArray)
+    {
+        //return Utility::specialColumns2(self::table(),$column, $post, $column2, $post2);
+        return static::where('status', '=',Utility::STATUS_ACTIVE)->where($column, '=',$post)
+            ->whereBetween('created_at',$dateArray)->orderBy('id','DESC')->get();
+
+    }
+
+    public static function specialColumnsDate($dateArray)
+    {
+        //return Utility::specialColumns2(self::table(),$column, $post, $column2, $post2);
+        return static::where('status', '=',Utility::STATUS_ACTIVE)
+            ->whereBetween('created_at',$dateArray)->orderBy('id','DESC')->get();
+
+    }
+
+
     public static function massData($column, $post = [])
     {
         //return Utility::massData(self::table(),$column, $post);
