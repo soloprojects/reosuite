@@ -7,7 +7,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">New Approval System</h4>
+                    <h4 class="modal-title" id="defaultModalLabel">New Admin Approval System</h4>
                 </div>
                 <div class="modal-body">
 
@@ -110,7 +110,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Approval System
+                        Admin Approval System
                     </h2>
                     <ul class="header-dropdown m-r--5">
                         <li>
@@ -261,7 +261,7 @@
                     } else if (message2 == 'saved') {
 
                          //RESET FORM
-                        resetForm(formId);
+                        //resetForm(formId);
                         var successMessage = swalSuccess('Data saved successfully');
                         swal("Success!", "Data saved successfully!", "success");
 

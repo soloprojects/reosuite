@@ -56,6 +56,7 @@ class HrisApprovalSysController extends Controller
             $displayArray = [];
 
             for($i=0;$i<count($user);$i++){
+                if(!empty($user[$i]) && !empty($stage[$i])) {
                 $hold = [];
                 $userData = User::firstRow('id',$user[$i]);
                 $username = $userData->firstname.' '.$userData->lastname;
@@ -64,6 +65,7 @@ class HrisApprovalSysController extends Controller
                 $compArray[$stage[$i]] = $user[$i];
                 $hold[$stage[$i]] = $user[$i];
                 $displayArray[$username] = $hold;
+                }
             }
             $encodeCompArray = json_encode($compArray);
             $encodeStage = json_encode($stageArray);
@@ -145,6 +147,7 @@ class HrisApprovalSysController extends Controller
             $displayArray = [];
 
             for($i=0;$i<count($user);$i++){
+                if(!empty($user[$i]) && !empty($stage[$i])) {
                 $hold = [];
                 $userData = User::firstRow('id',$user[$i]);
                 $username = $userData->firstname.' '.$userData->lastname;
@@ -153,6 +156,7 @@ class HrisApprovalSysController extends Controller
                 $compArray[$stage[$i]] = $user[$i];
                 $hold[$stage[$i]] = $user[$i];
                 $displayArray[$username] = $hold;
+                }
             }
             $encodeCompArray = json_encode($compArray);
             $encodeStage = json_encode($stageArray);

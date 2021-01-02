@@ -260,7 +260,7 @@
                     } else if (message2 == 'saved') {
 
                          //RESET FORM
-                        resetForm(formId);
+                        //resetForm(formId);
                         var successMessage = swalSuccess('Data saved successfully');
                         swal("Success!", "Data saved successfully!", "success");
 

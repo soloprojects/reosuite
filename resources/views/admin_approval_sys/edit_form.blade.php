@@ -55,7 +55,7 @@
 
             <div class="col-sm-4" id="hide_button_edit">
                 <div class="form-group">
-                    <div onclick="addMore('add_more_edit','hide_button_edit','1','<?php echo URL::to('add_more'); ?>','approval_sys','hide_button_edit');">
+                    <div onclick="addMore('add_more_edit','hide_button_edit','1','<?php echo URL::to('add_more'); ?>','approval_sys_edit','hide_button_edit');">
                         <i style="color:green;" class="fa fa-plus-circle fa-2x pull-right"></i>
                     </div>
                 </div>

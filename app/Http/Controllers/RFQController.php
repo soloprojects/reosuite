@@ -66,16 +66,7 @@ class RFQController extends Controller
 
         if($validator->passes()){
 
-            /*$countData = PoExtension::firstRow('po_number',$request->input('po_number'));
-            if(!empty($countData)){
-
-                return response()->json([
-                    'message' => 'good',
-                    'message2' => 'Entry(PO number) already exist, please try another entry'
-                ]);
-
-            }*/
-
+            
             //ITEM VARIABLES
             $invClass = Utility::jsonUrlDecode($request->input('inv_class')); $itemDesc = Utility::jsonUrlDecode($request->input('item_desc'));
              $quantity = Utility::jsonUrlDecode($request->input('quantity')); $unitMeasure = Utility::jsonUrlDecode($request->input('unit_measure'));
@@ -88,8 +79,8 @@ class RFQController extends Controller
             $dueDate = $request->input('due_date'); $mailOption = $request->input('mail_option');
             $emails = $request->input('emails'); $file = $request->input('file');
             $message = Utility::urlDecode($request->input('mail_message')); $rfqNo = $request->input('rfq_no');
-            $mailCopy = $request->input('mail_copy'); $user = $request->input('user');
-
+            $mailCopy = $request->input('mail_copy'); $user = $request->input('assign_user');
+            
             $files = $request->file('file');
             $attachment = [];
             $mailFiles = [];
@@ -142,7 +133,7 @@ class RFQController extends Controller
                 'message' => 'warning',
                 'message2' => json_encode($invClass)
             ]);*/
-            if(!empty($accClass)) {
+            if(!empty($accClass) || !empty($invClass)) {
 
                 $mainRfq = RFQExtension::create($dbDATA);
                 $accDbData['rfq_id'] = $mainRfq->id;
@@ -197,7 +188,7 @@ class RFQController extends Controller
                     $mailContent['rfq']= $getRfq;
                     $mailContent['rfqData'] = $getRfqData;
                     $mailContent['attachment'] = $mailFiles;
-                    $mailContent['currency'] = $currencyData->currency;
+                    $mailContent['currency'] = '';
 
                     //CHECK IF MAIL IS EMPTY ELSE CONTINUE TO SEND MAIL
                     if($emails != ''){
@@ -221,7 +212,7 @@ class RFQController extends Controller
 
                 return response()->json([
                     'message' => 'warning',
-                    'message2' => 'Please ensure that all account selected has a rate'
+                    'message2' => 'Please fill in all required fields'
                 ]);
 
             }
@@ -304,7 +295,7 @@ class RFQController extends Controller
             //GENERAL VARIABLES
             $dueDate = $request->input('due_date'); $mailOption = $request->input('mail_option');
             $emails = $request->input('emails'); $file = $request->input('file');
-            $message = Utility::urlDecode($request->input('mail_message')); $user = $request->input('user');
+            $message = Utility::urlDecode($request->input('mail_message')); $user = $request->input('assign_user');
             $rfqNo = $request->input('rfq_no'); $mailCopy = $request->input('mail_copy');
 
             $files = $request->file('file');
@@ -392,14 +383,6 @@ class RFQController extends Controller
 
             $accDbData['rfq_id'] = $editId;
             $accDbData['uid'] = $uid;
-
-
-            /*return response()->json([
-                'message' => 'good',
-                'message2' =>  json_encode($gg).'count='.$countExtAcc  //json_encode($request->all(),true)
-            ]);*/
-
-
 
             //LOOP THROUGH ACCOUNTS
             if(!empty($accClass)) {

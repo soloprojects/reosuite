@@ -9,7 +9,7 @@
                     <div class="form-line">
                         <input type="text" class="form-control" value="{{$edit->assigned->firstname}} {{$edit->assigned->lastname}}" autocomplete="off" id="select_user_edit" onkeyup="searchOptionList('select_user_edit','myUL2_edit','{{url('default_select')}}','default_search','user_edit');" name="select_user" placeholder="Select User">
 
-                        <input type="hidden" class="user_class_edit" value="{{$edit->assigned_user}}" name="user" id="user_edit" />
+                        <input type="hidden" class="user_class_edit" value="{{$edit->assigned_user}}" name="assign_user" id="user_edit" />
                     </div>
                 </div>
                 <ul id="myUL2_edit" class="myUL"></ul>

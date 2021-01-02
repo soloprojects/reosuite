@@ -174,7 +174,7 @@
                 <div class="form-line">
 
                     <input type="text" class="form-control " autocomplete="off" id="select_user{{$num2}}" onkeyup="searchOptionList('select_user{{$num2}}','myUL{{$num2}}','{{url('default_select')}}','default_search','user{{$num2}}');" name="select_user" placeholder="Select User">
-                    <input type="hidden" class="user_class_edit user_class" name="user" id="user{{$num2}}" />
+                    <input type="hidden" class=" user_class" name="user" id="user{{$num2}}" />
                 </div>
             </div>
             <ul id="myUL{{$num2}}" class="myUL"></ul>
@@ -182,7 +182,7 @@
         <div class="col-sm-4">
             <div class="form-group">
                 <div class="form-line">
-                    <select class="form-control stage_edit stage"  name="stage" >
+                    <select class="form-control stage"  name="stage" >
                         <option value="">select</option>
                         <?php for($i=0; $i<10;$i++){ ?>
                         @if($i == 0)
@@ -208,6 +208,61 @@
         <div class="col-sm-4" id="">
             <div class="form-group">
                 <div style="cursor: pointer;" onclick="removeInput('{{$add_id}}','remove_sal{{$more}}','{{url('add_more')}}','approval_sys','new_sal','{{$more}}','{{$add_id}}','{{$hide_id}}');">
+                    <i style="color:red;" class="fa fa-minus-circle fa-2x pull-right"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="add_more"></div>
+
+
+@endif
+
+<!-- APPROVAL SYSTEM EDIT -->
+@if($type == 'approval_sys_edit')
+
+    <div class="row clearfix remove_sal_edit{{$more}} new_sal_edit">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <div class="form-line">
+
+                    <input type="text" class="form-control " autocomplete="off" id="select_user_edit{{$num2}}" onkeyup="searchOptionList('select_user_edit{{$num2}}','myUL_edit{{$num2}}','{{url('default_select')}}','default_search','user_edit{{$num2}}');" name="select_user" placeholder="Select User">
+                    <input type="hidden" class="user_class_edit" name="user" id="user_edit{{$num2}}" />
+                </div>
+            </div>
+            <ul id="myUL_edit{{$num2}}" class="myUL"></ul>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <div class="form-line">
+                    <select class="form-control stage_edit"  name="stage" >
+                        <option value="">select</option>
+                        <?php for($i=0; $i<10;$i++){ ?>
+                        @if($i == 0)
+                        @else
+                            <option value="{{$i}}">Stage {{$i}}</option>
+                        @endif
+
+                        <?php } ?>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 addButtons" id="{{$hide_id}}{{$more}}_edit">
+            <div class="form-group">
+                <div onclick="addMore('{{$add_id}}','{{$hide_id}}{{$more}}_edit','{{$num2}}','<?php echo URL::to('add_more'); ?>','approval_sys_edit','{{$hide_id}}');">
+                    <i style="color:green;" class="fa fa-plus-circle fa-2x pull-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4" id="">
+            <div class="form-group">
+                <div style="cursor: pointer;" onclick="removeInput('{{$add_id}}','remove_sal_edit{{$more}}','{{url('add_more')}}','approval_sys_edit','new_sal_edit','{{$more}}','{{$add_id}}','{{$hide_id}}');">
                     <i style="color:red;" class="fa fa-minus-circle fa-2x pull-right"></i>
                 </div>
             </div>

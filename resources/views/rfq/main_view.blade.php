@@ -29,7 +29,7 @@
                                         <div class="form-line">
                                             <input type="text" class="form-control" autocomplete="off" id="select_user" onkeyup="searchOptionList('select_user','myUL2','{{url('default_select')}}','default_search','assign_user');" name="select_user" placeholder="Select User">
 
-                                            <input type="hidden" class="user_class" name="user" id="assign_user" />
+                                            <input type="hidden" class="user_class" name="assign_user" id="assign_user" />
                                         </div>
                                     </div>
                                     <ul id="myUL2" class="myUL"></ul>

@@ -86,7 +86,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Department Approval
+                        Admin Department Approval
                     </h2>
                     <ul class="header-dropdown m-r--5">
                         <li>

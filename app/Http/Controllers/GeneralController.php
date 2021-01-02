@@ -944,6 +944,12 @@ class GeneralController extends Controller
                 ->with('add_id',$addButtonId)->with('hide_id',$hideButtonId)->with('users',$users);
         }
 
+        if($type == 'approval_sys_edit'){
+            $users = User::getAllData();
+            return view::make('general.addMore')->with('num2',$num2)->with('more',$more)->with('type',$type)
+                ->with('add_id',$addButtonId)->with('hide_id',$hideButtonId)->with('users',$users);
+        }
+
         if($type == 'competency_cat'){
             $dept = Department::getAllData();
             $compType = SkillCompFrame::getAllData();
