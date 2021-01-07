@@ -8,7 +8,7 @@
         </th>
 
         <th>Department</th>
-        <th>HOD</th>
+        <th></th>
         <th>Manage</th>
     </tr>
     </thead>

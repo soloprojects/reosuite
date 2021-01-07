@@ -2455,6 +2455,25 @@
         $('#'+exclTaxId).val(decPoints(newAmt,2));
     }
 
+    function oneTimeTax(totalAmtId,totalAmount){
+        var perctId = (totalAmtId.search('edit') > 0) ? 'total_tax_perct_edit' : 'total_tax_perct';        
+        var perct =  $('#'+perctId);
+        console.log(totalAmount);
+        var perctVal = (perct.val() == '') ? 0 : perct.val();
+        var calc = (perctVal/100)*totalAmount;
+        return decPoints(calc,2);
+        
+    }
+
+    function oneTimeDiscount(totalAmtId,totalAmount){
+        var perctId = (totalAmtId.search('edit') > 0) ? 'total_discount_perct_edit' : 'total_discount_perct';
+        var perct =  $('#'+perctId);
+        var perctVal = (perct.val() == '') ? 0 : perct.val();
+        var calc = (perctVal/100)*totalAmount;
+        return decPoints(calc,2);
+        
+    }
+
     function searchOptionListAcc(searchId,listId,page,moduleType,hiddenId,vendCustId,postDateId){
         var pickedVal = $('#'+searchId).val();
         var vendCustVal = $('#'+vendCustId).val();
@@ -2905,12 +2924,26 @@
         //ALWAYS GET SUM OF ALL TAXES AND ALLOWANCES AND DISPLAY THEIR AMOUNTS IN TOTAL DISCOUNTS AND TAXES
         var totalDiscountGet = $('#'+totalDiscount);
         var totalTaxGet = $('#'+totalTax);
+        var sumTotalVal = $('#'+sumTotalId).val();
+
         var sumToArrayTax = classToArray(taxSharedClass);
         var sumArrayTax = sumArrayItems(sumToArrayTax);
         var sumToArrayDiscount = classToArray(discountSharedClass);
         var sumArrayDiscount = sumArrayItems(sumToArrayDiscount);
-        totalDiscountGet.val(decPoints(sumArrayDiscount,2));
-        totalTaxGet.val(decPoints(sumArrayTax,2));
+
+        
+        
+        var newSumTotal = sumTotalVal - totalTaxGet.val();
+        var oneTimeTax1 = oneTimeTax(sumTotalId,newSumTotal)
+        var oneTimeDiscount1 = oneTimeDiscount(sumTotalId,newSumTotal)
+
+        var currTotalTax = (oneTimeTax1 != 0 && oneTimeTax1 != 0.00) ? oneTimeTax1 : sumArrayTax;
+        var currTotalDiscount = (oneTimeDiscount1 != 0 && oneTimeDiscount1 != 0.00) ? oneTimeDiscount1 : sumArrayDiscount;
+        
+        $('#'+sumTotalId).val(decPoints(parseFloat(newSumTotal)+parseFloat(currTotalTax),2));
+        totalDiscountGet.val(decPoints(currTotalDiscount,2));
+        totalTaxGet.val(decPoints(currTotalTax,2));
+
         exclTax(sumTotalId,totalTax,'excl_'+sumTotalId);
 
         convertToDefaultCurr(currRep,sumTotalId,currPage,vendorCustId,postDateId);
