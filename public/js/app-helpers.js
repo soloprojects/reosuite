@@ -2455,6 +2455,7 @@
         $('#'+exclTaxId).val(decPoints(newAmt,2));
     }
 
+    //FOR CALCULATING ONE TIME TAX AND DISCOUNT
     function oneTimeTax(totalAmtId,totalAmount){
         var perctId = (totalAmtId.search('edit') > 0) ? 'total_tax_perct_edit' : 'total_tax_perct';        
         var perct =  $('#'+perctId);
@@ -2473,6 +2474,31 @@
         return decPoints(calc,2);
         
     }
+
+    function emptyOneTimeTaxDiscount(totalAmtId){
+        var perctId = (totalAmtId.search('edit') > 0) ? 'total_tax_perct_edit' : 'total_tax_perct';
+        var discountPerctId = (totalAmtId.search('edit') > 0) ? 'total_discount_perct_edit' : 'total_discount_perct';
+        var taxPerct =  $('#'+perctId);
+        var discountPerct =  $('#'+discountPerctId);
+        taxPerct.val(''); 
+        discountPerct.val('');      
+    }
+    
+    function sharedTaxAmount(totalAmtId){
+        var taxSharedClass = (totalAmtId.search('edit') > 0) ? 'shared_tax_amount_edit' : 'shared_tax_amount';
+        var sumArrayTax = classToArray2(taxSharedClass);
+        var sumArrayAmount = sumArrayItems(sumArrayTax);
+        return sumArrayAmount;        
+    }
+
+    function sharedSubTotal(totalAmtId){
+        var subTotalClass = (totalAmtId.search('edit') > 0) ? 'shared_sub_total_edit' : 'shared_sub_total';
+        var sumArrayTotal = classToArray2(subTotalClass);
+        var sumArrayAmount = sumArrayItems(sumArrayTotal);
+        return sumArrayAmount;        
+    }
+
+    //END FOR CALCULATING ONE TIME TAX AND DISCOUNT
 
     function searchOptionListAcc(searchId,listId,page,moduleType,hiddenId,vendCustId,postDateId){
         var pickedVal = $('#'+searchId).val();
@@ -2553,6 +2579,10 @@
                 $('#'+subTotalId).val(decPoints(data.rate,2));
                 $('#'+qtyId).val('1');
 
+                emptyOneTimeTaxDiscount(overallSumId);
+                var sumArrayTax = sharedTaxAmount(overallSumId);
+                $('#'+totalTaxId).val(sumArrayTax); 
+
                 var sumToArray = classToArray2(sharedSumClass);
                 var sumArray = sumArrayItems(sumToArray);
 
@@ -2582,6 +2612,8 @@
     //ON SELECTION OF AN ITEM FOR TRANSACTION
     function itemSum(amountId,rateId,itemId,qtyId,discountAmountId,taxAmountId,sharedSumClass,overallSumId,foreignCurrId,defaultCurrPage,ratePage,taxSharedClass,discountSharedClass,totalTax,totalDiscount,vendorCustId,postDateId,taxPerctId,discountPerctId){
 
+        emptyOneTimeTaxDiscount(overallSumId);
+        
         if(event.target.id == qtyId){
 
             //BEGINING
@@ -2679,7 +2711,7 @@
 
             if(rate != '' && item != ''){
                 //var real_amount = (event.target.id == qtyId) ? rate : qtyVal*rate;
-                var new_amount = (real_amount-discountA)+parseInt(taxA);
+                var new_amount = (real_amount-discountA)+parseFloat(taxA);
                 amount.val(decPoints(new_amount,2));
                 var sumToArray = classToArray(sharedSumClass);
                 var sumArray = sumArrayItems(sumToArray);
@@ -2716,6 +2748,7 @@
 
         var tax = $('#'+taxAmountId);
 
+        emptyOneTimeTaxDiscount(overallSumId);
 
         var discountPerctVal = (discountPerct.val()/100)*rate;
         var discountVal = (discount != '') ? discount.val() : 0;
@@ -2764,6 +2797,8 @@
             var qty = $('#'+qtyId);
              qtyVal = (qty.val() != '') ? qty.val() : 0;
         }
+
+        emptyOneTimeTaxDiscount(overallSumId);
 
         if(rate != '' && item != ''){
             var real_amount = (qtyId == '') ? decPoints(rate,2) : decPoints(rate*qtyVal,2); //TOTAL SUM EXCLUDING DISCOUNT AND TAX
@@ -2924,25 +2959,18 @@
         //ALWAYS GET SUM OF ALL TAXES AND ALLOWANCES AND DISPLAY THEIR AMOUNTS IN TOTAL DISCOUNTS AND TAXES
         var totalDiscountGet = $('#'+totalDiscount);
         var totalTaxGet = $('#'+totalTax);
-        var sumTotalVal = $('#'+sumTotalId).val();
+        emptyOneTimeTaxDiscount(sumTotalId);
 
         var sumToArrayTax = classToArray(taxSharedClass);
         var sumArrayTax = sumArrayItems(sumToArrayTax);
         var sumToArrayDiscount = classToArray(discountSharedClass);
-        var sumArrayDiscount = sumArrayItems(sumToArrayDiscount);
-
+        var sumArrayDiscount = sumArrayItems(sumToArrayDiscount);        
         
-        
-        var newSumTotal = sumTotalVal - totalTaxGet.val();
-        var oneTimeTax1 = oneTimeTax(sumTotalId,newSumTotal)
-        var oneTimeDiscount1 = oneTimeDiscount(sumTotalId,newSumTotal)
-
-        var currTotalTax = (oneTimeTax1 != 0 && oneTimeTax1 != 0.00) ? oneTimeTax1 : sumArrayTax;
-        var currTotalDiscount = (oneTimeDiscount1 != 0 && oneTimeDiscount1 != 0.00) ? oneTimeDiscount1 : sumArrayDiscount;
-        
-        $('#'+sumTotalId).val(decPoints(parseFloat(newSumTotal)+parseFloat(currTotalTax),2));
-        totalDiscountGet.val(decPoints(currTotalDiscount,2));
-        totalTaxGet.val(decPoints(currTotalTax,2));
+        var newSumTotal = sharedSubTotal(sumTotalId);
+       
+        $('#'+sumTotalId).val(decPoints(newSumTotal,2));
+        totalDiscountGet.val(decPoints(sumArrayDiscount,2));
+        totalTaxGet.val(decPoints(sumArrayTax,2));
 
         exclTax(sumTotalId,totalTax,'excl_'+sumTotalId);
 
