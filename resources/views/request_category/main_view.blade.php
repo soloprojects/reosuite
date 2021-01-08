@@ -110,7 +110,6 @@
                         Request Category(ies)
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        @if(in_array(Auth::user()->role,\App\Helpers\Utility::TOP_USERS) || $hod == \App\Helpers\Utility::HOD_DETECTOR)
                         <li>
                             <button class="btn btn-success" data-toggle="modal" data-target="#createModal"><i class="fa fa-plus"></i>Add</button>
                         </li>
@@ -120,7 +119,6 @@
                                 <i class="fa fa-trash-o"></i>Delete
                             </button>
                         </li>
-                        @endif
                         <li class="dropdown">
                             <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">more_vert</i>
