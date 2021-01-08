@@ -2454,27 +2454,7 @@
         
         $('#'+exclTaxId).val(decPoints(newAmt,2));
     }
-
-    //FOR CALCULATING ONE TIME TAX AND DISCOUNT
-    function oneTimeTax(totalAmtId,totalAmount){
-        var perctId = (totalAmtId.search('edit') > 0) ? 'total_tax_perct_edit' : 'total_tax_perct';        
-        var perct =  $('#'+perctId);
-        console.log(totalAmount);
-        var perctVal = (perct.val() == '') ? 0 : perct.val();
-        var calc = (perctVal/100)*totalAmount;
-        return decPoints(calc,2);
-        
-    }
-
-    function oneTimeDiscount(totalAmtId,totalAmount){
-        var perctId = (totalAmtId.search('edit') > 0) ? 'total_discount_perct_edit' : 'total_discount_perct';
-        var perct =  $('#'+perctId);
-        var perctVal = (perct.val() == '') ? 0 : perct.val();
-        var calc = (perctVal/100)*totalAmount;
-        return decPoints(calc,2);
-        
-    }
-
+   
     function emptyOneTimeTaxDiscount(totalAmtId){
         var perctId = (totalAmtId.search('edit') > 0) ? 'total_tax_perct_edit' : 'total_tax_perct';
         var discountPerctId = (totalAmtId.search('edit') > 0) ? 'total_discount_perct_edit' : 'total_discount_perct';
