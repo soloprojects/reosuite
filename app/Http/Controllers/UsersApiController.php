@@ -135,7 +135,7 @@ class UsersApiController extends Controller
     {
         //
        
-        $userData = User::countData('dormant_status',Utility::STATUS_ACTIVE);
+        $userData = User::countData('dormant_status',Utility::ZERO);
         
         return $userData;
 
