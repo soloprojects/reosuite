@@ -577,6 +577,12 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
+                                <a href="{{url('temp_user')}}">External Candidates/Users</a>
+                            </li>
+                            <li>
+                                <a href="{{url('user_pin_code')}}">External Signup Pin code</a>
+                            </li>
+                            <li>
                                 <a href="{{url('test_category')}}">Test Category</a>
                             </li>
                             <li>

@@ -211,7 +211,7 @@ class TempUsersController extends Controller
                     'uid' => $uid,
                     'email' => ucfirst($request->input('email')),
                     'password' => Hash::make($request->input('password')),
-                    'role' => ucfirst($request->input('role')),
+                    'role' => $request->input('role'),
                     'firstname' => $firstname,
                     'lastname' => $lastname,
                     'dept_id' => $request->input('unit'),

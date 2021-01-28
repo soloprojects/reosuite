@@ -40,7 +40,7 @@ class SubscriptionController extends Controller
 
 
         $uid = Utility::generateUID('users');
-
+        $photo = 'user.png';
         $userData = [
             'uid' => $uid,
             'email' => $email,
@@ -50,6 +50,7 @@ class SubscriptionController extends Controller
             'lastname' => ucfirst($lastname),
             'sex' => ucfirst($sex),
             'phone' => ucfirst($phone),
+            'photo' => $photo,
             'active_status' => Utility::STATUS_ACTIVE,
             'dormant_status' => Utility::ZERO,
             'status' => Utility::STATUS_ACTIVE

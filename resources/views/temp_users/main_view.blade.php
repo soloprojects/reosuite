@@ -378,7 +378,7 @@
                             <td class="btn-link">{{url('external/signup')}}</td>
                         </tr>
                         <tr>
-                            <td>Job Candidates Signup Link</td>
+                            <td>Exam Candidates Signup Link</td>
                             <td class="btn-link">{{url('external/candidate')}}</td>
                         </tr>
                         <tr>
