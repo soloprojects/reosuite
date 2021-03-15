@@ -34,6 +34,14 @@ Route::get('/temp_user_dashboard', 'Auth\TempUserHomeController@index')->name('t
 Route::any('/login_temp_user', 'Auth\TempUserLoginController@login')->name('login_temp_user');
 Route::any('/temp_user_logout', 'Auth\TempUserHomeController@signout')->name('temp_user_logout');
 
+//-------------PASSWORD RESET MODULE-----------------
+Route::get('/password_reset', 'ResetPasswordController@passwordReset')->name('password_reset');
+Route::get('/password_reset/token/{token}/{email}', 'ResetPasswordController@passwordResetToken')->name('password_reset_token');
+Route::any('/password_reset_email', 'ResetPasswordController@passwordResetEmail')->name('password_reset_email');
+Route::post('/password_reset_login', 'ResetPasswordController@passwordResetLogin')->name('password_reset_login');
+Route::any('/password_reset_email_existence', 'ResetPasswordController@passwordResetEmailExistence')->name('password_reset_email_existence');
+
+
 // -------------DEPARTMENT MODULE-----------
 Route::any('/department', 'DepartmentController@index')->name('department')->middleware('auth.admin');
 Route::post('/create_dept', 'DepartmentController@create')->name('create_dept');

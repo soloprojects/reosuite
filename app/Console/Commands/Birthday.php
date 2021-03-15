@@ -79,7 +79,7 @@ class Birthday extends Command
 
                     $mailContent = [];
 
-                    $messageBody = "Dear " . $userData->firstname . ", ".implode(',',$birthdayNames).
+                    $messageBody = "Dear " . $userData->firstname . ", ".implode(',',$birthdayUsersArr).
                     " have birthday today, please wish them well";
 
                     $mailContent['message'] = $messageBody;

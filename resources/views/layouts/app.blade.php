@@ -94,7 +94,7 @@
                 }
             });
         }
-        setInterval(checkUserAuth, 3600); // 1 second
+        setInterval(checkUserAuth, 30000); // 8 seconds
 
     </script>
 
@@ -531,6 +531,12 @@
                         <span>Survey System</span>
                     </a>
                     <ul class="ml-menu">
+                        <li>
+                            <a href="{{url('temp_user')}}">External Candidates/Users</a>
+                        </li>
+                        <li>
+                            <a href="{{url('user_pin_code')}}">External Signup Pin code</a>
+                        </li>
                         <li>
                             <a href="{{url('survey_ans_category')}}">Answer Category</a>
                         </li>
@@ -2140,6 +2146,7 @@
             dateFormat: "yy-mm-dd"
         });
     });
+    
 </script>
 
 </body>

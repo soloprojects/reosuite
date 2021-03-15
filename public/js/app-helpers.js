@@ -2147,9 +2147,9 @@
         });
     });
 
-    $(document).ready(function() {
-        $('.summernote').summernote();
-    });
+    // $(document).ready(function() {
+    //     $('.summernote').summernote();
+    // });
 
     var db, isfullscreen = false;
     function toggleFullScreen(){
